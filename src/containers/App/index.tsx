@@ -1,4 +1,8 @@
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
+
+import RecipesList from 'containers/RecipesList';
+import * as S from './Styles';
 
 const App = () => {
   const [data, setData] = useState(null);
@@ -8,14 +12,11 @@ const App = () => {
     (async () => {
       try {
         setRequestPending(true)
-        const response = await fetch(`http://127.0.0.1:8000/api/accounts`);
-
-        if (response.ok) {
-          const _data = await response.json();
-          setData(_data);
-        } else {
-          setData(null);
-        }
+        const response = await axios.get('http://127.0.0.1:8000/api/accounts');
+        setData(response.data);
+      } catch (error) {
+        console.error(error);
+        setData(null);
       } finally {
         setRequestPending(false)
       }
@@ -23,9 +24,9 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      Corn
-    </div>
+    <S.Container>
+      <RecipesList />
+    </S.Container>
   );
 };
 
