@@ -7,6 +7,7 @@ import Button, {ButtonType} from 'components/Button';
 import {Input} from 'components/FormElements';
 import Modal from 'components/Modal';
 import {setAccessToken, setRefreshToken} from 'store/authentication';
+import {setSelf} from 'store/self';
 import {AppDispatch, SFC} from 'types';
 import yup, {signingKeySchema} from 'utils/yup';
 
@@ -28,13 +29,19 @@ const LogInModal: SFC<LogInModalProps> = ({className, close}) => {
       const {data} = await axios.post('http://127.0.0.1:8000/login', {
         "signing_key": values.signingKey
       });
-      const {authentication: {access_token, refresh_token}} = data;
+      const {account: {account_number, balance}, authentication: {access_token, refresh_token}} = data;
 
       // TODO: Update to set both at same time
       dispatch(setAccessToken(access_token));
       dispatch(setRefreshToken(refresh_token));
 
-      // TODO: Set self data
+      dispatch(setSelf({
+        accountNumber: account_number,
+        balance,
+        displayImage: '',
+        displayName: '',
+        signingKey: values.signingKey,
+      }));
 
       close();
     } catch (error) {

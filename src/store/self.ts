@@ -5,6 +5,7 @@ import {Self} from 'types';
 
 const initialState: Self = {
   accountNumber: '',
+  balance: 0,
   displayImage: '',
   displayName: '',
   signingKey: '',
