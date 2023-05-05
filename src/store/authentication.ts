@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 import {AUTHENTICATION} from 'store/constants';
 import {Authentication} from 'types';
@@ -12,11 +12,11 @@ const authentication = createSlice({
   initialState,
   name: AUTHENTICATION,
   reducers: {
-    setAccessToken: (state, action) => {
-      state.accessToken = action.payload
+    setAccessToken: (state: Authentication, {payload}: PayloadAction<string | null>) => {
+      state.accessToken = payload
     },
-    setRefreshToken: (state, action) => {
-      state.refreshToken = action.payload
+    setRefreshToken: (state: Authentication, {payload}: PayloadAction<string | null>) => {
+      state.refreshToken = payload
     }
   },
 });
