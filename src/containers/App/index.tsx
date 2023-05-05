@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
 import RecipesList from 'containers/RecipesList';
+import TopNav from 'containers/TopNav';
 import * as S from './Styles';
 
 const App = () => {
@@ -25,7 +26,10 @@ const App = () => {
 
   return (
     <S.Container>
-      <RecipesList />
+      <TopNav />
+      <S.MainContent>
+        <RecipesList />
+      </S.MainContent>
     </S.Container>
   );
 };
