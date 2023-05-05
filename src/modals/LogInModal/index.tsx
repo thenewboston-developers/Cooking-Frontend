@@ -6,7 +6,7 @@ import {Form, Formik} from 'formik';
 import Button, {ButtonType} from 'components/Button';
 import {Input} from 'components/FormElements';
 import Modal from 'components/Modal';
-import {setAccessToken, setRefreshToken} from 'store/authentication';
+import {setAuthentication} from 'store/authentication';
 import {setSelf} from 'store/self';
 import {AppDispatch, SFC} from 'types';
 import yup, {signingKeySchema} from 'utils/yup';
@@ -31,9 +31,10 @@ const LogInModal: SFC<LogInModalProps> = ({className, close}) => {
       });
       const {account: {account_number, balance}, authentication: {access_token, refresh_token}} = data;
 
-      // TODO: Update to set both at same time
-      dispatch(setAccessToken(access_token));
-      dispatch(setRefreshToken(refresh_token));
+      dispatch(setAuthentication({
+        accessToken: access_token,
+        refreshToken: refresh_token,
+      }));
 
       dispatch(setSelf({
         accountNumber: account_number,

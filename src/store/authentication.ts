@@ -12,14 +12,11 @@ const authentication = createSlice({
   initialState,
   name: AUTHENTICATION,
   reducers: {
-    setAccessToken: (state: Authentication, {payload}: PayloadAction<string | null>) => {
-      state.accessToken = payload
+    setAuthentication: (state: Authentication, {payload}: PayloadAction<Authentication>) => {
+      return payload
     },
-    setRefreshToken: (state: Authentication, {payload}: PayloadAction<string | null>) => {
-      state.refreshToken = payload
-    }
   },
 });
 
-export const {setAccessToken, setRefreshToken} = authentication.actions;
+export const {setAuthentication} = authentication.actions;
 export default authentication.reducer;
