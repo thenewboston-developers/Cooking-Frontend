@@ -1,3 +1,4 @@
+import useSelfDisplayImage from 'hooks/useSelfDisplayImage';
 import useToggle from 'hooks/useToggle';
 
-export {useToggle};
+export {useSelfDisplayImage, useToggle};

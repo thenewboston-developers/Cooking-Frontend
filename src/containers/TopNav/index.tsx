@@ -1,12 +1,30 @@
-import CookingLogo from 'assets/logos/Cooking.png';
+import {useSelector} from 'react-redux';
+
+import CookingLogo from 'assets/logos/cooking.png';
 import Button from 'components/Button';
-import {useToggle} from 'hooks';
+import {useSelfDisplayImage, useToggle} from 'hooks';
 import LogInModal from 'modals/LogInModal';
+import {getSelf} from 'selectors/state';
 import {SFC} from 'types/generic';
 import * as S from './Styles';
 
 const TopNav: SFC = ({className}) => {
   const [logInModalIsOpen, toggleLogInModal] = useToggle(false);
+  const self = useSelector(getSelf);
+  const selfDisplayImage = useSelfDisplayImage();
+
+  const renderRightContent = () => {
+    if (!self.accountNumber) {
+      return (
+        <>
+          <Button text="Create Account" />
+          <Button onClick={toggleLogInModal} text="Log In" />
+        </>
+      );
+    }
+
+    return <S.Avatar alt="avatar" src={selfDisplayImage} />;
+  };
 
   return (
     <>
@@ -15,8 +33,7 @@ const TopNav: SFC = ({className}) => {
           <S.Logo alt="logo" src={CookingLogo}/>
         </S.Left>
         <S.Right>
-          <Button text="Create Account" />
-          <Button onClick={toggleLogInModal} text="Log In" />
+          {renderRightContent()}
         </S.Right>
       </S.Container>
       {logInModalIsOpen ? <LogInModal close={toggleLogInModal} /> : null}

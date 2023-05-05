@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+export const Avatar = styled.img`
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+`;
+
 export const Container = styled.div`
   align-items: center;
   display: flex;
