@@ -29,7 +29,10 @@ const LogInModal: SFC<LogInModalProps> = ({className, close}) => {
       const {data} = await axios.post('http://127.0.0.1:8000/login', {
         "signing_key": values.signingKey
       });
-      const {account: {account_number, balance}, authentication: {access_token, refresh_token}} = data;
+      const {
+        account: {account_number, balance, display_image, display_name},
+        authentication: {access_token, refresh_token}
+      } = data;
 
       dispatch(setAuthentication({
         accessToken: access_token,
@@ -39,8 +42,8 @@ const LogInModal: SFC<LogInModalProps> = ({className, close}) => {
       dispatch(setSelf({
         accountNumber: account_number,
         balance,
-        displayImage: '',
-        displayName: '',
+        displayImage: display_image,
+        displayName: display_name,
         signingKey: values.signingKey,
       }));
 
