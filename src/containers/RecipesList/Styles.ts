@@ -1,14 +1,18 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  border: 1px solid #ccc;
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
-  padding: 48px;
+  margin: 20px 24px;
+  overflow: hidden;
 `;
 
 export const Img = styled.img`
+  border-radius: 4px;
   height: auto;
-  max-width: 180px;
+  max-width: 140px;
   width: 100%;
 `;
 
@@ -18,6 +22,12 @@ export const Name = styled.span`
 `;
 
 export const Recipe = styled.div`
+  background: white;
+  border-bottom: 1px solid #ccc;
   display: flex;
-  margin-bottom: 24px;
+  padding: 8px;
+
+  &:last-child {
+    border-bottom: none;
+  }
 `;
