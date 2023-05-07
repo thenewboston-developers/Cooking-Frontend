@@ -2,19 +2,12 @@ import React from 'react';
 import {Flip, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import RecipesList from 'containers/RecipesList';
-import TopNav from 'containers/TopNav';
-import * as S from './Styles';
+import Layout from 'containers/Layout';
 
 const App = () => {
   return (
     <>
-      <S.Container>
-        <TopNav />
-        <S.MainContent>
-          <RecipesList />
-        </S.MainContent>
-      </S.Container>
+      <Layout />
       <ToastContainer
         autoClose={3000}
         closeOnClick

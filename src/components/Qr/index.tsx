@@ -1,13 +1,14 @@
-import {FC, ReactNode, useEffect, useState} from 'react';
+import {ReactNode, useEffect, useState} from 'react';
 import QrCode from 'qrcode';
 
+import {SFC} from 'types';
+
 export interface QrProps {
-  className?: string;
   text: string;
   width?: number;
 }
 
-const Qr: FC<QrProps> = ({className, text, width = 100}) => {
+const Qr: SFC<QrProps> = ({className, text, width = 100}) => {
   const [qr, setQr] = useState<ReactNode | null>(null);
 
   useEffect(() => {
