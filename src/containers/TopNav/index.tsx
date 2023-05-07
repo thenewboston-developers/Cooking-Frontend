@@ -3,12 +3,14 @@ import {useSelector} from 'react-redux';
 import CookingLogo from 'assets/logos/cooking.png';
 import Button from 'components/Button';
 import {useSelfDisplayImage, useToggle} from 'hooks';
+import CreateAccountModal from 'modals/CreateAccountModal';
 import LogInModal from 'modals/LogInModal';
 import {getSelf} from 'selectors/state';
 import {SFC} from 'types/generic';
 import * as S from './Styles';
 
 const TopNav: SFC = ({className}) => {
+  const [createAccountModalIsOpen, toggleCreateAccountModal] = useToggle(false);
   const [logInModalIsOpen, toggleLogInModal] = useToggle(false);
   const self = useSelector(getSelf);
   const selfDisplayImage = useSelfDisplayImage();
@@ -17,7 +19,7 @@ const TopNav: SFC = ({className}) => {
     if (!self.accountNumber) {
       return (
         <>
-          <Button text="Create Account" />
+          <Button onClick={toggleCreateAccountModal} text="Create Account" />
           <Button onClick={toggleLogInModal} text="Log In" />
         </>
       );
@@ -36,6 +38,7 @@ const TopNav: SFC = ({className}) => {
           {renderRightContent()}
         </S.Right>
       </S.Container>
+      {createAccountModalIsOpen ? <CreateAccountModal close={toggleCreateAccountModal} /> : null}
       {logInModalIsOpen ? <LogInModal close={toggleLogInModal} /> : null}
     </>
   );
