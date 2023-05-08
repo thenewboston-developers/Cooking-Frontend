@@ -1,13 +1,11 @@
 import {useMemo} from 'react';
 import {useDispatch} from 'react-redux';
-import axios from 'axios';
 import {Form, Formik} from 'formik';
 
 import Button, {ButtonType} from 'components/Button';
 import {Input} from 'components/FormElements';
 import Modal from 'components/Modal';
-import {setAuthentication} from 'store/authentication';
-import {setSelf} from 'store/self';
+import {login} from 'dispatchers/authentication';
 import {AppDispatch, SFC} from 'types';
 import yup, {signingKeySchema} from 'utils/yup';
 
@@ -26,27 +24,7 @@ const LogInModal: SFC<LogInModalProps> = ({className, close}) => {
 
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
-      const {data} = await axios.post('http://127.0.0.1:8000/login', {
-        "signing_key": values.signingKey
-      });
-      const {
-        account: {account_number, balance, display_image, display_name},
-        authentication: {access_token, refresh_token}
-      } = data;
-
-      dispatch(setAuthentication({
-        accessToken: access_token,
-        refreshToken: refresh_token,
-      }));
-
-      dispatch(setSelf({
-        accountNumber: account_number,
-        balance,
-        displayImage: display_image,
-        displayName: display_name,
-        signingKey: values.signingKey,
-      }));
-
+      await dispatch(login(values.signingKey));
       close();
     } catch (error) {
       console.error(error);
