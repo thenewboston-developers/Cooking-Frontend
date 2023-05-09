@@ -1,25 +1,26 @@
 import styled, {css} from 'styled-components';
 import UIcon from '@mdi/react';
 
+import {colors} from 'styles';
 import {ButtonColor} from './types';
 
 const BUTTON_HEIGHT = 36;
 
 const dangerMixin = css`
-  background-color: #f46a6a;
+  background-color: ${colors.palette.red['500']};
 
   &:hover {
-    background: #cf5a5a;
+    background: ${colors.palette.red['400']};
   }
 `;
 
 const disabledMixin = css`
-  background: #556ee6;
+  background: ${colors.palette.blue['500']};
   cursor: not-allowed;
   opacity: 0.65;
 
   &:hover {
-    background: #556ee6;
+    background: ${colors.palette.blue['500']};
   }
 `;
 
@@ -31,15 +32,15 @@ const hasIconMixin = css`
 `;
 
 const successMixin = css`
-  background-color: #34c38f;
+  background-color: ${colors.palette.green['300']};
 
   &:hover {
-    background: #2ca67a;
+    background: ${colors.palette.green['400']};
   }
 `;
 
 export const Button = styled.button<{$color: ButtonColor; hasIcon: boolean}>`
-  background: #556ee6;
+  background: ${colors.palette.blue['500']};
   border-radius: ${`${BUTTON_HEIGHT / 2}px`};
   border: 1px solid transparent;
   color: #fff;
@@ -51,7 +52,7 @@ export const Button = styled.button<{$color: ButtonColor; hasIcon: boolean}>`
   padding: 0 12px;
 
   &:hover {
-    background: #485ec4;
+    background: ${colors.palette.blue['400']};
   }
 
   ${({$color}) => {

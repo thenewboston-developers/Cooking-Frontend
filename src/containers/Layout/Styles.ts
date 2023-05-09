@@ -8,7 +8,6 @@ export const Container = styled.div`
 `;
 
 export const MainContent = styled.div`
-  background: #dae0e6;
   flex: 1;
   overflow-y: auto;
 `;
