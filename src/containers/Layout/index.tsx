@@ -1,4 +1,4 @@
-import {FC} from "react";
+import {FC} from 'react';
 
 import RecipesList from 'containers/RecipesList';
 import TopNav from 'containers/TopNav';

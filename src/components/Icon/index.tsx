@@ -15,10 +15,7 @@ export interface IconProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Icon = forwardRef<HTMLDivElement, IconProps>(
-  (
-    {className, disabled = false, icon, onClick, onKeyDown, size = 24, totalSize, unfocusable = false},
-    ref,
-  ) => {
+  ({className, disabled = false, icon, onClick, onKeyDown, size = 24, totalSize, unfocusable = false}, ref) => {
     const handleClick = (e?: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
       if (disabled || !onClick) return;
       onClick(e);

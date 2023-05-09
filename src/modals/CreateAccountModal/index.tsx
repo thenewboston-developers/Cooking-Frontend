@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import axios from "axios";
+import axios from 'axios';
 
 import CopyContainer from 'components/CopyContainer';
 import Modal from 'components/Modal';
@@ -39,15 +39,15 @@ const CreateAccountModal: SFC<CreateAccountModalProps> = ({className, close}) =>
         displayErrorToast('Error creating account');
       }
     })();
-  }, [])
+  }, [dispatch]);
 
   const renderResults = () => {
     if (!data) return null;
 
     return (
       <>
-        <CopyContainer text={data.account.account_number}/>
-        <CopyContainer text={data.signing_key}/>
+        <CopyContainer text={data.account.account_number} />
+        <CopyContainer text={data.signing_key} />
       </>
     );
   };
