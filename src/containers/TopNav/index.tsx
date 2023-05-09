@@ -32,11 +32,9 @@ const TopNav: SFC = ({className}) => {
     <>
       <S.Container className={className}>
         <S.Left>
-          <S.Logo alt="logo" src={CookingLogo}/>
+          <S.Logo alt="logo" src={CookingLogo} />
         </S.Left>
-        <S.Right>
-          {renderRightContent()}
-        </S.Right>
+        <S.Right>{renderRightContent()}</S.Right>
       </S.Container>
       {createAccountModalIsOpen ? <CreateAccountModal close={toggleCreateAccountModal} /> : null}
       {logInModalIsOpen ? <LogInModal close={toggleLogInModal} /> : null}

@@ -33,7 +33,7 @@ const LogInModal: SFC<LogInModalProps> = ({className, close}) => {
 
   const validationSchema = useMemo(() => {
     return yup.object().shape({
-      signingKey: signingKeySchema.required()
+      signingKey: signingKeySchema.required(),
     });
   }, []);
 
@@ -47,7 +47,7 @@ const LogInModal: SFC<LogInModalProps> = ({className, close}) => {
       >
         {({dirty, errors, isSubmitting, touched, isValid}) => (
           <Form>
-            <Input errors={errors} label="Signing Key" name="signingKey" touched={touched}/>
+            <Input errors={errors} label="Signing Key" name="signingKey" touched={touched} />
             <Button
               dirty={dirty}
               disabled={isSubmitting}

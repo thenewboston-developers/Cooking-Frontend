@@ -16,7 +16,7 @@ const self = createSlice({
   name: SELF,
   reducers: {
     setSelf: (state: Self, {payload}: PayloadAction<Self>) => {
-      return payload
+      return payload;
     },
     updateSelf: (state: Self, {payload}: PayloadAction<Partial<Self>>) => {
       Object.assign(state, payload);

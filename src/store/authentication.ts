@@ -13,7 +13,7 @@ const authentication = createSlice({
   name: AUTHENTICATION,
   reducers: {
     setAuthentication: (state: Authentication, {payload}: PayloadAction<Authentication>) => {
-      return payload
+      return payload;
     },
   },
 });
