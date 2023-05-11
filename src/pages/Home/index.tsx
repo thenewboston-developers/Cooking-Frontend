@@ -34,7 +34,7 @@ const recipes: TRecipe[] = [
   },
 ];
 
-const RecipesList: SFC = ({className}) => {
+const Home: SFC = ({className}) => {
   const renderRecipes = () => {
     return recipes.map(({id, description, imageUrl, name}) => (
       <Recipe description={description} imageUrl={imageUrl} key={id} name={name} />
@@ -44,4 +44,4 @@ const RecipesList: SFC = ({className}) => {
   return <S.Container className={className}>{renderRecipes()}</S.Container>;
 };
 
-export default RecipesList;
+export default Home;

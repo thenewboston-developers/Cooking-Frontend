@@ -1,7 +1,9 @@
 import {FC} from 'react';
+import {Route, Routes} from 'react-router-dom';
 
-import RecipesList from 'containers/RecipesList';
 import TopNav from 'containers/TopNav';
+import Home from 'pages/Home';
+import Profile from 'pages/Profile';
 import * as S from './Styles';
 
 const Layout: FC = () => {
@@ -9,7 +11,10 @@ const Layout: FC = () => {
     <S.Container>
       <TopNav />
       <S.MainContent>
-        <RecipesList />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="profile/" element={<Profile />} />
+        </Routes>
       </S.MainContent>
     </S.Container>
   );

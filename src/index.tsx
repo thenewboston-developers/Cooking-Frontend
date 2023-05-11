@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import {Provider} from 'react-redux';
+import {BrowserRouter} from 'react-router-dom';
 
 import App from 'containers/App';
 import store from 'store';
@@ -13,6 +14,8 @@ root.render(
   <Provider store={store}>
     <GlobalStyle />
     <ToastifyStyle />
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
 );

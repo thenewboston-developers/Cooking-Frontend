@@ -1,4 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux';
+import {Link} from 'react-router-dom';
 import {mdiDotsVertical} from '@mdi/js';
 
 import CookingLogo from 'assets/logos/cooking.png';
@@ -36,7 +37,9 @@ const TopNav: SFC = ({className}) => {
 
     return (
       <>
-        <S.Avatar alt="avatar" src={selfDisplayImage} />
+        <Link to="/profile">
+          <S.Avatar alt="avatar" src={selfDisplayImage} />
+        </Link>
         {renderDropdownMenu()}
       </>
     );
@@ -46,7 +49,9 @@ const TopNav: SFC = ({className}) => {
     <>
       <S.Container className={className}>
         <S.Left>
-          <S.Logo alt="logo" src={CookingLogo} />
+          <Link to="/">
+            <S.Logo alt="logo" src={CookingLogo} />
+          </Link>
         </S.Left>
         <S.Right>{renderRightContent()}</S.Right>
       </S.Container>
