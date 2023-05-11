@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const ErrorMessage = styled.div`
   color: #cd3d64;
-  font-size: 10px;
+  font-size: 12px;
   margin-top: 6px;
 `;
 
@@ -24,7 +24,7 @@ export const Field = styled(UField)`
 `;
 
 export const Label = styled.div`
-  font-size: 10px;
+  font-size: 12px;
   margin-bottom: 8px;
 `;
 

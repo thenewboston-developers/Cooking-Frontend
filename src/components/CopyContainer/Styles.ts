@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import {fonts} from 'styles';
+
 export const Container = styled.div`
   align-items: center;
   background: #f1f6fa;
@@ -13,7 +15,7 @@ export const Container = styled.div`
 
 export const CopyText = styled.div`
   cursor: pointer;
-  font-weight: bold;
+  font-weight: ${fonts.weight.bold};
 `;
 
 export const Text = styled.div`
