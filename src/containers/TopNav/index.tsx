@@ -36,7 +36,7 @@ const TopNav: SFC = ({className}) => {
 
     return (
       <>
-        <S.Avatar alt="avatar" onClick={() => dispatch(logout())} src={selfDisplayImage} />
+        <S.Avatar alt="avatar" src={selfDisplayImage} />
         {renderDropdownMenu()}
       </>
     );
