@@ -1,6 +1,6 @@
 import {createGlobalStyle} from 'styled-components';
 
-import {colors} from 'styles';
+import {colors, fonts} from 'styles';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -10,7 +10,9 @@ const GlobalStyle = createGlobalStyle`
   body {
     background: ${colors.background};
     color: ${colors.primary};
+    font-family: ${fonts.family.default};
     font-size: 14px;
+    font-weight: ${fonts.weight.regular};
     margin: 0;
   }
 
@@ -26,6 +28,7 @@ const GlobalStyle = createGlobalStyle`
   h6 {
     margin: 0;
   }
+
   h1 {
     font-size: 24px;
   }

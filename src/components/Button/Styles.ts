@@ -1,7 +1,7 @@
 import styled, {css} from 'styled-components';
 import UIcon from '@mdi/react';
 
-import {colors} from 'styles';
+import {colors, fonts} from 'styles';
 import {ButtonColor} from './types';
 
 const BUTTON_HEIGHT = 36;
@@ -46,8 +46,9 @@ export const Button = styled.button<{$color: ButtonColor; hasIcon: boolean}>`
   color: #fff;
   cursor: pointer;
   display: block;
-  font-family: Poppins, sans-serif;
+  font-family: ${fonts.family.default};
   font-size: 14px;
+  font-weight: ${fonts.weight.regular};
   height: ${`${BUTTON_HEIGHT}px`};
   padding: 0 12px;
 
