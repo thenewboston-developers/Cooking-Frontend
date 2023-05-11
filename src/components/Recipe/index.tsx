@@ -10,7 +10,11 @@ export interface RecipeProps {
 const Recipe: SFC<RecipeProps> = ({className, description, imageUrl, name}) => {
   return (
     <S.Container className={className}>
-      <S.Img alt="image" src={imageUrl} />
+      <S.ImgContainer>
+        <S.ImgWrapper>
+          <S.Img alt="image" src={imageUrl} />
+        </S.ImgWrapper>
+      </S.ImgContainer>
       <S.Right>
         <S.Name>{name}</S.Name>
         <S.Description>{description}</S.Description>
