@@ -10,12 +10,10 @@ const Layout: FC = () => {
   return (
     <S.Container>
       <TopNav />
-      <S.MainContent>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="profile/" element={<Profile />} />
-        </Routes>
-      </S.MainContent>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="profile/" element={<Profile />} />
+      </Routes>
     </S.Container>
   );
 };
