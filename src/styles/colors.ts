@@ -1,10 +1,11 @@
 /* eslint-disable sort-keys */
 
 const colors = {
-  background: '#f7f7f7',
-  primary: '#494949',
-  accent: '#f9a602',
+  background: '#f9fafb',
+  primary: 'rgb(15, 20, 25)',
+  secondary: 'rgb(83, 100, 113)',
   white: '#ffffff',
+  whiteHover: '#f3f4f6',
   black: '#000000',
   palette: {
     blue: {

@@ -1,10 +1,12 @@
 import styled, {css} from 'styled-components';
 
+import {colors} from 'styles';
+
 const buttonStyle = css`
   cursor: pointer;
 
   &:hover {
-    background: #e3e8ee;
+    background: ${colors.whiteHover};
   }
 `;
 

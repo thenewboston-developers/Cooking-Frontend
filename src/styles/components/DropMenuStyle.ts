@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
+import {colors} from 'styles';
+
 export const Menu = styled.div`
-  background: #fff;
+  background: ${colors.white};
   border-radius: 3px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   padding: 6px 0;
@@ -16,7 +18,7 @@ export const Option = styled.div`
   white-space: nowrap;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.04);
+    background: ${colors.whiteHover};
     cursor: pointer;
   }
 `;

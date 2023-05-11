@@ -1,8 +1,9 @@
 import {SFC} from 'types/generic';
-import {Recipe} from 'types/recipes';
+import {Recipe as TRecipe} from 'types/recipes';
+import Recipe from './Recipe';
 import * as S from './Styles';
 
-const recipes: Recipe[] = [
+const recipes: TRecipe[] = [
   {
     description: 'A classic spaghetti with meatballs recipe',
     id: '1',
@@ -35,11 +36,8 @@ const recipes: Recipe[] = [
 
 const RecipesList: SFC = ({className}) => {
   const renderRecipes = () => {
-    return recipes.map(({id, imageUrl, name}) => (
-      <S.Recipe key={id}>
-        <S.Img alt="image" src={imageUrl} />
-        <S.Name>{name}</S.Name>
-      </S.Recipe>
+    return recipes.map(({id, description, imageUrl, name}) => (
+      <Recipe description={description} imageUrl={imageUrl} key={id} name={name} />
     ));
   };
 

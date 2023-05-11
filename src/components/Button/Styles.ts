@@ -51,6 +51,7 @@ export const Button = styled.button<{$color: ButtonColor; hasIcon: boolean}>`
   font-weight: ${fonts.weight.regular};
   height: ${`${BUTTON_HEIGHT}px`};
   padding: 0 12px;
+  transition: all 0.1s;
 
   &:hover {
     background: ${colors.palette.blue['400']};
