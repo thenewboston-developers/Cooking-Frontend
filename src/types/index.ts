@@ -1,5 +1,5 @@
 import {Authentication} from 'types/authentication';
-import {ClassName, SFC} from 'types/generic';
+import {ClassName, GenericFunction, GenericVoidFunction, SFC} from 'types/generic';
 import {IdentificationData} from 'types/identification';
 import {Recipe} from 'types/recipes';
 import {Self} from 'types/self';
@@ -11,11 +11,13 @@ export {
   AppDispatch,
   Authentication,
   ClassName,
+  GenericFunction,
+  GenericVoidFunction,
   IdentificationData,
   Recipe,
   RootState,
-  Self,
   SFC,
+  Self,
   SigningKey,
   TnbKeyPair,
 };

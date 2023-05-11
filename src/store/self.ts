@@ -15,6 +15,7 @@ const self = createSlice({
   initialState,
   name: SELF,
   reducers: {
+    resetSelf: () => initialState,
     setSelf: (state: Self, {payload}: PayloadAction<Self>) => {
       return payload;
     },
@@ -24,5 +25,5 @@ const self = createSlice({
   },
 });
 
-export const {setSelf, updateSelf} = self.actions;
+export const {resetSelf, setSelf, updateSelf} = self.actions;
 export default self.reducer;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import {setAuthentication} from 'store/authentication';
-import {setSelf} from 'store/self';
+import {resetAuthentication, setAuthentication} from 'store/authentication';
+import {resetSelf, setSelf} from 'store/self';
 import {AppDispatch} from 'types/store';
 
 interface LoginResponse {
@@ -43,4 +43,9 @@ export const login = (signingKey: string) => async (dispatch: AppDispatch) => {
       signingKey,
     }),
   );
+};
+
+export const logout = () => async (dispatch: AppDispatch) => {
+  dispatch(resetAuthentication());
+  dispatch(resetSelf());
 };
