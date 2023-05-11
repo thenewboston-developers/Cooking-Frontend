@@ -1,19 +1,28 @@
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {mdiDotsVertical} from '@mdi/js';
 
 import CookingLogo from 'assets/logos/cooking.png';
 import Button from 'components/Button';
+import DropdownMenu, {DropdownMenuOption} from 'components/DropdownMenu';
+import {logout} from 'dispatchers/authentication';
 import {useSelfDisplayImage, useToggle} from 'hooks';
 import CreateAccountModal from 'modals/CreateAccountModal';
 import LogInModal from 'modals/LogInModal';
 import {getSelf} from 'selectors/state';
-import {SFC} from 'types/generic';
+import {AppDispatch, SFC} from 'types';
 import * as S from './Styles';
 
 const TopNav: SFC = ({className}) => {
   const [createAccountModalIsOpen, toggleCreateAccountModal] = useToggle(false);
   const [logInModalIsOpen, toggleLogInModal] = useToggle(false);
+  const dispatch = useDispatch<AppDispatch>();
   const self = useSelector(getSelf);
   const selfDisplayImage = useSelfDisplayImage();
+
+  const renderDropdownMenu = () => {
+    const menuOptions: DropdownMenuOption[] = [{label: 'Log Out', onClick: () => dispatch(logout())}];
+    return <DropdownMenu icon={mdiDotsVertical} options={menuOptions} />;
+  };
 
   const renderRightContent = () => {
     if (!self.accountNumber) {
@@ -25,7 +34,12 @@ const TopNav: SFC = ({className}) => {
       );
     }
 
-    return <S.Avatar alt="avatar" src={selfDisplayImage} />;
+    return (
+      <>
+        <S.Avatar alt="avatar" src={selfDisplayImage} />
+        {renderDropdownMenu()}
+      </>
+    );
   };
 
   return (

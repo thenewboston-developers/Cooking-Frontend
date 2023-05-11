@@ -12,11 +12,12 @@ const authentication = createSlice({
   initialState,
   name: AUTHENTICATION,
   reducers: {
+    resetAuthentication: () => initialState,
     setAuthentication: (state: Authentication, {payload}: PayloadAction<Authentication>) => {
       return payload;
     },
   },
 });
 
-export const {setAuthentication} = authentication.actions;
+export const {resetAuthentication, setAuthentication} = authentication.actions;
 export default authentication.reducer;
