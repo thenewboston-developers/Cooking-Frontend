@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import {fonts} from 'styles';
+
 export const Container = styled.div`
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -17,7 +19,7 @@ export const Img = styled.img`
 `;
 
 export const Name = styled.span`
-  font-weight: bold;
+  font-weight: ${fonts.weight.bold};
   margin-left: 12px;
 `;
 

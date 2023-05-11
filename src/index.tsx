@@ -5,6 +5,7 @@ import App from 'containers/App';
 import store from 'store';
 import GlobalStyle from 'styles/components/GlobalStyle';
 import ToastifyStyle from 'styles/components/ToastifyStyle';
+import 'styles/fonts.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 

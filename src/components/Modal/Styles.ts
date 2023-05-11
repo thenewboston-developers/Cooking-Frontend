@@ -1,11 +1,13 @@
 import styled, {keyframes} from 'styled-components';
 
+import {fonts} from 'styles';
+
 const addOverlay = keyframes`
   from {
     background: rgba(0, 0, 0, 0);
   }
   to {
-    background: rgba(44, 57, 103, 0.3); // Primary color
+    background: rgba(44, 57, 103, 0.3);
   }
 `;
 
@@ -17,8 +19,7 @@ export const Header = styled.div`
   align-items: center;
   color: #697386;
   display: flex;
-  font-size: 12px;
-  font-weight: 400;
+  font-weight: ${fonts.weight.bold};
   justify-content: space-between;
   margin-bottom: 46px;
   padding: 16px 24px 0;
