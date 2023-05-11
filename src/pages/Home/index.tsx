@@ -1,36 +1,32 @@
+import Recipe from 'components/Recipe';
 import {SFC} from 'types/generic';
 import {Recipe as TRecipe} from 'types/recipes';
-import Recipe from './Recipe';
 import * as S from './Styles';
 
 const recipes: TRecipe[] = [
   {
-    description: 'A classic spaghetti with meatballs recipe',
-    id: '1',
-    imageUrl:
-      'https://images.pexels.com/photos/12720645/pexels-photo-12720645.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    name: 'Spaghetti and Meatballs',
+    description: 'A classic lasagna recipe with layers of pasta, meat sauce, and ricotta cheese',
+    id: '5',
+    imageUrl: 'https://images.pexels.com/photos/14696208/pexels-photo-14696208.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    name: 'Meat Lasagna',
   },
   {
-    description: 'A quick and easy chicken stir-fry recipe',
-    id: '2',
-    imageUrl:
-      'https://images.pexels.com/photos/236887/pexels-photo-236887.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    name: 'Chicken Stir-Fry',
+    description: 'A delicious and healthy quinoa salad with roasted vegetables and feta cheese',
+    id: '6',
+    imageUrl: 'https://images.pexels.com/photos/5865161/pexels-photo-5865161.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    name: 'Roasted Vegetable Quinoa Salad',
   },
   {
-    description: 'A hearty beef stew recipe perfect for cold nights',
-    id: '3',
-    imageUrl:
-      'https://images.pexels.com/photos/2313686/pexels-photo-2313686.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    name: 'Beef Stew',
+    description: 'A flavorful Indian curry with tender chunks of chicken in a creamy tomato sauce',
+    id: '7',
+    imageUrl: 'https://images.pexels.com/photos/2611917/pexels-photo-2611917.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    name: 'Chicken Tikka Masala',
   },
   {
-    description: 'A refreshing salad recipe with mixed greens and strawberries',
-    id: '4',
-    imageUrl:
-      'https://images.pexels.com/photos/1684376/pexels-photo-1684376.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    name: 'Strawberry Salad',
+    description: 'A sweet and tangy glazed salmon recipe with honey and soy sauce',
+    id: '8',
+    imageUrl: 'https://images.pexels.com/photos/842142/pexels-photo-842142.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    name: 'Honey Soy Glazed Salmon',
   },
 ];
 
