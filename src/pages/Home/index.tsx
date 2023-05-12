@@ -1,6 +1,5 @@
 import Recipe from 'components/Recipe';
-import {SFC} from 'types/generic';
-import {Recipe as TRecipe} from 'types/recipes';
+import {Recipe as TRecipe, SFC} from 'types';
 import * as S from './Styles';
 
 const recipes: TRecipe[] = [

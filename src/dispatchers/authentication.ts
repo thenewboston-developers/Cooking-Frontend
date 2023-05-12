@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import {resetAuthentication, setAuthentication} from 'store/authentication';
 import {resetSelf, setSelf} from 'store/self';
-import {AppDispatch} from 'types/store';
+import {AppDispatch} from 'types';
 
 interface LoginResponse {
   account: {
@@ -18,7 +18,7 @@ interface LoginResponse {
 }
 
 export const login = (signingKey: string) => async (dispatch: AppDispatch) => {
-  const {data} = await axios.post<LoginResponse>('http://127.0.0.1:8000/login', {
+  const {data} = await axios.post<LoginResponse>(`${process.env.REACT_APP_API_URL}/login`, {
     signing_key: signingKey,
   });
 
