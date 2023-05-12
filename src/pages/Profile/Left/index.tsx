@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 
 import DefaultProfileImage from 'assets/default-profile-image.png';
@@ -19,6 +19,7 @@ const Left: SFC = ({className}) => {
   const [displayName, setDisplayName] = useState<string | null>(null);
   const [requestPending, setRequestPending] = useState<boolean>(false);
   const {accountNumber} = useParams();
+  const navigate = useNavigate();
   const isAuthenticated = useIsAuthenticated();
   const self = useSelector(getSelf);
 
@@ -49,12 +50,17 @@ const Left: SFC = ({className}) => {
     })();
   }, [accountNumber, self]);
 
+  const handleCreateRecipeClick = () => {
+    navigate('/createEditRecipe');
+  };
+
   const renderActionButtons = () => {
     if (!isAuthenticated || accountNumber !== self.accountNumber) return null;
 
     return (
       <S.ButtonContainer>
         <Button color={ButtonColor.secondary} onClick={toggleEditAccountModal} text="Edit profile" />
+        <Button color={ButtonColor.secondary} onClick={handleCreateRecipeClick} text="Create recipe" />
       </S.ButtonContainer>
     );
   };
