@@ -1,42 +1,49 @@
+import {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
+import axios from 'axios';
+
+import Loader from 'components/Loader';
 import Recipe from 'components/Recipe';
-import {Recipe as TRecipe, SFC} from 'types';
+import {SFC} from 'types';
+import {displayErrorToast} from 'utils/toast';
 import * as S from './Styles';
 
-const recipes: TRecipe[] = [
-  {
-    description: 'A classic spaghetti with meatballs recipe',
-    id: '1',
-    imageUrl:
-      'https://images.pexels.com/photos/12720645/pexels-photo-12720645.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    name: 'Spaghetti and Meatballs',
-  },
-  {
-    description: 'A quick and easy chicken stir-fry recipe',
-    id: '2',
-    imageUrl:
-      'https://images.pexels.com/photos/236887/pexels-photo-236887.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    name: 'Chicken Stir-Fry',
-  },
-  {
-    description: 'A hearty beef stew recipe perfect for cold nights',
-    id: '3',
-    imageUrl:
-      'https://images.pexels.com/photos/2313686/pexels-photo-2313686.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    name: 'Beef Stew',
-  },
-  {
-    description: 'A refreshing salad recipe with mixed greens and strawberries',
-    id: '4',
-    imageUrl:
-      'https://images.pexels.com/photos/1684376/pexels-photo-1684376.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    name: 'Strawberry Salad',
-  },
-];
+interface TRecipe {
+  creator: string;
+  description: string;
+  id: number;
+  image_url: string;
+  name: string;
+}
 
 const Right: SFC = ({className}) => {
+  const [recipes, setRecipes] = useState<TRecipe[] | null>(null);
+  const [requestPending, setRequestPending] = useState<boolean>(true);
+  const {accountNumber} = useParams();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setRequestPending(true);
+        const {data} = await axios.get<TRecipe[]>(
+          `${process.env.REACT_APP_API_URL}/api/recipes?creator=${accountNumber}`,
+        );
+        setRecipes(data);
+      } catch (error) {
+        console.error(error);
+        displayErrorToast('Error fetching recipes');
+      } finally {
+        setRequestPending(false);
+      }
+    })();
+  }, [accountNumber]);
+
   const renderRecipeList = () => {
-    const items = recipes.map(({id, description, imageUrl, name}) => (
-      <Recipe description={description} imageUrl={imageUrl} key={id} name={name} />
+    if (requestPending) return <Loader />;
+    if (recipes === null || recipes.length === 0) return <div>No recipes to display</div>;
+
+    const items = recipes.map(({description, id, image_url, name}) => (
+      <Recipe description={description} imageUrl={image_url} key={id} name={name} />
     ));
 
     return <S.RecipeList>{items}</S.RecipeList>;
