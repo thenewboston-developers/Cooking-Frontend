@@ -1,4 +1,4 @@
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {mdiDotsVertical} from '@mdi/js';
 
@@ -9,6 +9,7 @@ import {logout} from 'dispatchers/authentication';
 import {useIsAuthenticated, useSelfDisplayImage, useToggle} from 'hooks';
 import CreateAccountModal from 'modals/CreateAccountModal';
 import LogInModal from 'modals/LogInModal';
+import {getSelf} from 'selectors/state';
 import {AppDispatch, SFC} from 'types';
 import * as S from './Styles';
 
@@ -17,6 +18,7 @@ const TopNav: SFC = ({className}) => {
   const [logInModalIsOpen, toggleLogInModal] = useToggle(false);
   const dispatch = useDispatch<AppDispatch>();
   const isAuthenticated = useIsAuthenticated();
+  const self = useSelector(getSelf);
   const selfDisplayImage = useSelfDisplayImage();
 
   const renderDropdownMenu = () => {
@@ -36,7 +38,7 @@ const TopNav: SFC = ({className}) => {
 
     return (
       <>
-        <Link to="/profile">
+        <Link to={`/profile/${self.accountNumber}`}>
           <S.Avatar alt="avatar" src={selfDisplayImage} />
         </Link>
         {renderDropdownMenu()}

@@ -1,15 +1,8 @@
 import axios from 'axios';
 
 import {updateSelf} from 'store/self';
-import {AppDispatch, IdentificationData} from 'types';
+import {AppDispatch, EditAccountResponse, IdentificationData} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
-
-interface EditAccountResponse {
-  account_number: string;
-  balance: number;
-  display_image: string;
-  display_name: string;
-}
 
 export const editAccount = (accountNumber: string, values: IdentificationData) => async (dispatch: AppDispatch) => {
   const requestData = {
