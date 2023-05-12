@@ -4,13 +4,13 @@ import {cardStyle, fonts} from 'styles';
 
 export const Card = styled.div`
   ${cardStyle};
-  margin-top: 32px;
   padding: 16px;
 `;
 
 export const Container = styled.div`
-  margin: 0 auto;
-  width: 80%;
+  display: grid;
+  grid-template-columns: auto 320px;
+  overflow-y: auto;
 `;
 
 export const Details = styled.div`
@@ -26,9 +26,19 @@ export const Img = styled.img`
   max-width: 100%;
 `;
 
+export const Left = styled.div`
+  grid-column: 1 / span 1;
+  padding: 20px 10px 20px 24px;
+`;
+
 export const Name = styled.span`
   font-size: 24px;
   font-weight: ${fonts.weight.black};
+`;
+
+export const Right = styled.div`
+  grid-column: 2 / span 1;
+  padding: 20px 24px 20px 10px;
 `;
 
 export const SectionContent = styled.div`

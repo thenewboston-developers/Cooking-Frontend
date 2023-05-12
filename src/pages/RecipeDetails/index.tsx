@@ -1,5 +1,6 @@
 import {mdiDotsVertical} from '@mdi/js';
 
+import AccountCard from 'components/AccountCard';
 import Detail from 'components/Detail';
 import DropdownMenu, {DropdownMenuOption} from 'components/DropdownMenu';
 import {SFC} from 'types';
@@ -58,14 +59,25 @@ const RecipeDetails: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
-      <S.Card>
-        {renderTop()}
-        <S.Img
-          alt="image"
-          src="https://images.pexels.com/photos/2773940/pexels-photo-2773940.jpeg?auto=compress&cs=tinysrgb&w=1600"
-        />
-        {renderDescription()}
-      </S.Card>
+      <S.Left>
+        <S.Card>
+          {renderTop()}
+          <S.Img
+            alt="image"
+            src="https://images.pexels.com/photos/2773940/pexels-photo-2773940.jpeg?auto=compress&cs=tinysrgb&w=1600"
+          />
+          {renderDescription()}
+        </S.Card>
+      </S.Left>
+      <S.Right>
+        <S.Card>
+          <AccountCard
+            accountNumber="7c18d4ca28a32ff21d75fd604e6dc2572cafd68b7c1cff2ef732f6bdc6a0a60f"
+            displayImage="https://avatars.githubusercontent.com/u/8547538?v=4"
+            displayName="Bucky"
+          />
+        </S.Card>
+      </S.Right>
     </S.Container>
   );
 };
