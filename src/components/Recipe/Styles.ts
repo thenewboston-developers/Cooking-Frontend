@@ -1,16 +1,14 @@
 import styled from 'styled-components';
 
 import UAccountCard from 'components/AccountCard';
-import {colors, fonts} from 'styles';
+import {cardStyle, colors, fonts} from 'styles';
 
 export const AccountCard = styled(UAccountCard)`
-  margin-top: 16px;
+  margin-top: 20px;
 `;
 
 export const Container = styled.div`
-  background: ${colors.white};
-  border-radius: 8px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  ${cardStyle};
   display: flex;
   padding: 16px;
 `;
@@ -18,7 +16,7 @@ export const Container = styled.div`
 export const Description = styled.span`
   color: ${colors.secondary};
   font-size: 15px;
-  margin-top: 6px;
+  margin-top: 4px;
 `;
 
 export const Img = styled.img`
@@ -46,7 +44,7 @@ export const Middle = styled.div`
 `;
 
 export const Name = styled.span`
-  font-size: 15px;
+  font-size: 18px;
   font-weight: ${fonts.weight.bold};
 `;
 

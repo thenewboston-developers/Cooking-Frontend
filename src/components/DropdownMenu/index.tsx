@@ -1,11 +1,10 @@
 import {CSSProperties, ReactNode, useCallback, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 
-import {GenericVoidFunction} from 'types';
 import Icon from 'components/Icon';
 import {useEventListener, useToggle} from 'hooks';
 import {Menu, Option} from 'styles/components/DropMenuStyle';
-import {SFC} from 'types';
+import {GenericVoidFunction, SFC} from 'types';
 
 export interface DropdownMenuOption {
   label: ReactNode;

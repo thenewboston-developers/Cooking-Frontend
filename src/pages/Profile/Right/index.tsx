@@ -4,26 +4,13 @@ import axios from 'axios';
 
 import Loader from 'components/Loader';
 import Recipe from 'components/Recipe';
-import {SFC} from 'types';
+import {RecipeReadSerializer, SFC} from 'types';
 import {displayErrorToast} from 'utils/toast';
 import * as S from './Styles';
 
-interface TRecipe {
-  creator: {
-    account_number: string;
-    balance: number;
-    display_image: string;
-    display_name: string;
-  };
-  description: string;
-  id: number;
-  image_url: string;
-  name: string;
-}
-
 const Right: SFC = ({className}) => {
   const [deletedRecipeIds, setDeletedRecipeIds] = useState<number[]>([]);
-  const [recipes, setRecipes] = useState<TRecipe[] | null>(null);
+  const [recipes, setRecipes] = useState<RecipeReadSerializer[] | null>(null);
   const [requestPending, setRequestPending] = useState<boolean>(true);
   const {accountNumber} = useParams();
 
@@ -31,7 +18,7 @@ const Right: SFC = ({className}) => {
     (async () => {
       try {
         setRequestPending(true);
-        const {data} = await axios.get<TRecipe[]>(
+        const {data} = await axios.get<RecipeReadSerializer[]>(
           `${process.env.REACT_APP_API_URL}/api/recipes?creator=${accountNumber}`,
         );
         setRecipes(data);

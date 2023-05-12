@@ -5,6 +5,7 @@ import TopNav from 'containers/TopNav';
 import CreateEditRecipe from 'pages/CreateEditRecipe';
 import Home from 'pages/Home';
 import Profile from 'pages/Profile';
+import RecipeDetails from 'pages/RecipeDetails';
 import * as S from './Styles';
 
 const Layout: FC = () => {
@@ -15,6 +16,7 @@ const Layout: FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/createEditRecipe" element={<CreateEditRecipe />} />
         <Route path="/profile/:accountNumber" element={<Profile />} />
+        <Route path="/recipe/:id" element={<RecipeDetails />} />
       </Routes>
     </S.Container>
   );
