@@ -4,7 +4,7 @@ import UAccountCard from 'components/AccountCard';
 import {cardStyle, colors, fonts} from 'styles';
 
 export const AccountCard = styled(UAccountCard)`
-  margin-top: 16px;
+  margin-top: 20px;
 `;
 
 export const Container = styled.div`
@@ -16,7 +16,7 @@ export const Container = styled.div`
 export const Description = styled.span`
   color: ${colors.secondary};
   font-size: 15px;
-  margin-top: 6px;
+  margin-top: 4px;
 `;
 
 export const Img = styled.img`
@@ -44,7 +44,7 @@ export const Middle = styled.div`
 `;
 
 export const Name = styled.span`
-  font-size: 15px;
+  font-size: 18px;
   font-weight: ${fonts.weight.bold};
 `;
 
