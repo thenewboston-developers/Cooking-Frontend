@@ -25,7 +25,7 @@ export const Img = styled.img`
 `;
 
 export const ImgContainer = styled.div`
-  width: 260px;
+  flex-basis: 260px;
 `;
 
 export const ImgWrapper = styled.div`
@@ -40,6 +40,7 @@ export const Name = styled.span`
 
 export const Right = styled.span`
   display: flex;
+  flex: 1;
   flex-direction: column;
   margin-left: 12px;
 `;

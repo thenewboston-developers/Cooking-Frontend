@@ -39,8 +39,8 @@ const Right: SFC = ({className}) => {
   }, [accountNumber]);
 
   const renderRecipeList = () => {
-    if (recipes === null || requestPending) return <Loader />;
-    if (recipes.length === 0) return <div>No recipes to display</div>;
+    if (requestPending) return <Loader />;
+    if (recipes === null || recipes.length === 0) return <div>No recipes to display</div>;
 
     const items = recipes.map(({description, id, image_url, name}) => (
       <Recipe description={description} imageUrl={image_url} key={id} name={name} />

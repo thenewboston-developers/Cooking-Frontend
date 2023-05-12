@@ -1,38 +1,58 @@
+import {useEffect, useState} from 'react';
+import axios from 'axios';
+
+import Loader from 'components/Loader';
 import Recipe from 'components/Recipe';
-import {Recipe as TRecipe, SFC} from 'types';
+import {SFC} from 'types';
+import {displayErrorToast} from 'utils/toast';
 import * as S from './Styles';
 
-const recipes: TRecipe[] = [
-  {
-    description: 'A classic lasagna recipe with layers of pasta, meat sauce, and ricotta cheese',
-    id: '5',
-    imageUrl: 'https://images.pexels.com/photos/14696208/pexels-photo-14696208.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    name: 'Meat Lasagna',
-  },
-  {
-    description: 'A delicious and healthy quinoa salad with roasted vegetables and feta cheese',
-    id: '6',
-    imageUrl: 'https://images.pexels.com/photos/5865161/pexels-photo-5865161.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    name: 'Roasted Vegetable Quinoa Salad',
-  },
-  {
-    description: 'A flavorful Indian curry with tender chunks of chicken in a creamy tomato sauce',
-    id: '7',
-    imageUrl: 'https://images.pexels.com/photos/2611917/pexels-photo-2611917.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    name: 'Chicken Tikka Masala',
-  },
-  {
-    description: 'A sweet and tangy glazed salmon recipe with honey and soy sauce',
-    id: '8',
-    imageUrl: 'https://images.pexels.com/photos/842142/pexels-photo-842142.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    name: 'Honey Soy Glazed Salmon',
-  },
-];
+interface TRecipe {
+  creator: string;
+  description: string;
+  id: number;
+  image_url: string;
+  name: string;
+}
 
 const Home: SFC = ({className}) => {
+  const [recipes, setRecipes] = useState<TRecipe[] | null>(null);
+  const [requestPending, setRequestPending] = useState<boolean>(true);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setRequestPending(true);
+        const {data} = await axios.get<TRecipe[]>(`${process.env.REACT_APP_API_URL}/api/recipes`);
+        setRecipes(data);
+      } catch (error) {
+        console.error(error);
+        displayErrorToast('Error fetching recipes');
+      } finally {
+        setRequestPending(false);
+      }
+    })();
+  }, []);
+
   const renderRecipeList = () => {
-    const items = recipes.map(({id, description, imageUrl, name}) => (
-      <Recipe description={description} imageUrl={imageUrl} key={id} name={name} />
+    if (requestPending) {
+      return (
+        <S.EmptyStateWrapper>
+          <Loader />
+        </S.EmptyStateWrapper>
+      );
+    }
+
+    if (recipes === null || recipes.length === 0) {
+      return (
+        <S.EmptyStateWrapper>
+          <div>No recipes to display</div>
+        </S.EmptyStateWrapper>
+      );
+    }
+
+    const items = recipes.map(({description, id, image_url, name}) => (
+      <Recipe description={description} imageUrl={image_url} key={id} name={name} />
     ));
 
     return <S.RecipeList>{items}</S.RecipeList>;
