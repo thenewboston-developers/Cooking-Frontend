@@ -1,3 +1,8 @@
+import {useSelector} from 'react-redux';
+import {mdiDotsVertical} from '@mdi/js';
+
+import DropdownMenu, {DropdownMenuOption} from 'components/DropdownMenu';
+import {getSelf} from 'selectors/state';
 import {SFC} from 'types';
 import * as S from './Styles';
 
@@ -19,6 +24,23 @@ const Recipe: SFC<RecipeProps> = ({
   imageUrl,
   name,
 }) => {
+  const self = useSelector(getSelf);
+
+  const renderRight = () => {
+    if (creatorAccountNumber !== self.accountNumber) return null;
+
+    const menuOptions: DropdownMenuOption[] = [
+      {label: 'Edit', onClick: () => console.log(1)},
+      {label: 'Delete', onClick: () => console.log(2)},
+    ];
+
+    return (
+      <S.Right>
+        <DropdownMenu icon={mdiDotsVertical} options={menuOptions} />
+      </S.Right>
+    );
+  };
+
   return (
     <S.Container className={className}>
       <S.ImgContainer>
@@ -26,7 +48,7 @@ const Recipe: SFC<RecipeProps> = ({
           <S.Img alt="image" src={imageUrl} />
         </S.ImgWrapper>
       </S.ImgContainer>
-      <S.Right>
+      <S.Middle>
         <S.Name>{name}</S.Name>
         <S.Description>{description}</S.Description>
         <S.AccountCard
@@ -34,7 +56,8 @@ const Recipe: SFC<RecipeProps> = ({
           displayImage={creatorDisplayImage}
           displayName={creatorDisplayName}
         />
-      </S.Right>
+      </S.Middle>
+      {renderRight()}
     </S.Container>
   );
 };

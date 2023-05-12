@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 
-import DefaultProfileImage from 'assets/default-profile-image.png';
+import DefaultAvatar from 'assets/default-avatar.png';
 import Button, {ButtonColor} from 'components/Button';
 import Loader from 'components/Loader';
 import {useIsAuthenticated, useToggle} from 'hooks';
@@ -70,7 +70,7 @@ const Left: SFC = ({className}) => {
 
     return (
       <S.ImgWrapper>
-        <S.Img alt="image" src={displayImage || DefaultProfileImage} />
+        <S.Img alt="image" src={displayImage || DefaultAvatar} />
       </S.ImgWrapper>
     );
   };
