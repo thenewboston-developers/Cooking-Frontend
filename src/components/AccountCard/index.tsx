@@ -14,7 +14,9 @@ const AccountCard: SFC<AccountCardProps> = ({accountNumber, className, displayIm
   return (
     <S.Container className={className}>
       <Link to={`/profile/${accountNumber}`}>
-        <S.Img alt="avatar" src={displayImage} />
+        <S.ImgWrapper>
+          <S.Img alt="avatar" src={displayImage} />
+        </S.ImgWrapper>
       </Link>
       <S.Text>
         <Link to={`/profile/${accountNumber}`}>
