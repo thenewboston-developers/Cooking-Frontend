@@ -1,6 +1,6 @@
 export interface Recipe {
   description: string;
-  id: string;
+  id: number;
   imageUrl: string;
   name: string;
 }

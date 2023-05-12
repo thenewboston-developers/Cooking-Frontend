@@ -1,9 +1,11 @@
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 import {mdiDotsVertical} from '@mdi/js';
 
 import DropdownMenu, {DropdownMenuOption} from 'components/DropdownMenu';
 import {getSelf} from 'selectors/state';
-import {SFC} from 'types';
+import {updateManager} from 'store/manager';
+import {AppDispatch, SFC} from 'types';
 import * as S from './Styles';
 
 export interface RecipeProps {
@@ -11,6 +13,7 @@ export interface RecipeProps {
   creatorDisplayImage: string;
   creatorDisplayName: string;
   description: string;
+  id: number;
   imageUrl: string;
   name: string;
 }
@@ -21,16 +24,31 @@ const Recipe: SFC<RecipeProps> = ({
   creatorDisplayImage,
   creatorDisplayName,
   description,
+  id,
   imageUrl,
   name,
 }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const self = useSelector(getSelf);
+
+  const handleEditClick = () => {
+    const activeRecipe = {
+      description,
+      id,
+      imageUrl,
+      name,
+    };
+
+    dispatch(updateManager({activeRecipe}));
+    navigate('/createEditRecipe');
+  };
 
   const renderRight = () => {
     if (creatorAccountNumber !== self.accountNumber) return null;
 
     const menuOptions: DropdownMenuOption[] = [
-      {label: 'Edit', onClick: () => console.log(1)},
+      {label: 'Edit', onClick: handleEditClick},
       {label: 'Delete', onClick: () => console.log(2)},
     ];
 

@@ -62,6 +62,7 @@ const Home: SFC = ({className}) => {
         creatorDisplayImage={creator.display_image}
         creatorDisplayName={creator.display_name}
         description={description}
+        id={id}
         imageUrl={image_url}
         key={id}
         name={name}

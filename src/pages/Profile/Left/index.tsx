@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 
@@ -9,7 +9,8 @@ import Loader from 'components/Loader';
 import {useIsAuthenticated, useToggle} from 'hooks';
 import EditAccountModal from 'modals/EditAccountModal';
 import {getSelf} from 'selectors/state';
-import {GetAccountResponse, SFC} from 'types';
+import {updateManager} from 'store/manager';
+import {AppDispatch, GetAccountResponse, SFC} from 'types';
 import {displayErrorToast} from 'utils/toast';
 import * as S from './Styles';
 
@@ -19,6 +20,7 @@ const Left: SFC = ({className}) => {
   const [displayName, setDisplayName] = useState<string | null>(null);
   const [requestPending, setRequestPending] = useState<boolean>(false);
   const {accountNumber} = useParams();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const isAuthenticated = useIsAuthenticated();
   const self = useSelector(getSelf);
@@ -51,6 +53,7 @@ const Left: SFC = ({className}) => {
   }, [accountNumber, self]);
 
   const handleCreateRecipeClick = () => {
+    dispatch(updateManager({activeRecipe: null}));
     navigate('/createEditRecipe');
   };
 
