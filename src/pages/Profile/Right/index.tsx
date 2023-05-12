@@ -22,6 +22,7 @@ interface TRecipe {
 }
 
 const Right: SFC = ({className}) => {
+  const [deletedRecipeIds, setDeletedRecipeIds] = useState<number[]>([]);
   const [recipes, setRecipes] = useState<TRecipe[] | null>(null);
   const [requestPending, setRequestPending] = useState<boolean>(true);
   const {accountNumber} = useParams();
@@ -43,22 +44,29 @@ const Right: SFC = ({className}) => {
     })();
   }, [accountNumber]);
 
+  const handleRecipeDelete = (id: number) => {
+    setDeletedRecipeIds([...deletedRecipeIds, id]);
+  };
+
   const renderRecipeList = () => {
     if (requestPending) return <Loader />;
     if (recipes === null || recipes.length === 0) return <div>No recipes to display</div>;
 
-    const items = recipes.map(({creator, description, id, image_url, name}) => (
-      <Recipe
-        creatorAccountNumber={creator.account_number}
-        creatorDisplayImage={creator.display_image}
-        creatorDisplayName={creator.display_name}
-        description={description}
-        id={id}
-        imageUrl={image_url}
-        key={id}
-        name={name}
-      />
-    ));
+    const items = recipes
+      .filter(({id}) => !deletedRecipeIds.includes(id))
+      .map(({creator, description, id, image_url, name}) => (
+        <Recipe
+          creatorAccountNumber={creator.account_number}
+          creatorDisplayImage={creator.display_image}
+          creatorDisplayName={creator.display_name}
+          description={description}
+          handleDelete={handleRecipeDelete}
+          id={id}
+          imageUrl={image_url}
+          key={id}
+          name={name}
+        />
+      ));
 
     return <S.RecipeList>{items}</S.RecipeList>;
   };
