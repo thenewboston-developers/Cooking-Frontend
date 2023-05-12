@@ -1,16 +1,14 @@
 import styled from 'styled-components';
 
 import UAccountCard from 'components/AccountCard';
-import {colors, fonts} from 'styles';
+import {cardStyle, colors, fonts} from 'styles';
 
 export const AccountCard = styled(UAccountCard)`
   margin-top: 16px;
 `;
 
 export const Container = styled.div`
-  background: ${colors.white};
-  border-radius: 8px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  ${cardStyle};
   display: flex;
   padding: 16px;
 `;

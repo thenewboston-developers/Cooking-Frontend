@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import {Input as UInput} from 'components/FormElements';
 import {cardStyle} from 'styles';
 
 export const Card = styled.div`
@@ -11,9 +10,5 @@ export const Card = styled.div`
 
 export const Container = styled.div`
   margin: 0 auto;
-  width: 420px;
-`;
-
-export const Input = styled(UInput)`
-  width: 100%;
+  width: 80%;
 `;

@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 import axios from 'axios';
 import {mdiDotsVertical} from '@mdi/js';
 
@@ -77,12 +77,16 @@ const Recipe: SFC<RecipeProps> = ({
   return (
     <S.Container className={className}>
       <S.ImgContainer>
-        <S.ImgWrapper>
-          <S.Img alt="image" src={imageUrl} />
-        </S.ImgWrapper>
+        <Link to={`/recipe/${id}`}>
+          <S.ImgWrapper>
+            <S.Img alt="image" src={imageUrl} />
+          </S.ImgWrapper>
+        </Link>
       </S.ImgContainer>
       <S.Middle>
-        <S.Name>{name}</S.Name>
+        <Link to={`/recipe/${id}`}>
+          <S.Name>{name}</S.Name>
+        </Link>
         <S.Description>{description}</S.Description>
         <S.AccountCard
           accountNumber={creatorAccountNumber}
