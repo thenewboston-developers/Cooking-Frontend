@@ -18,9 +18,19 @@ export const Description = styled.span`
 
 export const Img = styled.img`
   border-radius: 6px;
-  height: auto;
-  max-width: 200px;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
   width: 100%;
+`;
+
+export const ImgContainer = styled.div`
+  width: 260px;
+`;
+
+export const ImgWrapper = styled.div`
+  padding-bottom: 75%; /* 4:3 aspect ratio */
+  position: relative;
 `;
 
 export const Name = styled.span`

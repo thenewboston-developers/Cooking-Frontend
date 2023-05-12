@@ -18,6 +18,10 @@ const GlobalStyle = createGlobalStyle`
 
   a {
     color: ${colors.palette.blue['500']};
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   h1,

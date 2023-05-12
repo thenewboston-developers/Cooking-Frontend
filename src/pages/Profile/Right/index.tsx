@@ -1,6 +1,5 @@
-import {SFC} from 'types/generic';
-import {Recipe as TRecipe} from 'types/recipes';
-import Recipe from './Recipe';
+import Recipe from 'components/Recipe';
+import {Recipe as TRecipe, SFC} from 'types';
 import * as S from './Styles';
 
 const recipes: TRecipe[] = [
@@ -34,14 +33,16 @@ const recipes: TRecipe[] = [
   },
 ];
 
-const RecipesList: SFC = ({className}) => {
-  const renderRecipes = () => {
-    return recipes.map(({id, description, imageUrl, name}) => (
+const Right: SFC = ({className}) => {
+  const renderRecipeList = () => {
+    const items = recipes.map(({id, description, imageUrl, name}) => (
       <Recipe description={description} imageUrl={imageUrl} key={id} name={name} />
     ));
+
+    return <S.RecipeList>{items}</S.RecipeList>;
   };
 
-  return <S.Container className={className}>{renderRecipes()}</S.Container>;
+  return <S.Container className={className}>{renderRecipeList()}</S.Container>;
 };
 
-export default RecipesList;
+export default Right;

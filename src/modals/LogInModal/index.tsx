@@ -38,7 +38,7 @@ const LogInModal: SFC<LogInModalProps> = ({className, close}) => {
   }, []);
 
   return (
-    <Modal className={className} close={close} header="Log In">
+    <Modal className={className} close={close} header="Log in">
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
