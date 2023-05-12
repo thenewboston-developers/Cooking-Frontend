@@ -13,6 +13,7 @@ import {getSelf} from 'selectors/state';
 import {updateManager} from 'store/manager';
 import {AppDispatch, RecipeReadSerializer, SFC} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
+import {shortDate} from 'utils/dates';
 import {displayErrorToast, displayToast} from 'utils/toast';
 import * as S from './Styles';
 
@@ -76,8 +77,8 @@ const RecipeDetails: SFC = ({className}) => {
       <S.TopLeft>
         <S.Name>{recipe!.name}</S.Name>
         <S.Details>
-          <Detail label="Created" value={recipe!.created_date} />
-          <Detail label="Modified" value={recipe!.modified_date} />
+          <Detail label="Created" value={shortDate(recipe!.created_date, true)} />
+          <Detail label="Modified" value={shortDate(recipe!.modified_date, true)} />
         </S.Details>
       </S.TopLeft>
     );
