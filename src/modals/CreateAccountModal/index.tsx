@@ -31,7 +31,7 @@ const CreateAccountModal: SFC<CreateAccountModalProps> = ({className, close}) =>
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.post<ResponseData>('http://127.0.0.1:8000/api/accounts', {});
+        const response = await axios.post<ResponseData>(`${process.env.REACT_APP_API_URL}/api/accounts`, {});
         dispatch(login(response.data.signing_key));
         setData(response.data);
       } catch (error) {
