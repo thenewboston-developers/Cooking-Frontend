@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
+import UAccountCard from 'components/AccountCard';
 import {colors, fonts} from 'styles';
+
+export const AccountCard = styled(UAccountCard)`
+  margin-top: 16px;
+`;
 
 export const Container = styled.div`
   background: ${colors.white};

@@ -8,7 +8,12 @@ import {displayErrorToast} from 'utils/toast';
 import * as S from './Styles';
 
 interface TRecipe {
-  creator: string;
+  creator: {
+    account_number: string;
+    balance: number;
+    display_image: string;
+    display_name: string;
+  };
   description: string;
   id: number;
   image_url: string;
@@ -51,8 +56,16 @@ const Home: SFC = ({className}) => {
       );
     }
 
-    const items = recipes.map(({description, id, image_url, name}) => (
-      <Recipe description={description} imageUrl={image_url} key={id} name={name} />
+    const items = recipes.map(({creator, description, id, image_url, name}) => (
+      <Recipe
+        creatorAccountNumber={creator.account_number}
+        creatorDisplayImage={creator.display_image}
+        creatorDisplayName={creator.display_name}
+        description={description}
+        imageUrl={image_url}
+        key={id}
+        name={name}
+      />
     ));
 
     return <S.RecipeList>{items}</S.RecipeList>;

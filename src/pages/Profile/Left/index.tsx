@@ -50,7 +50,7 @@ const Left: SFC = ({className}) => {
   }, [accountNumber, self]);
 
   const renderActionButtons = () => {
-    if (!isAuthenticated) return null;
+    if (!isAuthenticated || accountNumber !== self.accountNumber) return null;
 
     return (
       <S.ButtonContainer>
