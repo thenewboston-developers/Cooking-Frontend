@@ -38,14 +38,18 @@ export const ImgWrapper = styled.div`
   position: relative;
 `;
 
+export const Middle = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-left: 12px;
+`;
+
 export const Name = styled.span`
   font-size: 15px;
   font-weight: ${fonts.weight.bold};
 `;
 
-export const Right = styled.span`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
+export const Right = styled.div`
   margin-left: 12px;
 `;

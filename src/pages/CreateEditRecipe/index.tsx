@@ -6,7 +6,7 @@ import {Form, Formik} from 'formik';
 
 import Button, {ButtonType} from 'components/Button';
 import {ToastType} from 'enums';
-import {useIsAuthenticated} from 'hooks';
+import {useActiveRecipe, useIsAuthenticated} from 'hooks';
 import {getSelf} from 'selectors/state';
 import {SFC} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
@@ -15,14 +15,15 @@ import yup from 'utils/yup';
 import * as S from './Styles';
 
 const CreateEditRecipe: SFC = ({className}) => {
+  const activeRecipe = useActiveRecipe();
   const isAuthenticated = useIsAuthenticated();
   const navigate = useNavigate();
   const self = useSelector(getSelf);
 
   const initialValues = {
-    description: '',
-    imageUrl: '',
-    name: '',
+    description: activeRecipe?.description || '',
+    imageUrl: activeRecipe?.imageUrl || '',
+    name: activeRecipe?.name || '',
   };
 
   type FormValues = typeof initialValues;
@@ -34,12 +35,24 @@ const CreateEditRecipe: SFC = ({className}) => {
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
       const requestData = {...values, image_url: values.imageUrl};
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/recipes`, requestData, authorizationHeaders());
-      displayToast('Recipe created!', ToastType.success);
+
+      if (activeRecipe) {
+        await axios.patch(
+          `${process.env.REACT_APP_API_URL}/api/recipes/${activeRecipe.id}`,
+          requestData,
+          authorizationHeaders(),
+        );
+        displayToast('Recipe updated!', ToastType.success);
+      } else {
+        await axios.post(`${process.env.REACT_APP_API_URL}/api/recipes`, requestData, authorizationHeaders());
+        displayToast('Recipe created!', ToastType.success);
+      }
+
       navigate(`/profile/${self.accountNumber}`);
     } catch (error) {
       console.error(error);
-      displayErrorToast('Error creating recipe');
+      const verb = activeRecipe ? 'updating' : 'creating';
+      displayErrorToast(`Error ${verb} recipe`);
     }
   };
 
