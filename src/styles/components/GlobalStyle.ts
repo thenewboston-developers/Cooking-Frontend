@@ -17,10 +17,12 @@ const GlobalStyle = createGlobalStyle`
   }
 
   a {
-    color: ${colors.palette.blue['500']};
+    color: ${colors.primary};
+    text-decoration: none;
 
     &:hover {
       cursor: pointer;
+      text-decoration: underline;
     }
   }
 
