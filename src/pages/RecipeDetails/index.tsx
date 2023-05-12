@@ -8,10 +8,12 @@ import AccountCard from 'components/AccountCard';
 import Detail from 'components/Detail';
 import DropdownMenu, {DropdownMenuOption} from 'components/DropdownMenu';
 import Loader from 'components/Loader';
+import {ToastType} from 'enums';
 import {getSelf} from 'selectors/state';
 import {updateManager} from 'store/manager';
 import {AppDispatch, RecipeReadSerializer, SFC} from 'types';
-import {displayErrorToast} from 'utils/toast';
+import {authorizationHeaders} from 'utils/authentication';
+import {displayErrorToast, displayToast} from 'utils/toast';
 import * as S from './Styles';
 
 const RecipeDetails: SFC = ({className}) => {
@@ -36,6 +38,17 @@ const RecipeDetails: SFC = ({className}) => {
       }
     })();
   }, [id]);
+
+  const handleDeleteClick = async () => {
+    try {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/recipes/${recipe!.id}`, authorizationHeaders());
+      displayToast('Recipe deleted!', ToastType.success);
+      navigate(`/profile/${self.accountNumber}`);
+    } catch (error) {
+      console.error(error);
+      displayErrorToast('Error deleting the recipe');
+    }
+  };
 
   const handleEditClick = () => {
     const activeRecipe = {
@@ -75,7 +88,7 @@ const RecipeDetails: SFC = ({className}) => {
 
     const menuOptions: DropdownMenuOption[] = [
       {label: 'Edit', onClick: handleEditClick},
-      {label: 'Delete', onClick: () => console.log(2)},
+      {label: 'Delete', onClick: handleDeleteClick},
     ];
 
     return (

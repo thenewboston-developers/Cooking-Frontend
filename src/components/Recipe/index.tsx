@@ -4,11 +4,12 @@ import axios from 'axios';
 import {mdiDotsVertical} from '@mdi/js';
 
 import DropdownMenu, {DropdownMenuOption} from 'components/DropdownMenu';
+import {ToastType} from 'enums';
 import {getSelf} from 'selectors/state';
 import {updateManager} from 'store/manager';
 import {AppDispatch, SFC} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
-import {displayErrorToast} from 'utils/toast';
+import {displayErrorToast, displayToast} from 'utils/toast';
 import * as S from './Styles';
 
 export interface RecipeProps {
@@ -40,6 +41,7 @@ const Recipe: SFC<RecipeProps> = ({
   const handleDeleteClick = async () => {
     try {
       await axios.delete(`${process.env.REACT_APP_API_URL}/api/recipes/${id}`, authorizationHeaders());
+      displayToast('Recipe deleted!', ToastType.success);
       handleDelete(id);
     } catch (error) {
       console.error(error);
