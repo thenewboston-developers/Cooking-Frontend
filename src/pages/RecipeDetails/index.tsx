@@ -1,24 +1,44 @@
+import {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
+import {useParams} from 'react-router-dom';
+import axios from 'axios';
 import {mdiDotsVertical} from '@mdi/js';
 
 import AccountCard from 'components/AccountCard';
 import Detail from 'components/Detail';
 import DropdownMenu, {DropdownMenuOption} from 'components/DropdownMenu';
-import {SFC} from 'types';
+import Loader from 'components/Loader';
+import {getSelf} from 'selectors/state';
+import {RecipeReadSerializer, SFC} from 'types';
+import {displayErrorToast} from 'utils/toast';
 import * as S from './Styles';
 
 const RecipeDetails: SFC = ({className}) => {
+  const [recipe, setRecipe] = useState<RecipeReadSerializer | null>(null);
+  const [requestPending, setRequestPending] = useState<boolean>(true);
+  const {id} = useParams();
+  const self = useSelector(getSelf);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setRequestPending(true);
+        const {data} = await axios.get<RecipeReadSerializer>(`${process.env.REACT_APP_API_URL}/api/recipes/${id}`);
+        setRecipe(data);
+      } catch (error) {
+        console.error(error);
+        displayErrorToast('Error fetching recipe');
+      } finally {
+        setRequestPending(false);
+      }
+    })();
+  }, [id]);
+
   const renderDescription = () => {
     return (
       <>
         <S.SectionLabel>Description</S.SectionLabel>
-        <S.SectionContent>
-          Mushroom Risotto with Truffle Oil is a rich and savory Italian dish that's perfect for a cozy night in. This
-          dish features creamy and tender Arborio rice cooked with a flavorful combination of sautéed mushrooms, garlic,
-          onion, white wine, and parmesan cheese. To take this dish to the next level, a drizzle of aromatic truffle oil
-          is added at the end, adding a decadent and earthy flavor that perfectly complements the richness of the
-          risotto. The result is a comforting and indulgent dish that's sure to please any mushroom lover or food
-          enthusiast. Serve it as a main course or as a side dish to impress your guests at your next dinner party.
-        </S.SectionContent>
+        <S.SectionContent>{recipe!.description}</S.SectionContent>
       </>
     );
   };
@@ -26,16 +46,18 @@ const RecipeDetails: SFC = ({className}) => {
   const renderTopLeft = () => {
     return (
       <S.TopLeft>
-        <S.Name>Mushroom Risotto with Truffle Oil</S.Name>
+        <S.Name>{recipe!.name}</S.Name>
         <S.Details>
-          <Detail label="Created" value="5/9/23" />
-          <Detail label="Modified" value="5/12/23" />
+          <Detail label="Created" value={recipe!.created_date} />
+          <Detail label="Modified" value={recipe!.modified_date} />
         </S.Details>
       </S.TopLeft>
     );
   };
 
   const renderTopRight = () => {
+    if (recipe!.creator.account_number !== self.accountNumber) return null;
+
     const menuOptions: DropdownMenuOption[] = [
       {label: 'Edit', onClick: () => console.log(1)},
       {label: 'Delete', onClick: () => console.log(2)},
@@ -57,24 +79,37 @@ const RecipeDetails: SFC = ({className}) => {
     );
   };
 
+  if (requestPending) {
+    return (
+      <S.EmptyStateWrapper>
+        <Loader />
+      </S.EmptyStateWrapper>
+    );
+  }
+
+  if (!recipe) {
+    return (
+      <S.EmptyStateWrapper>
+        <div>No recipe to display</div>
+      </S.EmptyStateWrapper>
+    );
+  }
+
   return (
     <S.Container className={className}>
       <S.Left>
         <S.Card>
           {renderTop()}
-          <S.Img
-            alt="image"
-            src="https://images.pexels.com/photos/2773940/pexels-photo-2773940.jpeg?auto=compress&cs=tinysrgb&w=1600"
-          />
+          <S.Img alt="image" src={recipe.image_url} />
           {renderDescription()}
         </S.Card>
       </S.Left>
       <S.Right>
         <S.Card>
           <AccountCard
-            accountNumber="7c18d4ca28a32ff21d75fd604e6dc2572cafd68b7c1cff2ef732f6bdc6a0a60f"
-            displayImage="https://avatars.githubusercontent.com/u/8547538?v=4"
-            displayName="Bucky"
+            accountNumber={recipe.creator.account_number}
+            displayImage={recipe.creator.display_image}
+            displayName={recipe.creator.display_name}
           />
         </S.Card>
       </S.Right>

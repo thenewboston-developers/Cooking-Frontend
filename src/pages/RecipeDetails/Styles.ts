@@ -19,6 +19,10 @@ export const Details = styled.div`
   margin-top: 8px;
 `;
 
+export const EmptyStateWrapper = styled.div`
+  margin: 20px 24px;
+`;
+
 export const Img = styled.img`
   border-radius: 6px;
   height: auto;
