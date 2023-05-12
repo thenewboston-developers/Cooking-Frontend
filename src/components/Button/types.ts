@@ -1,6 +1,7 @@
 export enum ButtonColor {
   danger = 'danger',
   primary = 'primary',
+  secondary = 'secondary',
   success = 'success',
 }
 

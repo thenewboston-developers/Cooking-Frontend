@@ -53,7 +53,7 @@ const CreateAccountModal: SFC<CreateAccountModalProps> = ({className, close}) =>
   };
 
   return (
-    <Modal className={className} close={close} header="New Account Created!">
+    <Modal className={className} close={close} header="New account created!">
       {renderResults()}
     </Modal>
   );

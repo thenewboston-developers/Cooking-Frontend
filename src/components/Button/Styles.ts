@@ -31,6 +31,16 @@ const hasIconMixin = css`
   width: auto;
 `;
 
+const secondaryMixin = css`
+  background-color: transparent;
+  border-color: rgb(207, 217, 222);
+  color: ${colors.primary};
+
+  &:hover {
+    background: ${colors.whiteHover};
+  }
+`;
+
 const successMixin = css`
   background-color: ${colors.palette.green['300']};
 
@@ -43,12 +53,12 @@ export const Button = styled.button<{$color: ButtonColor; hasIcon: boolean}>`
   background: ${colors.palette.blue['500']};
   border-radius: ${`${BUTTON_HEIGHT / 2}px`};
   border: 1px solid transparent;
-  color: #fff;
+  color: ${colors.white};
   cursor: pointer;
   display: block;
   font-family: ${fonts.family.default};
   font-size: 14px;
-  font-weight: ${fonts.weight.regular};
+  font-weight: ${fonts.weight.bold};
   height: ${`${BUTTON_HEIGHT}px`};
   padding: 0 12px;
   transition: all 0.1s;
@@ -59,6 +69,7 @@ export const Button = styled.button<{$color: ButtonColor; hasIcon: boolean}>`
 
   ${({$color}) => {
     if ($color === ButtonColor.danger) return dangerMixin;
+    if ($color === ButtonColor.secondary) return secondaryMixin;
     if ($color === ButtonColor.success) return successMixin;
     return;
   }}
