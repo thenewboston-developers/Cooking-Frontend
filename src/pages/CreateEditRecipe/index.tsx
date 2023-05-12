@@ -1,14 +1,12 @@
 import {useEffect, useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useSelector} from 'react-redux';
 import axios from 'axios';
 import {Form, Formik} from 'formik';
 
 import Button, {ButtonType} from 'components/Button';
 import {ToastType} from 'enums';
 import {useActiveRecipe, useIsAuthenticated} from 'hooks';
-import {getSelf} from 'selectors/state';
-import {SFC} from 'types';
+import {RecipeReadSerializer, SFC} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
 import {displayErrorToast, displayToast} from 'utils/toast';
 import yup from 'utils/yup';
@@ -18,7 +16,6 @@ const CreateEditRecipe: SFC = ({className}) => {
   const activeRecipe = useActiveRecipe();
   const isAuthenticated = useIsAuthenticated();
   const navigate = useNavigate();
-  const self = useSelector(getSelf);
 
   const initialValues = {
     description: activeRecipe?.description || '',
@@ -34,21 +31,26 @@ const CreateEditRecipe: SFC = ({className}) => {
 
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
+      let response;
       const requestData = {...values, image_url: values.imageUrl};
 
       if (activeRecipe) {
-        await axios.patch(
+        response = await axios.patch<RecipeReadSerializer>(
           `${process.env.REACT_APP_API_URL}/api/recipes/${activeRecipe.id}`,
           requestData,
           authorizationHeaders(),
         );
         displayToast('Recipe updated!', ToastType.success);
       } else {
-        await axios.post(`${process.env.REACT_APP_API_URL}/api/recipes`, requestData, authorizationHeaders());
+        response = await axios.post<RecipeReadSerializer>(
+          `${process.env.REACT_APP_API_URL}/api/recipes`,
+          requestData,
+          authorizationHeaders(),
+        );
         displayToast('Recipe created!', ToastType.success);
       }
 
-      navigate(`/profile/${self.accountNumber}`);
+      navigate(`/recipe/${response.data.id}`);
     } catch (error) {
       console.error(error);
       const verb = activeRecipe ? 'updating' : 'creating';

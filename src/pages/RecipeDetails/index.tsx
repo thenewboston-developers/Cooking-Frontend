@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
-import {useSelector} from 'react-redux';
-import {useParams} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 import {mdiDotsVertical} from '@mdi/js';
 
@@ -9,7 +9,8 @@ import Detail from 'components/Detail';
 import DropdownMenu, {DropdownMenuOption} from 'components/DropdownMenu';
 import Loader from 'components/Loader';
 import {getSelf} from 'selectors/state';
-import {RecipeReadSerializer, SFC} from 'types';
+import {updateManager} from 'store/manager';
+import {AppDispatch, RecipeReadSerializer, SFC} from 'types';
 import {displayErrorToast} from 'utils/toast';
 import * as S from './Styles';
 
@@ -17,6 +18,8 @@ const RecipeDetails: SFC = ({className}) => {
   const [recipe, setRecipe] = useState<RecipeReadSerializer | null>(null);
   const [requestPending, setRequestPending] = useState<boolean>(true);
   const {id} = useParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const self = useSelector(getSelf);
 
   useEffect(() => {
@@ -33,6 +36,18 @@ const RecipeDetails: SFC = ({className}) => {
       }
     })();
   }, [id]);
+
+  const handleEditClick = () => {
+    const activeRecipe = {
+      description: recipe!.description,
+      id: recipe!.id,
+      imageUrl: recipe!.image_url,
+      name: recipe!.name,
+    };
+
+    dispatch(updateManager({activeRecipe}));
+    navigate('/createEditRecipe');
+  };
 
   const renderDescription = () => {
     return (
@@ -59,7 +74,7 @@ const RecipeDetails: SFC = ({className}) => {
     if (recipe!.creator.account_number !== self.accountNumber) return null;
 
     const menuOptions: DropdownMenuOption[] = [
-      {label: 'Edit', onClick: () => console.log(1)},
+      {label: 'Edit', onClick: handleEditClick},
       {label: 'Delete', onClick: () => console.log(2)},
     ];
 
