@@ -18,6 +18,7 @@ import * as S from './Styles';
 const Comments: SFC = ({className}) => {
   const [comments, setComments] = useState<CommentReadSerializer[]>([]);
   const [deletedCommentIds, setDeletedCommentIds] = useState<number[]>([]);
+  const [editedComments, setEditedComments] = useState<CommentReadSerializer[]>([]);
   const [newComments, setNewComments] = useState<CommentReadSerializer[]>([]);
   const [requestPending, setRequestPending] = useState<boolean>(true);
   const {id: recipeId} = useParams();
@@ -31,6 +32,7 @@ const Comments: SFC = ({className}) => {
 
   useEffect(() => {
     setDeletedCommentIds([]);
+    setEditedComments([]);
     setNewComments([]);
   }, [recipeId]);
 
@@ -52,12 +54,19 @@ const Comments: SFC = ({className}) => {
   }, [recipeId]);
 
   const commentList = useMemo(() => {
-    const items = [...comments, ...newComments].filter(({id}) => !deletedCommentIds.includes(id));
+    const editedCommentsIds = editedComments.map(({id}) => id);
+    let items = [...comments, ...newComments].filter(({id}) => !editedCommentsIds.includes(id));
+    items = [...items, ...editedComments].filter(({id}) => !deletedCommentIds.includes(id));
     return orderBy(items, ['created_date'], ['desc']);
-  }, [comments, deletedCommentIds, newComments]);
+  }, [comments, deletedCommentIds, editedComments, newComments]);
 
   const handleCommentDelete = (id: number) => {
     setDeletedCommentIds([...deletedCommentIds, id]);
+  };
+
+  const handleCommentEdit = (comment: CommentReadSerializer) => {
+    const items = editedComments.filter(({id}) => id !== comment.id);
+    setEditedComments([...items, comment]);
   };
 
   const handleSubmit = async (values: FormValues, {resetForm}: FormikHelpers<FormValues>): Promise<void> => {
@@ -89,7 +98,7 @@ const Comments: SFC = ({className}) => {
 
   const renderComments = () => {
     return commentList.map((comment) => (
-      <Comment comment={comment} handleDelete={handleCommentDelete} key={comment.id} />
+      <Comment comment={comment} handleDelete={handleCommentDelete} handleEdit={handleCommentEdit} key={comment.id} />
     ));
   };
 
