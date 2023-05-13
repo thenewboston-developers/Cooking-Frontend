@@ -12,6 +12,13 @@ export const DisplayName = styled.div`
   margin-bottom: 2px;
 `;
 
+export const Middle = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-left: 10px;
+`;
+
 export const Right = styled.div`
   margin-left: 10px;
 `;
