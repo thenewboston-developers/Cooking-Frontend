@@ -17,6 +17,7 @@ import * as S from './Styles';
 
 const Comments: SFC = ({className}) => {
   const [comments, setComments] = useState<CommentReadSerializer[]>([]);
+  const [deletedCommentIds, setDeletedCommentIds] = useState<number[]>([]);
   const [newComments, setNewComments] = useState<CommentReadSerializer[]>([]);
   const [requestPending, setRequestPending] = useState<boolean>(true);
   const {id: recipeId} = useParams();
@@ -29,6 +30,7 @@ const Comments: SFC = ({className}) => {
   type FormValues = typeof initialValues;
 
   useEffect(() => {
+    setDeletedCommentIds([]);
     setNewComments([]);
   }, [recipeId]);
 
@@ -50,8 +52,13 @@ const Comments: SFC = ({className}) => {
   }, [recipeId]);
 
   const commentList = useMemo(() => {
-    return orderBy([...comments, ...newComments], ['created_date'], ['desc']);
-  }, [comments, newComments]);
+    const items = [...comments, ...newComments].filter(({id}) => !deletedCommentIds.includes(id));
+    return orderBy(items, ['created_date'], ['desc']);
+  }, [comments, deletedCommentIds, newComments]);
+
+  const handleCommentDelete = (id: number) => {
+    setDeletedCommentIds([...deletedCommentIds, id]);
+  };
 
   const handleSubmit = async (values: FormValues, {resetForm}: FormikHelpers<FormValues>): Promise<void> => {
     try {
@@ -81,7 +88,9 @@ const Comments: SFC = ({className}) => {
   };
 
   const renderComments = () => {
-    return commentList.map((comment) => <Comment comment={comment} key={comment.id} />);
+    return commentList.map((comment) => (
+      <Comment comment={comment} handleDelete={handleCommentDelete} key={comment.id} />
+    ));
   };
 
   const validationSchema = useMemo(() => {
