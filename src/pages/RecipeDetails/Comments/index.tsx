@@ -3,11 +3,13 @@ import {useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
 import {Formik, FormikHelpers} from 'formik';
+import orderBy from 'lodash/orderBy';
 
 import Avatar from 'components/Avatar';
 import {ButtonType} from 'components/Button';
 import {getSelf} from 'selectors/state';
 import {CommentReadSerializer, SFC} from 'types';
+import {authorizationHeaders} from 'utils/authentication';
 import {displayErrorToast} from 'utils/toast';
 import yup from 'utils/yup';
 import Comment from './Comment';
@@ -15,6 +17,7 @@ import * as S from './Styles';
 
 const Comments: SFC = ({className}) => {
   const [comments, setComments] = useState<CommentReadSerializer[]>([]);
+  const [newComments, setNewComments] = useState<CommentReadSerializer[]>([]);
   const [requestPending, setRequestPending] = useState<boolean>(true);
   const {id: recipeId} = useParams();
   const self = useSelector(getSelf);
@@ -24,6 +27,10 @@ const Comments: SFC = ({className}) => {
   };
 
   type FormValues = typeof initialValues;
+
+  useEffect(() => {
+    setNewComments([]);
+  }, [recipeId]);
 
   useEffect(() => {
     (async () => {
@@ -42,9 +49,21 @@ const Comments: SFC = ({className}) => {
     })();
   }, [recipeId]);
 
+  const commentList = useMemo(() => {
+    return orderBy([...comments, ...newComments], ['created_date'], ['desc']);
+  }, [comments, newComments]);
+
   const handleSubmit = async (values: FormValues, {resetForm}: FormikHelpers<FormValues>): Promise<void> => {
     try {
-      console.log(values);
+      const requestData = {...values, recipe: recipeId};
+
+      const {data} = await axios.post<CommentReadSerializer>(
+        `${process.env.REACT_APP_API_URL}/api/comments`,
+        requestData,
+        authorizationHeaders(),
+      );
+
+      setNewComments([...newComments, data]);
       resetForm();
     } catch (error) {
       console.error(error);
@@ -52,8 +71,17 @@ const Comments: SFC = ({className}) => {
     }
   };
 
+  const renderCommentCount = () => {
+    const commentsText = commentList.length === 1 ? 'comment' : 'comments';
+    return (
+      <div>
+        {commentList.length} {commentsText}
+      </div>
+    );
+  };
+
   const renderComments = () => {
-    return comments.map((comment) => <Comment comment={comment} key={comment.id} />);
+    return commentList.map((comment) => <Comment comment={comment} key={comment.id} />);
   };
 
   const validationSchema = useMemo(() => {
@@ -66,7 +94,7 @@ const Comments: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
-      <div>0 comments</div>
+      {renderCommentCount()}
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
