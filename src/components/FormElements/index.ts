@@ -1,3 +1,4 @@
+import InlineInput from './InlineInput';
 import Input from './Input';
 
-export {Input};
+export {InlineInput, Input};

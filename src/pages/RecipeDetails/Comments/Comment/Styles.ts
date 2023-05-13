@@ -1,14 +1,10 @@
 import styled from 'styled-components';
 
-import {colors, fonts} from 'styles';
-
-export const AccountNumber = styled.div`
-  color: ${colors.secondary};
-  font-size: 12px;
-`;
+import {fonts} from 'styles';
 
 export const Container = styled.div`
   display: flex;
+  margin-top: 20px;
 `;
 
 export const DisplayName = styled.div`
@@ -16,6 +12,17 @@ export const DisplayName = styled.div`
   margin-bottom: 2px;
 `;
 
+export const Middle = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-left: 10px;
+`;
+
 export const Right = styled.div`
   margin-left: 10px;
+`;
+
+export const Text = styled.div`
+  line-height: 1.3;
 `;
