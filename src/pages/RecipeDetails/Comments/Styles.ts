@@ -9,6 +9,16 @@ export const Button = styled(UButton)`
   margin-left: 12px;
 `;
 
+export const Comment = styled.div`
+  display: flex;
+  margin-top: 20px;
+`;
+
+export const CommentText = styled.div`
+  line-height: 1.3;
+  margin-left: 12px;
+`;
+
 export const Container = styled.div`
   ${cardStyle};
   margin-top: 20px;

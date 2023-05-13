@@ -25,6 +25,29 @@ const Comments: SFC = ({className}) => {
     }
   };
 
+  const renderComments = () => {
+    return (
+      <>
+        <S.Comment>
+          <div>
+            <S.ImgWrapper>
+              <S.Img alt="avatar" src={DefaultAvatar} />
+            </S.ImgWrapper>
+          </div>
+          <S.CommentText>Hey now</S.CommentText>
+        </S.Comment>
+        <S.Comment>
+          <div>
+            <S.ImgWrapper>
+              <S.Img alt="avatar" src={DefaultAvatar} />
+            </S.ImgWrapper>
+          </div>
+          <S.CommentText>Hey now</S.CommentText>
+        </S.Comment>
+      </>
+    );
+  };
+
   const validationSchema = useMemo(() => {
     return yup.object().shape({
       text: yup.string().required(),
@@ -59,6 +82,7 @@ const Comments: SFC = ({className}) => {
           </S.Form>
         )}
       </Formik>
+      {renderComments()}
     </S.Container>
   );
 };
