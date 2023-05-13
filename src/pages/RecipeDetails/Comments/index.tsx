@@ -21,7 +21,7 @@ const Comments: SFC = ({className}) => {
       resetForm();
     } catch (error) {
       console.error(error);
-      displayErrorToast('Error posting the comment');
+      displayErrorToast('Error submitting the comment');
     }
   };
 

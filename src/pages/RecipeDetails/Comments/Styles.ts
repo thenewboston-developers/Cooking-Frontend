@@ -28,7 +28,7 @@ export const Container = styled.div`
 export const Form = styled(UForm)`
   align-items: center;
   display: flex;
-  margin-top: 16px;
+  margin-top: 20px;
 `;
 
 export const Img = styled.img`
