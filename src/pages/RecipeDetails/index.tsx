@@ -15,6 +15,7 @@ import {AppDispatch, RecipeReadSerializer, SFC} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
 import {shortDate} from 'utils/dates';
 import {displayErrorToast, displayToast} from 'utils/toast';
+import Comments from './Comments';
 import * as S from './Styles';
 
 const RecipeDetails: SFC = ({className}) => {
@@ -132,6 +133,7 @@ const RecipeDetails: SFC = ({className}) => {
           <S.Img alt="image" src={recipe.image_url} />
           {renderDescription()}
         </S.Card>
+        <Comments />
       </S.Left>
       <S.Right>
         <S.Card>
