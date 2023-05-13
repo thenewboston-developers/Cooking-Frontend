@@ -7,6 +7,7 @@ import {Input} from 'components/FormElements';
 import Modal from 'components/Modal';
 import {login} from 'dispatchers/authentication';
 import {AppDispatch, SFC} from 'types';
+import {displayErrorToast} from 'utils/toast';
 import yup, {signingKeySchema} from 'utils/yup';
 
 export interface LogInModalProps {
@@ -28,6 +29,7 @@ const LogInModal: SFC<LogInModalProps> = ({className, close}) => {
       close();
     } catch (error) {
       console.error(error);
+      displayErrorToast('Error logging in');
     }
   };
 
