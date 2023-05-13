@@ -1,19 +1,46 @@
-import {useMemo} from 'react';
+import {useEffect, useMemo, useState} from 'react';
+import {useSelector} from 'react-redux';
+import {useParams} from 'react-router-dom';
+import axios from 'axios';
 import {Formik, FormikHelpers} from 'formik';
 
-import DefaultAvatar from 'assets/default-avatar.png';
+import Avatar from 'components/Avatar';
 import {ButtonType} from 'components/Button';
-import {SFC} from 'types';
+import {getSelf} from 'selectors/state';
+import {CommentReadSerializer, SFC} from 'types';
 import {displayErrorToast} from 'utils/toast';
 import yup from 'utils/yup';
+import Comment from './Comment';
 import * as S from './Styles';
 
 const Comments: SFC = ({className}) => {
+  const [comments, setComments] = useState<CommentReadSerializer[]>([]);
+  const [requestPending, setRequestPending] = useState<boolean>(true);
+  const {id: recipeId} = useParams();
+  const self = useSelector(getSelf);
+
   const initialValues = {
     text: '',
   };
 
   type FormValues = typeof initialValues;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setRequestPending(true);
+        const {data} = await axios.get<CommentReadSerializer[]>(
+          `${process.env.REACT_APP_API_URL}/api/comments?recipe=${recipeId}`,
+        );
+        setComments(data);
+      } catch (error) {
+        console.error(error);
+        displayErrorToast('Error fetching comments');
+      } finally {
+        setRequestPending(false);
+      }
+    })();
+  }, [recipeId]);
 
   const handleSubmit = async (values: FormValues, {resetForm}: FormikHelpers<FormValues>): Promise<void> => {
     try {
@@ -26,26 +53,7 @@ const Comments: SFC = ({className}) => {
   };
 
   const renderComments = () => {
-    return (
-      <>
-        <S.Comment>
-          <div>
-            <S.ImgWrapper>
-              <S.Img alt="avatar" src={DefaultAvatar} />
-            </S.ImgWrapper>
-          </div>
-          <S.CommentText>Hey now</S.CommentText>
-        </S.Comment>
-        <S.Comment>
-          <div>
-            <S.ImgWrapper>
-              <S.Img alt="avatar" src={DefaultAvatar} />
-            </S.ImgWrapper>
-          </div>
-          <S.CommentText>Hey now</S.CommentText>
-        </S.Comment>
-      </>
-    );
+    return comments.map((comment) => <Comment comment={comment} key={comment.id} />);
   };
 
   const validationSchema = useMemo(() => {
@@ -53,6 +61,8 @@ const Comments: SFC = ({className}) => {
       text: yup.string().required(),
     });
   }, []);
+
+  if (requestPending) return null;
 
   return (
     <S.Container className={className}>
@@ -65,11 +75,7 @@ const Comments: SFC = ({className}) => {
       >
         {({dirty, errors, isSubmitting, touched, isValid}) => (
           <S.Form>
-            <div>
-              <S.ImgWrapper>
-                <S.Img alt="avatar" src={DefaultAvatar} />
-              </S.ImgWrapper>
-            </div>
+            <Avatar accountNumber={self.accountNumber} displayImage={self.displayImage} />
             <S.InlineInput errors={errors} name="text" touched={touched} />
             <S.Button
               dirty={dirty}

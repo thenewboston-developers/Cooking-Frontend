@@ -21,7 +21,7 @@ import * as S from './Styles';
 const RecipeDetails: SFC = ({className}) => {
   const [recipe, setRecipe] = useState<RecipeReadSerializer | null>(null);
   const [requestPending, setRequestPending] = useState<boolean>(true);
-  const {id} = useParams();
+  const {id: recipeId} = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const self = useSelector(getSelf);
@@ -30,7 +30,9 @@ const RecipeDetails: SFC = ({className}) => {
     (async () => {
       try {
         setRequestPending(true);
-        const {data} = await axios.get<RecipeReadSerializer>(`${process.env.REACT_APP_API_URL}/api/recipes/${id}`);
+        const {data} = await axios.get<RecipeReadSerializer>(
+          `${process.env.REACT_APP_API_URL}/api/recipes/${recipeId}`,
+        );
         setRecipe(data);
       } catch (error) {
         console.error(error);
@@ -39,7 +41,7 @@ const RecipeDetails: SFC = ({className}) => {
         setRequestPending(false);
       }
     })();
-  }, [id]);
+  }, [recipeId]);
 
   const handleDeleteClick = async () => {
     try {

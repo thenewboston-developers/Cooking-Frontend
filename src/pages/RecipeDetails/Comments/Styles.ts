@@ -9,16 +9,6 @@ export const Button = styled(UButton)`
   margin-left: 12px;
 `;
 
-export const Comment = styled.div`
-  display: flex;
-  margin-top: 20px;
-`;
-
-export const CommentText = styled.div`
-  line-height: 1.3;
-  margin-left: 12px;
-`;
-
 export const Container = styled.div`
   ${cardStyle};
   margin-top: 20px;
@@ -29,20 +19,6 @@ export const Form = styled(UForm)`
   align-items: center;
   display: flex;
   margin-top: 20px;
-`;
-
-export const Img = styled.img`
-  border-radius: 50%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  width: 100%;
-`;
-
-export const ImgWrapper = styled.div`
-  padding-bottom: 100%;
-  position: relative;
-  width: 36px;
 `;
 
 export const InlineInput = styled(UInlineInput)`
