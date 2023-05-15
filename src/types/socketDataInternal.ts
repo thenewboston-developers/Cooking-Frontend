@@ -14,8 +14,8 @@ export interface AuthenticateResponse extends CorrelationId {
 }
 
 export interface AuthenticateSigningKeyRequest extends CorrelationId {
-  method: SocketDataInternalMethod.authenticate;
-  token: string;
+  method: SocketDataInternalMethod.authenticate_signing_key;
+  signing_key: string;
 }
 
 export interface AuthenticateSigningKeyResponse extends CorrelationId {

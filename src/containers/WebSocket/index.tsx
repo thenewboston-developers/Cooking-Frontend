@@ -2,10 +2,10 @@ import {FC, useCallback, useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 
-import {SocketDataInternalMethod, SocketStatus} from 'enums';
+import {SocketDataInternalMethod} from 'enums';
 import rootRouter from 'routers/rootRouter';
 import {getSelf} from 'selectors/state';
-import {AppDispatch} from 'types';
+import {AppDispatch, AuthenticateSigningKeyRequest} from 'types';
 
 const WebSocket: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,28 +16,25 @@ const WebSocket: FC = () => {
   }, [self.accountNumber]);
 
   const sendAuthenticateRequest = useCallback((): void => {
-    socket.send(
-      JSON.stringify({
-        correlation_id: crypto.randomUUID(),
-        method: SocketDataInternalMethod.authenticate_signing_key,
-        signing_key: self.signingKey,
-      }),
-    );
+    const payload: AuthenticateSigningKeyRequest = {
+      correlation_id: crypto.randomUUID(),
+      method: SocketDataInternalMethod.authenticate_signing_key,
+      signing_key: self.signingKey,
+    };
+
+    socket.send(JSON.stringify(payload));
   }, [self.signingKey, socket]);
 
   useEffect(() => {
     if (!socket) return;
 
-    socket.onclose = () => {
-      console.log(SocketStatus.disconnected);
-    };
+    socket.onclose = () => {};
 
     socket.onmessage = (event) => {
       rootRouter(dispatch, event);
     };
 
     socket.onopen = () => {
-      console.log(SocketStatus.connected);
       sendAuthenticateRequest();
     };
 
