@@ -2,9 +2,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {mdiDotsVertical} from '@mdi/js';
 
+import Coin from 'assets/coin.png';
 import CookingLogo from 'assets/logos/cooking.png';
 import Button from 'components/Button';
-import DropdownMenu, {DropdownMenuOption} from 'components/DropdownMenu';
+import {DropdownMenuOption} from 'components/DropdownMenu';
 import {logout} from 'dispatchers/authentication';
 import {useIsAuthenticated, useSelfDisplayImage, useToggle} from 'hooks';
 import CreateAccountModal from 'modals/CreateAccountModal';
@@ -21,23 +22,33 @@ const TopNav: SFC = ({className}) => {
   const self = useSelector(getSelf);
   const selfDisplayImage = useSelfDisplayImage();
 
+  const renderBalance = () => {
+    return (
+      <>
+        <S.BalanceGraphic alt="coin" src={Coin} />
+        <S.BalanceText>{self.balance.toLocaleString()}</S.BalanceText>
+      </>
+    );
+  };
+
   const renderDropdownMenu = () => {
     const menuOptions: DropdownMenuOption[] = [{label: 'Log out', onClick: () => dispatch(logout())}];
-    return <DropdownMenu icon={mdiDotsVertical} options={menuOptions} />;
+    return <S.DropdownMenu icon={mdiDotsVertical} options={menuOptions} />;
   };
 
   const renderRightContent = () => {
     if (!isAuthenticated) {
       return (
-        <>
+        <S.ButtonContainer>
           <Button onClick={toggleCreateAccountModal} text="Create account" />
           <Button onClick={toggleLogInModal} text="Log in" />
-        </>
+        </S.ButtonContainer>
       );
     }
 
     return (
       <>
+        {renderBalance()}
         <Link to={`/profile/${self.accountNumber}`}>
           <S.Avatar alt="avatar" src={selfDisplayImage} />
         </Link>
