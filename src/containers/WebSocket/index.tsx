@@ -2,20 +2,14 @@ import {FC, useCallback, useEffect, useMemo} from 'react';
 import {useSelector} from 'react-redux';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 
+import {SocketStatus} from 'enums';
 import {getSelf} from 'selectors/state';
-
-enum SocketStatus {
-  authenticated = 'authenticated',
-  connected = 'connected',
-  disconnected = 'disconnected',
-  error = 'error',
-}
 
 const WebSocket: FC = () => {
   const self = useSelector(getSelf);
 
   const socket = useMemo((): ReconnectingWebSocket => {
-    return new ReconnectingWebSocket(`ws://127.0.0.1:8000/ws/accounts/${self.accountNumber}`);
+    return new ReconnectingWebSocket(`${process.env.REACT_APP_WS_URL}/ws/accounts/${self.accountNumber}`);
   }, [self.accountNumber]);
 
   const sendAuthenticateRequest = useCallback((): void => {
