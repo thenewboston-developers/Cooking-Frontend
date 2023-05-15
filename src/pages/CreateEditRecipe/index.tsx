@@ -32,7 +32,11 @@ const CreateEditRecipe: SFC = ({className}) => {
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
       let response;
-      const requestData = {...values, image_url: values.imageUrl};
+      const requestData = {
+        description: values.description,
+        image_url: values.imageUrl,
+        name: values.name,
+      };
 
       if (activeRecipe) {
         response = await axios.patch<RecipeReadSerializer>(
