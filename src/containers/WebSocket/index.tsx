@@ -1,11 +1,14 @@
 import {FC, useCallback, useEffect, useMemo} from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 
-import {SocketStatus} from 'enums';
+import {SocketDataInternalMethod, SocketStatus} from 'enums';
+import rootRouter from 'routers/rootRouter';
 import {getSelf} from 'selectors/state';
+import {AppDispatch} from 'types';
 
 const WebSocket: FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const self = useSelector(getSelf);
 
   const socket = useMemo((): ReconnectingWebSocket => {
@@ -16,7 +19,7 @@ const WebSocket: FC = () => {
     socket.send(
       JSON.stringify({
         correlation_id: crypto.randomUUID(),
-        method: 'authenticate_signing_key',
+        method: SocketDataInternalMethod.authenticate_signing_key,
         signing_key: self.signingKey,
       }),
     );
@@ -30,7 +33,7 @@ const WebSocket: FC = () => {
     };
 
     socket.onmessage = (event) => {
-      console.log(event);
+      rootRouter(dispatch, event);
     };
 
     socket.onopen = () => {
@@ -41,7 +44,7 @@ const WebSocket: FC = () => {
     return () => {
       socket.close();
     };
-  }, [sendAuthenticateRequest, socket]);
+  }, [dispatch, sendAuthenticateRequest, socket]);
 
   return null;
 };

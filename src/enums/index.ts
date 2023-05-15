@@ -1,4 +1,4 @@
-import {SocketStatus} from 'enums/socketStatuses';
+import {SocketDataInternalMethod, SocketDataStandardType, SocketStatus} from 'enums/sockets';
 import {ToastType} from 'enums/toast';
 
-export {SocketStatus, ToastType};
+export {SocketDataInternalMethod, SocketDataStandardType, SocketStatus, ToastType};

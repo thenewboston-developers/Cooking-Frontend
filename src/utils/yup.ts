@@ -1,5 +1,10 @@
 import * as yup from 'yup';
 
+export const accountNumberSchema = yup
+  .string()
+  .length(64, 'Account number must be 64 characters long')
+  .matches(/^[0-9a-fA-F]+$/, 'Invalid account number');
+
 export const signingKeySchema = yup
   .string()
   .length(64, 'Signing key must be 64 characters long')
