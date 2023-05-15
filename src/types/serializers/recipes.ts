@@ -1,4 +1,5 @@
 export interface RecipeReadSerializer {
+  balance: number;
   created_date: string;
   creator: {
     account_number: string;

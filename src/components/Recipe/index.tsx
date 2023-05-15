@@ -13,6 +13,7 @@ import {displayErrorToast, displayToast} from 'utils/toast';
 import * as S from './Styles';
 
 export interface RecipeProps {
+  balance: number;
   creatorAccountNumber: string;
   creatorDisplayImage: string;
   creatorDisplayName: string;
@@ -24,6 +25,7 @@ export interface RecipeProps {
 }
 
 const Recipe: SFC<RecipeProps> = ({
+  balance,
   className,
   creatorAccountNumber,
   creatorDisplayImage,
@@ -51,6 +53,7 @@ const Recipe: SFC<RecipeProps> = ({
 
   const handleEditClick = () => {
     const activeRecipe = {
+      balance,
       description,
       id,
       imageUrl,

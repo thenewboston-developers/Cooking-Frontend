@@ -50,8 +50,9 @@ const Home: SFC = ({className}) => {
 
     const items = recipes
       .filter(({id}) => !deletedRecipeIds.includes(id))
-      .map(({creator, description, id, image_url, name}) => (
+      .map(({balance, creator, description, id, image_url, name}) => (
         <Recipe
+          balance={balance}
           creatorAccountNumber={creator.account_number}
           creatorDisplayImage={creator.display_image}
           creatorDisplayName={creator.display_name}

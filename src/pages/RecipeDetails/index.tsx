@@ -56,6 +56,7 @@ const RecipeDetails: SFC = ({className}) => {
 
   const handleEditClick = () => {
     const activeRecipe = {
+      balance: recipe!.balance,
       description: recipe!.description,
       id: recipe!.id,
       imageUrl: recipe!.image_url,
