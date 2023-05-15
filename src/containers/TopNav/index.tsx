@@ -2,8 +2,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {mdiDotsVertical} from '@mdi/js';
 
-import Coin from 'assets/coin.png';
 import CookingLogo from 'assets/logos/cooking.png';
+import Balance from 'components/Balance';
 import Button from 'components/Button';
 import {DropdownMenuOption} from 'components/DropdownMenu';
 import {logout} from 'dispatchers/authentication';
@@ -22,15 +22,6 @@ const TopNav: SFC = ({className}) => {
   const self = useSelector(getSelf);
   const selfDisplayImage = useSelfDisplayImage();
 
-  const renderBalance = () => {
-    return (
-      <>
-        <S.BalanceGraphic alt="coin" src={Coin} />
-        <S.BalanceText>{self.balance.toLocaleString()}</S.BalanceText>
-      </>
-    );
-  };
-
   const renderDropdownMenu = () => {
     const menuOptions: DropdownMenuOption[] = [{label: 'Log out', onClick: () => dispatch(logout())}];
     return <S.DropdownMenu icon={mdiDotsVertical} options={menuOptions} />;
@@ -48,7 +39,7 @@ const TopNav: SFC = ({className}) => {
 
     return (
       <>
-        {renderBalance()}
+        <Balance balance={self.balance} />
         <Link to={`/profile/${self.accountNumber}`}>
           <S.Avatar alt="avatar" src={selfDisplayImage} />
         </Link>

@@ -9,6 +9,8 @@ export const Button = styled(UButton)`
   margin-left: 12px;
 `;
 
+export const CommentListLength = styled.div``;
+
 export const Container = styled.div`
   ${cardStyle};
   margin-top: 20px;
@@ -24,4 +26,10 @@ export const Form = styled(UForm)`
 export const InlineInput = styled(UInlineInput)`
   flex: 1;
   margin-left: 12px;
+`;
+
+export const Overview = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
 `;

@@ -6,6 +6,7 @@ import {Formik, FormikHelpers} from 'formik';
 import orderBy from 'lodash/orderBy';
 
 import Avatar from 'components/Avatar';
+import Balance from 'components/Balance';
 import {ButtonType} from 'components/Button';
 import {getSelf} from 'selectors/state';
 import {CommentReadSerializer, SFC} from 'types';
@@ -15,7 +16,11 @@ import yup from 'utils/yup';
 import Comment from './Comment';
 import * as S from './Styles';
 
-const Comments: SFC = ({className}) => {
+export interface CommentsProps {
+  balance: number;
+}
+
+const Comments: SFC<CommentsProps> = ({balance, className}) => {
   const [comments, setComments] = useState<CommentReadSerializer[]>([]);
   const [deletedCommentIds, setDeletedCommentIds] = useState<number[]>([]);
   const [editedComments, setEditedComments] = useState<CommentReadSerializer[]>([]);
@@ -87,19 +92,22 @@ const Comments: SFC = ({className}) => {
     }
   };
 
-  const renderCommentCount = () => {
-    const commentsText = commentList.length === 1 ? 'comment' : 'comments';
-    return (
-      <div>
-        {commentList.length} {commentsText}
-      </div>
-    );
-  };
-
   const renderComments = () => {
     return commentList.map((comment) => (
       <Comment comment={comment} handleDelete={handleCommentDelete} handleEdit={handleCommentEdit} key={comment.id} />
     ));
+  };
+
+  const renderOverview = () => {
+    const commentsText = commentList.length === 1 ? 'comment' : 'comments';
+    return (
+      <S.Overview>
+        <S.CommentListLength>
+          {commentList.length} {commentsText}
+        </S.CommentListLength>
+        <Balance balance={balance} />
+      </S.Overview>
+    );
   };
 
   const validationSchema = useMemo(() => {
@@ -112,7 +120,7 @@ const Comments: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
-      {renderCommentCount()}
+      {renderOverview()}
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
