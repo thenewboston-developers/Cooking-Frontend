@@ -16,6 +16,7 @@ import * as S from './Styles';
 
 const Left: SFC = ({className}) => {
   const [editAccountModalIsOpen, toggleEditAccountModal] = useToggle(false);
+  const [displayBalance, setDisplayBalance] = useState<number>(0);
   const [displayImage, setDisplayImage] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState<string | null>(null);
   const [requestPending, setRequestPending] = useState<boolean>(false);
@@ -27,10 +28,12 @@ const Left: SFC = ({className}) => {
 
   useEffect(() => {
     (async () => {
+      setDisplayBalance(0);
       setDisplayImage(null);
       setDisplayName(null);
 
       if (accountNumber === self.accountNumber) {
+        setDisplayBalance(self.balance);
         setDisplayImage(self.displayImage);
         setDisplayName(self.displayName);
         return;
@@ -41,6 +44,7 @@ const Left: SFC = ({className}) => {
         const {data} = await axios.get<GetAccountResponse>(
           `${process.env.REACT_APP_API_URL}/api/accounts/${accountNumber}`,
         );
+        setDisplayBalance(data.balance);
         setDisplayImage(data.display_image);
         setDisplayName(data.display_name);
       } catch (error) {
@@ -89,6 +93,7 @@ const Left: SFC = ({className}) => {
       <S.Container className={className}>
         {renderDisplayImage()}
         {renderDisplayName()}
+        <S.Balance balance={displayBalance} />
         {renderActionButtons()}
       </S.Container>
       {editAccountModalIsOpen ? <EditAccountModal close={toggleEditAccountModal} /> : null}

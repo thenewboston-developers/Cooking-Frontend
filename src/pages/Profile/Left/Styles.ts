@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
+import UBalance from 'components/Balance';
 import {fonts} from 'styles';
+
+export const Balance = styled(UBalance)`
+  margin-top: 4px;
+`;
 
 export const ButtonContainer = styled.div`
   display: flex;

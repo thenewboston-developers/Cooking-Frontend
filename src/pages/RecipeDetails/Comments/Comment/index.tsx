@@ -65,6 +65,7 @@ const Comment: SFC<CommentProps> = ({className, comment, handleDelete, handleEdi
             <S.DisplayName>{display_name || 'Anonymous'}</S.DisplayName>
           </Link>
           <S.Text>{text}</S.Text>
+          <S.Balance balance={10} />
         </S.Middle>
         {renderRight()}
       </S.Container>
