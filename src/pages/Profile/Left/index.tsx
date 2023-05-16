@@ -22,8 +22,8 @@ const Left: SFC = ({className}) => {
   const [requestPending, setRequestPending] = useState<boolean>(false);
   const {accountNumber} = useParams();
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
   const isAuthenticated = useIsAuthenticated();
+  const navigate = useNavigate();
   const self = useSelector(getSelf);
 
   useEffect(() => {
