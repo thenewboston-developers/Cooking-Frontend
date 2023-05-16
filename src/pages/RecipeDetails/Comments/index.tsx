@@ -6,8 +6,8 @@ import {Formik, FormikHelpers} from 'formik';
 import orderBy from 'lodash/orderBy';
 
 import Avatar from 'components/Avatar';
-import Balance from 'components/Balance';
 import {ButtonType} from 'components/Button';
+import CoinAmount from 'components/CoinAmount';
 import {getSelf} from 'selectors/state';
 import {CommentReadSerializer, SFC} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
@@ -17,10 +17,10 @@ import Comment from './Comment';
 import * as S from './Styles';
 
 export interface CommentsProps {
-  balance: number;
+  recipeBalance: number;
 }
 
-const Comments: SFC<CommentsProps> = ({balance, className}) => {
+const Comments: SFC<CommentsProps> = ({className, recipeBalance}) => {
   const [comments, setComments] = useState<CommentReadSerializer[]>([]);
   const [deletedCommentIds, setDeletedCommentIds] = useState<number[]>([]);
   const [editedComments, setEditedComments] = useState<CommentReadSerializer[]>([]);
@@ -105,7 +105,7 @@ const Comments: SFC<CommentsProps> = ({balance, className}) => {
         <S.CommentListLength>
           {commentList.length} {commentsText}
         </S.CommentListLength>
-        <Balance balance={balance} />
+        <CoinAmount amount={recipeBalance} />
       </S.Overview>
     );
   };

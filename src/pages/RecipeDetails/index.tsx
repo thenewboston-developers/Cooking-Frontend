@@ -136,7 +136,7 @@ const RecipeDetails: SFC = ({className}) => {
           <S.Img alt="image" src={recipe.image_url} />
           {renderDescription()}
         </S.Card>
-        <Comments balance={recipe.balance} />
+        <Comments recipeBalance={recipe.balance} />
       </S.Left>
       <S.Right>
         <S.Card>

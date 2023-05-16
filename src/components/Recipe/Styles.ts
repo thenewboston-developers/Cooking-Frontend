@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 import UAccountCard from 'components/AccountCard';
-import UBalance from 'components/Balance';
+import UCoinAmount from 'components/CoinAmount';
 import {cardStyle, colors, fonts} from 'styles';
 
 export const AccountCard = styled(UAccountCard)`
   margin-top: 24px;
 `;
 
-export const Balance = styled(UBalance)`
+export const CoinAmount = styled(UCoinAmount)`
   margin-top: 8px;
 `;
 

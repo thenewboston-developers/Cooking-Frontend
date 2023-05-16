@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-import UBalance from 'components/Balance';
+import UCoinAmount from 'components/CoinAmount';
 import {fonts} from 'styles';
 
-export const Balance = styled(UBalance)`
+export const CoinAmount = styled(UCoinAmount)`
   margin-top: 4px;
 `;
 

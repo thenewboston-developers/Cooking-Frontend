@@ -2,17 +2,17 @@ import Coin from 'assets/coin.png';
 import {SFC} from 'types';
 import * as S from './Styles';
 
-export interface BalanceProps {
-  balance: number;
+export interface CoinAmountProps {
+  amount: number;
 }
 
-const Balance: SFC<BalanceProps> = ({balance, className}) => {
+const CoinAmount: SFC<CoinAmountProps> = ({amount, className}) => {
   return (
     <S.Container className={className}>
       <S.Img alt="coin" src={Coin} />
-      <S.Text>{balance.toLocaleString()}</S.Text>
+      <S.Amount>{amount.toLocaleString()}</S.Amount>
     </S.Container>
   );
 };
 
-export default Balance;
+export default CoinAmount;

@@ -93,7 +93,7 @@ const Left: SFC = ({className}) => {
       <S.Container className={className}>
         {renderDisplayImage()}
         {renderDisplayName()}
-        <S.Balance balance={displayBalance} />
+        <S.CoinAmount amount={displayBalance} />
         {renderActionButtons()}
       </S.Container>
       {editAccountModalIsOpen ? <EditAccountModal close={toggleEditAccountModal} /> : null}

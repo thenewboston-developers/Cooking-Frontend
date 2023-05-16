@@ -3,8 +3,8 @@ import {Link} from 'react-router-dom';
 import {mdiDotsVertical} from '@mdi/js';
 
 import CookingLogo from 'assets/logos/cooking.png';
-import Balance from 'components/Balance';
 import Button from 'components/Button';
+import CoinAmount from 'components/CoinAmount';
 import {DropdownMenuOption} from 'components/DropdownMenu';
 import {logout} from 'dispatchers/authentication';
 import {useIsAuthenticated, useSelfDisplayImage, useToggle} from 'hooks';
@@ -39,7 +39,7 @@ const TopNav: SFC = ({className}) => {
 
     return (
       <>
-        <Balance balance={self.balance} />
+        <CoinAmount amount={self.balance} />
         <Link to={`/profile/${self.accountNumber}`}>
           <S.Avatar alt="avatar" src={selfDisplayImage} />
         </Link>
