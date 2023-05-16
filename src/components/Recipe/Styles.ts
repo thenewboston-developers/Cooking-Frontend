@@ -21,6 +21,7 @@ export const Container = styled.div`
 export const Description = styled.span`
   color: ${colors.secondary};
   font-size: 15px;
+  line-height: 1.3;
   margin-top: 4px;
 `;
 

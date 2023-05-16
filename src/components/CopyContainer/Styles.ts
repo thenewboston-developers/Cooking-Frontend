@@ -8,9 +8,7 @@ export const Container = styled.div`
   border-radius: 8px;
   display: flex;
   font-size: 12px;
-  margin-top: 40px;
   padding: 8px;
-  width: 280px;
 `;
 
 export const CopyText = styled.div`
