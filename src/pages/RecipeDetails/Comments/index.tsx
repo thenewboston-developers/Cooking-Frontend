@@ -8,6 +8,7 @@ import orderBy from 'lodash/orderBy';
 import Avatar from 'components/Avatar';
 import {ButtonType} from 'components/Button';
 import CoinAmount from 'components/CoinAmount';
+import {CORE_TRANSACTION_FEE} from 'constants/protocol';
 import {getSelf} from 'selectors/state';
 import {CommentReadSerializer, SFC} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
@@ -18,9 +19,10 @@ import * as S from './Styles';
 
 export interface CommentsProps {
   recipeBalance: number;
+  refreshRecipe: () => void;
 }
 
-const Comments: SFC<CommentsProps> = ({className, recipeBalance}) => {
+const Comments: SFC<CommentsProps> = ({className, recipeBalance, refreshRecipe}) => {
   const [comments, setComments] = useState<CommentReadSerializer[]>([]);
   const [deletedCommentIds, setDeletedCommentIds] = useState<number[]>([]);
   const [editedComments, setEditedComments] = useState<CommentReadSerializer[]>([]);
@@ -30,6 +32,7 @@ const Comments: SFC<CommentsProps> = ({className, recipeBalance}) => {
   const self = useSelector(getSelf);
 
   const initialValues = {
+    amount: '',
     text: '',
   };
 
@@ -85,6 +88,8 @@ const Comments: SFC<CommentsProps> = ({className, recipeBalance}) => {
       );
 
       setNewComments([...newComments, data]);
+
+      refreshRecipe();
       resetForm();
     } catch (error) {
       console.error(error);
@@ -112,9 +117,16 @@ const Comments: SFC<CommentsProps> = ({className, recipeBalance}) => {
 
   const validationSchema = useMemo(() => {
     return yup.object().shape({
+      amount: yup
+        .number()
+        .required()
+        .min(1)
+        .test('amount-does-not-exceed-balance-plus-fees', 'Invalid amount', (amount) => {
+          return self.balance >= amount + CORE_TRANSACTION_FEE;
+        }),
       text: yup.string().required(),
     });
-  }, []);
+  }, [self.balance]);
 
   if (requestPending) return null;
 
@@ -130,7 +142,8 @@ const Comments: SFC<CommentsProps> = ({className, recipeBalance}) => {
         {({dirty, errors, isSubmitting, touched, isValid}) => (
           <S.Form>
             <Avatar accountNumber={self.accountNumber} displayImage={self.displayImage} />
-            <S.InlineInput errors={errors} name="text" touched={touched} />
+            <S.TextInput errors={errors} name="text" placeholder="Add a comment..." touched={touched} />
+            <S.AmountInput errors={errors} name="amount" placeholder="Amount" touched={touched} />
             <S.Button
               dirty={dirty}
               disabled={isSubmitting}
