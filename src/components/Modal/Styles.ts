@@ -21,7 +21,7 @@ export const Header = styled.div`
   display: flex;
   font-weight: ${fonts.weight.bold};
   justify-content: space-between;
-  margin-bottom: 46px;
+  margin-bottom: 36px;
   padding: 16px 24px 0;
   position: relative;
 `;

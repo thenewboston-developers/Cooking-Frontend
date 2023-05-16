@@ -3,10 +3,10 @@ import {useDispatch} from 'react-redux';
 import axios from 'axios';
 
 import CopyContainer from 'components/CopyContainer';
-import Modal from 'components/Modal';
 import {login} from 'dispatchers/authentication';
 import {AppDispatch, SFC} from 'types';
 import {displayErrorToast} from 'utils/toast';
+import * as S from './Styles';
 
 export interface CreateAccountModalProps {
   close(): void;
@@ -32,7 +32,7 @@ const CreateAccountModal: SFC<CreateAccountModalProps> = ({className, close}) =>
     (async () => {
       try {
         const response = await axios.post<ResponseData>(`${process.env.REACT_APP_API_URL}/api/accounts`, {});
-        dispatch(login(response.data.signing_key));
+        await dispatch(login(response.data.signing_key));
         setData(response.data);
       } catch (error) {
         console.error(error);
@@ -46,16 +46,22 @@ const CreateAccountModal: SFC<CreateAccountModalProps> = ({className, close}) =>
 
     return (
       <>
+        <S.Text>
+          Your <b>account number</b> is your unique identifier for thenewboston ecosystem. Log in to your account using
+          your <b>signing key</b>. Do not share your signing key with anyone else!
+        </S.Text>
+        <S.Label>Account Number</S.Label>
         <CopyContainer text={data.account.account_number} />
+        <S.Label>Signing Key</S.Label>
         <CopyContainer text={data.signing_key} />
       </>
     );
   };
 
   return (
-    <Modal className={className} close={close} header="New account created!">
+    <S.Modal className={className} close={close} header="New account created!">
       {renderResults()}
-    </Modal>
+    </S.Modal>
   );
 };
 
