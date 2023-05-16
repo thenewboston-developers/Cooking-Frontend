@@ -4,11 +4,12 @@ import * as S from './Styles';
 
 export interface CoinAmountProps {
   amount: number;
+  onClick?: () => void;
 }
 
-const CoinAmount: SFC<CoinAmountProps> = ({amount, className}) => {
+const CoinAmount: SFC<CoinAmountProps> = ({amount, className, onClick}) => {
   return (
-    <S.Container className={className}>
+    <S.Container className={className} onClick={onClick}>
       <S.Img alt="coin" src={Coin} />
       <S.Amount>{amount.toLocaleString()}</S.Amount>
     </S.Container>
