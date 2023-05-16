@@ -9,6 +9,7 @@ import {getSelf} from 'selectors/state';
 import {updateManager} from 'store/manager';
 import {AppDispatch, RecipeReadSerializer, SFC} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
+import {truncate} from 'utils/strings';
 import {displayErrorToast, displayToast} from 'utils/toast';
 import * as S from './Styles';
 
@@ -76,7 +77,7 @@ const Recipe: SFC<RecipeProps> = ({className, handleDelete, recipe}) => {
         <Link to={`/recipe/${id}`}>
           <S.Name>{name}</S.Name>
         </Link>
-        <S.Description>{description}</S.Description>
+        <S.Description>{truncate(description, 420)}</S.Description>
         <S.CoinAmount amount={balance} />
         <S.AccountCard
           accountNumber={creator.account_number}
