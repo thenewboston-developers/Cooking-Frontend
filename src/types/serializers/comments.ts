@@ -1,4 +1,5 @@
 export interface CommentReadSerializer {
+  balance: number;
   created_date: string;
   creator: {
     account_number: string;

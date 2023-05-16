@@ -25,6 +25,7 @@ const Comment: SFC<CommentProps> = ({className, comment, handleDelete, handleEdi
   const self = useSelector(getSelf);
 
   const {
+    balance,
     creator: {account_number, display_image, display_name},
     id,
     text,
@@ -65,7 +66,7 @@ const Comment: SFC<CommentProps> = ({className, comment, handleDelete, handleEdi
             <S.DisplayName>{display_name || 'Anonymous'}</S.DisplayName>
           </Link>
           <S.Text>{text}</S.Text>
-          <S.Balance balance={10} />
+          <S.Balance balance={balance} />
         </S.Middle>
         {renderRight()}
       </S.Container>
