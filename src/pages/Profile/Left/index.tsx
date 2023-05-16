@@ -61,6 +61,17 @@ const Left: SFC = ({className}) => {
     navigate('/createEditRecipe');
   };
 
+  const renderAccountNumber = () => {
+    if (requestPending) return null;
+
+    return (
+      <>
+        <S.Label>Account Number</S.Label>
+        <S.CopyContainer text={accountNumber || ''} />
+      </>
+    );
+  };
+
   const renderActionButtons = () => {
     if (!isAuthenticated || accountNumber !== self.accountNumber) return null;
 
@@ -70,6 +81,12 @@ const Left: SFC = ({className}) => {
         <Button color={ButtonColor.secondary} onClick={handleCreateRecipeClick} text="Create recipe" />
       </S.ButtonContainer>
     );
+  };
+
+  const renderCoinAmount = () => {
+    if (requestPending) return null;
+
+    return <S.CoinAmount amount={displayBalance} />;
   };
 
   const renderDisplayImage = () => {
@@ -93,7 +110,8 @@ const Left: SFC = ({className}) => {
       <S.Container className={className}>
         {renderDisplayImage()}
         {renderDisplayName()}
-        <S.CoinAmount amount={displayBalance} />
+        {renderCoinAmount()}
+        {renderAccountNumber()}
         {renderActionButtons()}
       </S.Container>
       {editAccountModalIsOpen ? <EditAccountModal close={toggleEditAccountModal} /> : null}
