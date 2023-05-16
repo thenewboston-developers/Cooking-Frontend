@@ -7,22 +7,22 @@ import orderBy from 'lodash/orderBy';
 
 import Avatar from 'components/Avatar';
 import {ButtonType} from 'components/Button';
-import CoinAmount from 'components/CoinAmount';
 import {CORE_TRANSACTION_FEE} from 'constants/protocol';
 import {getSelf} from 'selectors/state';
-import {CommentReadSerializer, SFC} from 'types';
+import {CommentReadSerializer, RecipeReadSerializer, SFC} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
 import {displayErrorToast} from 'utils/toast';
 import yup from 'utils/yup';
 import Comment from './Comment';
+import Overview from './Overview';
 import * as S from './Styles';
 
 export interface CommentsProps {
-  recipeBalance: number;
+  recipe: RecipeReadSerializer;
   refreshRecipe: () => void;
 }
 
-const Comments: SFC<CommentsProps> = ({className, recipeBalance, refreshRecipe}) => {
+const Comments: SFC<CommentsProps> = ({className, recipe, refreshRecipe}) => {
   const [comments, setComments] = useState<CommentReadSerializer[]>([]);
   const [deletedCommentIds, setDeletedCommentIds] = useState<number[]>([]);
   const [editedComments, setEditedComments] = useState<CommentReadSerializer[]>([]);
@@ -103,18 +103,6 @@ const Comments: SFC<CommentsProps> = ({className, recipeBalance, refreshRecipe})
     ));
   };
 
-  const renderOverview = () => {
-    const commentsText = commentList.length === 1 ? 'comment' : 'comments';
-    return (
-      <S.Overview>
-        <S.CommentListLength>
-          {commentList.length} {commentsText}
-        </S.CommentListLength>
-        <CoinAmount amount={recipeBalance} />
-      </S.Overview>
-    );
-  };
-
   const validationSchema = useMemo(() => {
     return yup.object().shape({
       amount: yup
@@ -132,7 +120,7 @@ const Comments: SFC<CommentsProps> = ({className, recipeBalance, refreshRecipe})
 
   return (
     <S.Container className={className}>
-      {renderOverview()}
+      <Overview commentList={commentList} recipe={recipe} refreshRecipe={refreshRecipe} />
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
