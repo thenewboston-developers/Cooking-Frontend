@@ -7,38 +7,22 @@ import DropdownMenu, {DropdownMenuOption} from 'components/DropdownMenu';
 import {ToastType} from 'enums';
 import {getSelf} from 'selectors/state';
 import {updateManager} from 'store/manager';
-import {AppDispatch, SFC} from 'types';
+import {AppDispatch, RecipeReadSerializer, SFC} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
 import {displayErrorToast, displayToast} from 'utils/toast';
 import * as S from './Styles';
 
 export interface RecipeProps {
-  balance: number;
-  creatorAccountNumber: string;
-  creatorDisplayImage: string;
-  creatorDisplayName: string;
-  description: string;
   handleDelete: (id: number) => void;
-  id: number;
-  imageUrl: string;
-  name: string;
+  recipe: RecipeReadSerializer;
 }
 
-const Recipe: SFC<RecipeProps> = ({
-  balance,
-  className,
-  creatorAccountNumber,
-  creatorDisplayImage,
-  creatorDisplayName,
-  description,
-  handleDelete,
-  id,
-  imageUrl,
-  name,
-}) => {
+const Recipe: SFC<RecipeProps> = ({className, handleDelete, recipe}) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const self = useSelector(getSelf);
+
+  const {balance, creator, description, id, image_url, name} = recipe;
 
   const handleDeleteClick = async () => {
     try {
@@ -56,7 +40,7 @@ const Recipe: SFC<RecipeProps> = ({
       balance,
       description,
       id,
-      imageUrl,
+      imageUrl: image_url,
       name,
     };
 
@@ -65,7 +49,7 @@ const Recipe: SFC<RecipeProps> = ({
   };
 
   const renderRight = () => {
-    if (creatorAccountNumber !== self.accountNumber) return null;
+    if (creator.account_number !== self.accountNumber) return null;
 
     const menuOptions: DropdownMenuOption[] = [
       {label: 'Edit', onClick: handleEditClick},
@@ -84,7 +68,7 @@ const Recipe: SFC<RecipeProps> = ({
       <S.ImgContainer>
         <Link to={`/recipe/${id}`}>
           <S.ImgWrapper>
-            <S.Img alt="image" src={imageUrl} />
+            <S.Img alt="image" src={image_url} />
           </S.ImgWrapper>
         </Link>
       </S.ImgContainer>
@@ -95,9 +79,9 @@ const Recipe: SFC<RecipeProps> = ({
         <S.Description>{description}</S.Description>
         <S.CoinAmount amount={balance} />
         <S.AccountCard
-          accountNumber={creatorAccountNumber}
-          displayImage={creatorDisplayImage}
-          displayName={creatorDisplayName}
+          accountNumber={creator.account_number}
+          displayImage={creator.display_image}
+          displayName={creator.display_name}
         />
       </S.Middle>
       {renderRight()}

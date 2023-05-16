@@ -41,20 +41,7 @@ const Right: SFC = ({className}) => {
 
     const items = recipes
       .filter(({id}) => !deletedRecipeIds.includes(id))
-      .map(({balance, creator, description, id, image_url, name}) => (
-        <Recipe
-          balance={balance}
-          creatorAccountNumber={creator.account_number}
-          creatorDisplayImage={creator.display_image}
-          creatorDisplayName={creator.display_name}
-          description={description}
-          handleDelete={handleRecipeDelete}
-          id={id}
-          imageUrl={image_url}
-          key={id}
-          name={name}
-        />
-      ));
+      .map((recipe) => <Recipe handleDelete={handleRecipeDelete} key={recipe.id} recipe={recipe} />);
 
     return <S.RecipeList>{items}</S.RecipeList>;
   };
