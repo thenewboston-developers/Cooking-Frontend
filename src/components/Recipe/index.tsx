@@ -93,6 +93,7 @@ const Recipe: SFC<RecipeProps> = ({
           <S.Name>{name}</S.Name>
         </Link>
         <S.Description>{description}</S.Description>
+        <S.Balance balance={balance} />
         <S.AccountCard
           accountNumber={creatorAccountNumber}
           displayImage={creatorDisplayImage}
