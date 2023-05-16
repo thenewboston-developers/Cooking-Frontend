@@ -10,17 +10,6 @@ export const Avatar = styled.img`
   width: 32px;
 `;
 
-export const BalanceGraphic = styled.img`
-  height: 22px;
-  width: 22px;
-`;
-
-export const BalanceText = styled.div`
-  color: ${colors.secondary};
-  font-size: 13px;
-  margin-left: 4px;
-`;
-
 export const ButtonContainer = styled.div`
   align-items: center;
   display: flex;

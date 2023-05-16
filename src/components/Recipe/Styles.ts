@@ -1,10 +1,15 @@
 import styled from 'styled-components';
 
 import UAccountCard from 'components/AccountCard';
+import UCoinAmount from 'components/CoinAmount';
 import {cardStyle, colors, fonts} from 'styles';
 
 export const AccountCard = styled(UAccountCard)`
-  margin-top: 20px;
+  margin-top: 24px;
+`;
+
+export const CoinAmount = styled(UCoinAmount)`
+  margin-top: 8px;
 `;
 
 export const Container = styled.div`

@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
+import UCoinAmount from 'components/CoinAmount';
 import {fonts} from 'styles';
+
+export const CoinAmount = styled(UCoinAmount)`
+  margin-top: 4px;
+`;
 
 export const Container = styled.div`
   display: flex;
@@ -9,7 +14,6 @@ export const Container = styled.div`
 
 export const DisplayName = styled.div`
   font-weight: ${fonts.weight.bold};
-  margin-bottom: 2px;
 `;
 
 export const Middle = styled.div`
@@ -25,4 +29,5 @@ export const Right = styled.div`
 
 export const Text = styled.div`
   line-height: 1.3;
+  margin-top: 2px;
 `;

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
@@ -56,6 +56,7 @@ const RecipeDetails: SFC = ({className}) => {
 
   const handleEditClick = () => {
     const activeRecipe = {
+      balance: recipe!.balance,
       description: recipe!.description,
       id: recipe!.id,
       imageUrl: recipe!.image_url,
@@ -65,6 +66,19 @@ const RecipeDetails: SFC = ({className}) => {
     dispatch(updateManager({activeRecipe}));
     navigate('/createEditRecipe');
   };
+
+  const refreshRecipe = useCallback(() => {
+    (async () => {
+      try {
+        const {data} = await axios.get<RecipeReadSerializer>(
+          `${process.env.REACT_APP_API_URL}/api/recipes/${recipeId}`,
+        );
+        setRecipe(data);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, [recipeId]);
 
   const renderDescription = () => {
     return (
@@ -135,7 +149,7 @@ const RecipeDetails: SFC = ({className}) => {
           <S.Img alt="image" src={recipe.image_url} />
           {renderDescription()}
         </S.Card>
-        <Comments />
+        <Comments recipeBalance={recipe.balance} refreshRecipe={refreshRecipe} />
       </S.Left>
       <S.Right>
         <S.Card>

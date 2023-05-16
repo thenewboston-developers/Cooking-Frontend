@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import UCoinAmount from 'components/CoinAmount';
 import {fonts} from 'styles';
 
 export const ButtonContainer = styled.div`
@@ -7,6 +8,10 @@ export const ButtonContainer = styled.div`
   flex-direction: column;
   gap: 12px;
   margin-top: 16px;
+`;
+
+export const CoinAmount = styled(UCoinAmount)`
+  margin-top: 4px;
 `;
 
 export const Container = styled.div`

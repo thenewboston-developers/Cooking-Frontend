@@ -7,6 +7,8 @@ import orderBy from 'lodash/orderBy';
 
 import Avatar from 'components/Avatar';
 import {ButtonType} from 'components/Button';
+import CoinAmount from 'components/CoinAmount';
+import {CORE_TRANSACTION_FEE} from 'constants/protocol';
 import {getSelf} from 'selectors/state';
 import {CommentReadSerializer, SFC} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
@@ -15,7 +17,12 @@ import yup from 'utils/yup';
 import Comment from './Comment';
 import * as S from './Styles';
 
-const Comments: SFC = ({className}) => {
+export interface CommentsProps {
+  recipeBalance: number;
+  refreshRecipe: () => void;
+}
+
+const Comments: SFC<CommentsProps> = ({className, recipeBalance, refreshRecipe}) => {
   const [comments, setComments] = useState<CommentReadSerializer[]>([]);
   const [deletedCommentIds, setDeletedCommentIds] = useState<number[]>([]);
   const [editedComments, setEditedComments] = useState<CommentReadSerializer[]>([]);
@@ -25,6 +32,7 @@ const Comments: SFC = ({className}) => {
   const self = useSelector(getSelf);
 
   const initialValues = {
+    amount: '',
     text: '',
   };
 
@@ -80,20 +88,13 @@ const Comments: SFC = ({className}) => {
       );
 
       setNewComments([...newComments, data]);
+
+      refreshRecipe();
       resetForm();
     } catch (error) {
       console.error(error);
       displayErrorToast('Error submitting the comment');
     }
-  };
-
-  const renderCommentCount = () => {
-    const commentsText = commentList.length === 1 ? 'comment' : 'comments';
-    return (
-      <div>
-        {commentList.length} {commentsText}
-      </div>
-    );
   };
 
   const renderComments = () => {
@@ -102,17 +103,36 @@ const Comments: SFC = ({className}) => {
     ));
   };
 
+  const renderOverview = () => {
+    const commentsText = commentList.length === 1 ? 'comment' : 'comments';
+    return (
+      <S.Overview>
+        <S.CommentListLength>
+          {commentList.length} {commentsText}
+        </S.CommentListLength>
+        <CoinAmount amount={recipeBalance} />
+      </S.Overview>
+    );
+  };
+
   const validationSchema = useMemo(() => {
     return yup.object().shape({
+      amount: yup
+        .number()
+        .required()
+        .min(1)
+        .test('amount-does-not-exceed-balance-plus-fees', 'Invalid amount', (amount) => {
+          return self.balance >= amount + CORE_TRANSACTION_FEE;
+        }),
       text: yup.string().required(),
     });
-  }, []);
+  }, [self.balance]);
 
   if (requestPending) return null;
 
   return (
     <S.Container className={className}>
-      {renderCommentCount()}
+      {renderOverview()}
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
@@ -122,7 +142,8 @@ const Comments: SFC = ({className}) => {
         {({dirty, errors, isSubmitting, touched, isValid}) => (
           <S.Form>
             <Avatar accountNumber={self.accountNumber} displayImage={self.displayImage} />
-            <S.InlineInput errors={errors} name="text" touched={touched} />
+            <S.TextInput errors={errors} name="text" placeholder="Add a comment..." touched={touched} />
+            <S.AmountInput errors={errors} name="amount" placeholder="Amount" touched={touched} />
             <S.Button
               dirty={dirty}
               disabled={isSubmitting}
