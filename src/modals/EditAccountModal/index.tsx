@@ -27,7 +27,7 @@ const EditAccountModal: SFC<EditAccountModalProps> = ({className, close}) => {
 
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
-      dispatch(editAccount(self.accountNumber, values));
+      await dispatch(editAccount(self.accountNumber, values));
       close();
     } catch (error) {
       console.error(error);
