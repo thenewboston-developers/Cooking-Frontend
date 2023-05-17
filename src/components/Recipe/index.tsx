@@ -9,6 +9,7 @@ import {getSelf} from 'selectors/state';
 import {updateManager} from 'store/manager';
 import {AppDispatch, RecipeReadSerializer, SFC} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
+import {shortDate} from 'utils/dates';
 import {truncate} from 'utils/strings';
 import {displayErrorToast, displayToast} from 'utils/toast';
 import * as S from './Styles';
@@ -23,7 +24,7 @@ const Recipe: SFC<RecipeProps> = ({className, handleDelete, recipe}) => {
   const navigate = useNavigate();
   const self = useSelector(getSelf);
 
-  const {balance, creator, description, id, image_url, name} = recipe;
+  const {balance, created_date, creator, description, id, image_url, name} = recipe;
 
   const handleDeleteClick = async () => {
     try {
@@ -81,6 +82,7 @@ const Recipe: SFC<RecipeProps> = ({className, handleDelete, recipe}) => {
         <S.CoinAmount amount={balance} />
         <S.AccountCard
           accountNumber={creator.account_number}
+          bottomText={shortDate(created_date, true)}
           displayImage={creator.display_image}
           displayName={creator.display_name}
         />

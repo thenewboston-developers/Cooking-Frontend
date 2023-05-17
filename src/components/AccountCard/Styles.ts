@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import {colors, fonts} from 'styles';
 
-export const AccountNumber = styled.div`
+export const BottomText = styled.div`
   color: ${colors.secondary};
   font-size: 12px;
 `;
