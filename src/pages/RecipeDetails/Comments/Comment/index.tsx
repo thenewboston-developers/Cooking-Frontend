@@ -11,6 +11,7 @@ import EditCommentModal from 'modals/EditCommentModal';
 import {getSelf} from 'selectors/state';
 import {CommentReadSerializer, SFC} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
+import {shortDate} from 'utils/dates';
 import {displayErrorToast, displayToast} from 'utils/toast';
 import * as S from './Styles';
 
@@ -26,6 +27,7 @@ const Comment: SFC<CommentProps> = ({className, comment, handleDelete, handleEdi
 
   const {
     amount,
+    created_date,
     creator: {account_number, display_image, display_name},
     id,
     text,
@@ -40,6 +42,18 @@ const Comment: SFC<CommentProps> = ({className, comment, handleDelete, handleEdi
       console.error(error);
       displayErrorToast('Error deleting the comment');
     }
+  };
+
+  const renderNameDateContainer = () => {
+    return (
+      <S.NameDateContainer>
+        <Link to={`/profile/${account_number}`}>
+          <S.DisplayName>{display_name || 'Anonymous'}</S.DisplayName>
+        </Link>
+        <S.Dot>·</S.Dot>
+        <S.Date>{shortDate(created_date, true)}</S.Date>
+      </S.NameDateContainer>
+    );
   };
 
   const renderRight = () => {
@@ -62,9 +76,7 @@ const Comment: SFC<CommentProps> = ({className, comment, handleDelete, handleEdi
       <S.Container className={className}>
         <Avatar accountNumber={account_number} displayImage={display_image} />
         <S.Middle>
-          <Link to={`/profile/${account_number}`}>
-            <S.DisplayName>{display_name || 'Anonymous'}</S.DisplayName>
-          </Link>
+          {renderNameDateContainer()}
           <S.Text>{text}</S.Text>
           <S.CoinAmount amount={amount} />
         </S.Middle>
