@@ -14,6 +14,7 @@ import {updateManager} from 'store/manager';
 import {AppDispatch, RecipeReadSerializer, SFC} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
 import {shortDate} from 'utils/dates';
+import {truncate} from 'utils/strings';
 import {displayErrorToast, displayToast} from 'utils/toast';
 import Comments from './Comments';
 import * as S from './Styles';
@@ -155,6 +156,7 @@ const RecipeDetails: SFC = ({className}) => {
         <S.Card>
           <AccountCard
             accountNumber={recipe.creator.account_number}
+            bottomText={truncate(recipe.creator.account_number, 16)}
             displayImage={recipe.creator.display_image}
             displayName={recipe.creator.display_name}
           />
