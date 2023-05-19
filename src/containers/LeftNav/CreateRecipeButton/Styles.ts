@@ -7,7 +7,7 @@ const HEIGHT = 48;
 
 export const Container = styled.div`
   align-items: center;
-  background: black;
+  background: ${colors.palette.darkGray['500']};
   border-radius: ${`${HEIGHT / 2}px`};
   color: ${colors.white};
   display: flex;
@@ -19,7 +19,7 @@ export const Container = styled.div`
   transition: background 0.3s ease;
 
   &:hover {
-    background: rgba(208, 215, 222, 0.32);
+    background: ${colors.palette.darkGray['400']};
     cursor: pointer;
     text-decoration: none;
   }
@@ -32,7 +32,7 @@ export const Icon = styled(UIcon)`
 `;
 
 export const Text = styled.div`
-  font-size: 20px;
+  font-size: 17px;
 
   @media (max-width: ${breakpoints.desktop}) {
     display: none;

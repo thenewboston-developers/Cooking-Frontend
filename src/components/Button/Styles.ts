@@ -6,21 +6,13 @@ import {ButtonColor} from './types';
 
 const BUTTON_HEIGHT = 36;
 
-const dangerMixin = css`
-  background-color: ${colors.palette.red['500']};
-
-  &:hover {
-    background: ${colors.palette.red['400']};
-  }
-`;
-
 const disabledMixin = css`
-  background: ${colors.palette.blue['500']};
+  background-color: ${colors.palette.red['300']};
   cursor: not-allowed;
   opacity: 0.65;
 
   &:hover {
-    background: ${colors.palette.blue['500']};
+    background-color: ${colors.palette.red['300']};
   }
 `;
 
@@ -50,7 +42,7 @@ const successMixin = css`
 `;
 
 export const Button = styled.button<{$color: ButtonColor; hasIcon: boolean}>`
-  background: ${colors.palette.blue['500']};
+  background: ${colors.palette.red['400']};
   border-radius: ${`${BUTTON_HEIGHT / 2}px`};
   border: 1px solid transparent;
   color: ${colors.white};
@@ -64,11 +56,10 @@ export const Button = styled.button<{$color: ButtonColor; hasIcon: boolean}>`
   transition: all 0.1s;
 
   &:hover {
-    background: ${colors.palette.blue['400']};
+    background-color: ${colors.palette.red['500']};
   }
 
   ${({$color}) => {
-    if ($color === ButtonColor.danger) return dangerMixin;
     if ($color === ButtonColor.secondary) return secondaryMixin;
     if ($color === ButtonColor.success) return successMixin;
     return;

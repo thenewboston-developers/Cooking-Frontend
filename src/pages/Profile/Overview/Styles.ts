@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import UCoinAmount from 'components/CoinAmount';
 import UCopyContainer from 'components/CopyContainer';
-import {fonts} from 'styles';
+import {colors, fonts} from 'styles';
 
 export const ButtonContainer = styled.div`
   align-items: flex-end;
@@ -16,6 +16,8 @@ export const CoinAmount = styled(UCoinAmount)`
 `;
 
 export const Container = styled.div`
+  background: rgb(224 231 237 / 32%);
+  border-bottom: 1px solid ${colors.border};
   display: flex;
   padding: 24px 16px 24px;
 `;

@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
-import {breakpoints, colors} from 'styles';
+import {breakpoints} from 'styles';
 
 export const Amount = styled.div`
-  color: ${colors.secondary};
   font-size: 20px;
   margin-left: 20px;
 `;

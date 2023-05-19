@@ -1,13 +1,10 @@
 import {Field as UField} from 'formik';
 import styled from 'styled-components';
 
-import {colors} from 'styles';
+import {colors, inputStyle} from 'styles';
 
 export const Field = styled(UField)`
-  background: #f1f6fa;
-  border-radius: 3px;
-  border: 1px solid ${({$error}) => ($error ? colors.palette.red['500'] : 'transparent')};
-  height: 40px;
-  padding: 10px 14px;
+  ${inputStyle};
+  border: 1px solid ${({$error}) => ($error ? colors.palette.red['400'] : colors.border)};
   width: ${({width}) => (width ? `${width}px` : '260px')};
 `;
