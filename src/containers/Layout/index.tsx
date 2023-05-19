@@ -1,6 +1,5 @@
-import Center from 'containers/Center';
 import LeftNav from 'containers/LeftNav';
-import Right from 'containers/Right';
+import MainArea from 'containers/MainArea';
 import {SFC} from 'types';
 import * as S from './Styles';
 
@@ -8,8 +7,7 @@ const NewLayout: SFC = ({className}) => {
   return (
     <S.Container className={className}>
       <LeftNav />
-      <Center />
-      <Right />
+      <MainArea />
     </S.Container>
   );
 };

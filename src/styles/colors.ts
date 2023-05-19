@@ -2,11 +2,12 @@
 
 const colors = {
   background: '#fff',
+  black: '#000000',
+  border: 'rgb(239, 243, 244)',
   primary: 'rgb(15, 20, 25)',
   secondary: 'rgb(83, 100, 113)',
   white: '#ffffff',
   whiteHover: '#f3f4f6',
-  black: '#000000',
   palette: {
     blue: {
       '100': '#d1e9f5',

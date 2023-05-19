@@ -20,6 +20,7 @@ export const Img = styled.img`
   border-radius: 6px;
   height: auto;
   margin-top: 20px;
+  max-height: 600px;
   max-width: 100%;
 `;
 

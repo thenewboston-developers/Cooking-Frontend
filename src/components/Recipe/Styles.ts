@@ -13,7 +13,7 @@ export const CoinAmount = styled(UCoinAmount)`
 `;
 
 export const Container = styled.div`
-  border-bottom: 1px solid #d8dee4;
+  border-bottom: 1px solid ${colors.border};
   display: flex;
   padding: 16px;
 

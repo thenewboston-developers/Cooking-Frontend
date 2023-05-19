@@ -7,7 +7,7 @@ import RecipeDetails from 'pages/RecipeDetails';
 import {SFC} from 'types';
 import * as S from './Styles';
 
-const Center: SFC = ({className}) => {
+const MainArea: SFC = ({className}) => {
   return (
     <S.Container className={className}>
       <Routes>
@@ -20,4 +20,4 @@ const Center: SFC = ({className}) => {
   );
 };
 
-export default Center;
+export default MainArea;
