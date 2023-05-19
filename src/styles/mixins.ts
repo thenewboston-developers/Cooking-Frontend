@@ -1,6 +1,7 @@
 import {css} from 'styled-components';
 
 import colors from 'styles/colors';
+import fonts from 'styles/fonts';
 
 export const hiddenScroll = css`
   overflow-y: auto;
@@ -21,6 +22,7 @@ export const hiddenScroll = css`
 export const inputStyle = css`
   background: ${colors.whiteHover};
   border-radius: 3px;
+  font-family: ${fonts.family.default};
   height: 40px;
   padding: 10px 14px;
 

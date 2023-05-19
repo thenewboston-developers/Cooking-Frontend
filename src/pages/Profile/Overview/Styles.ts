@@ -60,8 +60,8 @@ export const Label = styled.div`
 export const Left = styled.div``;
 
 export const Name = styled.span`
-  font-size: 24px;
-  font-weight: ${fonts.weight.black};
+  font-size: 26px;
+  font-weight: ${fonts.weight.bold};
   margin-top: 12px;
 `;
 

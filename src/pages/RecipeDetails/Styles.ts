@@ -26,7 +26,7 @@ export const Img = styled.img`
 
 export const Name = styled.span`
   font-size: 32px;
-  font-weight: ${fonts.weight.black};
+  font-weight: ${fonts.weight.bold};
 `;
 
 export const SectionContent = styled.div`

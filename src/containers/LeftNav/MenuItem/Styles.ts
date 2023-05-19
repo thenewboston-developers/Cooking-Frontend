@@ -11,7 +11,7 @@ const buttonStyle = css<{$isActive: boolean}>`
   background: ${({$isActive}) => ($isActive ? 'rgba(208, 215, 222, 0.32)' : 'transparent')};
   border-radius: ${`${HEIGHT / 2}px`};
   display: flex;
-  font-weight: ${({$isActive}) => ($isActive ? fonts.weight.black : fonts.weight.regular)};
+  font-weight: ${({$isActive}) => ($isActive ? fonts.weight.bold : fonts.weight.regular)};
   height: ${`${HEIGHT}px`};
   padding: 0 12px;
   transition: background 0.3s ease;

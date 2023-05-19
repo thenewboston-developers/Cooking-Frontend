@@ -1,5 +1,7 @@
 import {createGlobalStyle} from 'styled-components';
 
+import fonts from 'styles/fonts';
+
 const ToastifyStyle = createGlobalStyle`
   .Toastify {
     &__close-button {
@@ -25,6 +27,8 @@ const ToastifyStyle = createGlobalStyle`
     }
 
     &__toast-body {
+      font-family: ${fonts.family.default};
+
       && {
         padding: 0;
       }
