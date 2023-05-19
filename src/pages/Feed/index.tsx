@@ -43,7 +43,7 @@ const Feed: SFC = ({className}) => {
     if (recipes === null || recipes.length === 0) {
       return (
         <S.EmptyStateWrapper>
-          <div>No recipes to display</div>
+          <S.EmptyState>No recipes to display</S.EmptyState>
         </S.EmptyStateWrapper>
       );
     }

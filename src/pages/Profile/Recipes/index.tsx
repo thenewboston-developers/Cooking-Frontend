@@ -36,8 +36,21 @@ const Recipes: SFC = ({className}) => {
   };
 
   const renderRecipeList = () => {
-    if (requestPending) return <Loader />;
-    if (recipes === null || recipes.length === 0) return <div>No recipes to display</div>;
+    if (requestPending) {
+      return (
+        <S.EmptyStateWrapper>
+          <Loader />
+        </S.EmptyStateWrapper>
+      );
+    }
+
+    if (recipes === null || recipes.length === 0) {
+      return (
+        <S.EmptyStateWrapper>
+          <S.EmptyState>No recipes to display</S.EmptyState>
+        </S.EmptyStateWrapper>
+      );
+    }
 
     const items = recipes
       .filter(({id}) => !deletedRecipeIds.includes(id))
