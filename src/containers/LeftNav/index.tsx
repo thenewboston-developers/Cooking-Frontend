@@ -8,6 +8,7 @@ import LogInModal from 'modals/LogInModal';
 import {getSelf} from 'selectors/state';
 import {AppDispatch, SFC} from 'types';
 import Balance from './Balance';
+import CreateRecipeButton from './CreateRecipeButton';
 import MenuButton from './MenuItem/MenuButton';
 import MenuLink from './MenuItem/MenuLink';
 import * as S from './Styles';
@@ -22,6 +23,11 @@ const LeftNav: SFC = ({className}) => {
   const renderBalance = () => {
     if (!isAuthenticated) return null;
     return <Balance />;
+  };
+
+  const renderCreateRecipeButton = () => {
+    if (!isAuthenticated) return null;
+    return <CreateRecipeButton />;
   };
 
   const renderLogoutButton = () => {
@@ -53,6 +59,7 @@ const LeftNav: SFC = ({className}) => {
           {renderUnauthenticatedButtons()}
           <MenuLink icon={mdiHome} text="Home" to="/" />
           {renderProfileLink()}
+          {renderCreateRecipeButton()}
         </S.Top>
         <S.Bottom>{renderLogoutButton()}</S.Bottom>
       </S.Container>
