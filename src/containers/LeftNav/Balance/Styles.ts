@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import {colors} from 'styles';
+import {breakpoints, colors} from 'styles';
 
 export const Amount = styled.div`
   color: ${colors.secondary};
@@ -12,6 +12,10 @@ export const Container = styled.div`
   align-items: center;
   display: flex;
   padding: 0 12px 24px;
+
+  @media (max-width: ${breakpoints.desktop}) {
+    display: none;
+  }
 `;
 
 export const Img = styled.img`

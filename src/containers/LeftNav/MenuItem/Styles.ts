@@ -2,7 +2,7 @@ import {Link as ULink} from 'react-router-dom';
 import styled, {css} from 'styled-components';
 import UIcon from '@mdi/react';
 
-import {fonts} from 'styles';
+import {breakpoints, fonts} from 'styles';
 
 const HEIGHT = 48;
 
@@ -36,4 +36,8 @@ export const MenuLink = styled(ULink)`
 export const Text = styled.div`
   font-size: 20px;
   margin-left: 20px;
+
+  @media (max-width: ${breakpoints.desktop}) {
+    display: none;
+  }
 `;
