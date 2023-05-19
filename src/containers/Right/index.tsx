@@ -2,7 +2,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {mdiDotsVertical} from '@mdi/js';
 
-import CookingLogo from 'assets/logos/cooking.png';
 import Button from 'components/Button';
 import CoinAmount from 'components/CoinAmount';
 import {DropdownMenuOption} from 'components/DropdownMenu';
@@ -14,7 +13,7 @@ import {getSelf} from 'selectors/state';
 import {AppDispatch, SFC} from 'types';
 import * as S from './Styles';
 
-const TopNav: SFC = ({className}) => {
+const Right: SFC = ({className}) => {
   const [createAccountModalIsOpen, toggleCreateAccountModal] = useToggle(false);
   const [logInModalIsOpen, toggleLogInModal] = useToggle(false);
   const dispatch = useDispatch<AppDispatch>();
@@ -22,12 +21,7 @@ const TopNav: SFC = ({className}) => {
   const self = useSelector(getSelf);
   const selfDisplayImage = useSelfDisplayImage();
 
-  const renderDropdownMenu = () => {
-    const menuOptions: DropdownMenuOption[] = [{label: 'Log out', onClick: () => dispatch(logout())}];
-    return <S.DropdownMenu icon={mdiDotsVertical} options={menuOptions} />;
-  };
-
-  const renderRightContent = () => {
+  const renderContent = () => {
     if (!isAuthenticated) {
       return (
         <S.ButtonContainer>
@@ -48,20 +42,18 @@ const TopNav: SFC = ({className}) => {
     );
   };
 
+  const renderDropdownMenu = () => {
+    const menuOptions: DropdownMenuOption[] = [{label: 'Log out', onClick: () => dispatch(logout())}];
+    return <S.DropdownMenu icon={mdiDotsVertical} options={menuOptions} />;
+  };
+
   return (
     <>
-      <S.Container className={className}>
-        <S.Left>
-          <Link to="/">
-            <S.Logo alt="logo" src={CookingLogo} />
-          </Link>
-        </S.Left>
-        <S.Right>{renderRightContent()}</S.Right>
-      </S.Container>
+      <S.Container className={className}>{renderContent()}</S.Container>
       {createAccountModalIsOpen ? <CreateAccountModal close={toggleCreateAccountModal} /> : null}
       {logInModalIsOpen ? <LogInModal close={toggleLogInModal} /> : null}
     </>
   );
 };
 
-export default TopNav;
+export default Right;

@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
-import {cardStyle, fonts} from 'styles';
+import {fonts} from 'styles';
 
 export const Card = styled.div`
-  ${cardStyle};
   padding: 16px;
 `;
 

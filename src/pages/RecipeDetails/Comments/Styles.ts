@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import UButton from 'components/Button';
 import {InlineInput} from 'components/FormElements';
-import {cardStyle} from 'styles';
 
 export const AmountInput = styled(InlineInput)`
   margin-left: 12px;
@@ -15,7 +14,6 @@ export const Button = styled(UButton)`
 `;
 
 export const Container = styled.div`
-  ${cardStyle};
   margin-top: 20px;
   padding: 16px;
 `;

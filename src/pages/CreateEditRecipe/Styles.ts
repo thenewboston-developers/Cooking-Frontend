@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
 import {Input as UInput} from 'components/FormElements';
-import {cardStyle} from 'styles';
 
 export const Card = styled.div`
-  ${cardStyle};
   margin-top: 32px;
   padding: 16px;
 `;

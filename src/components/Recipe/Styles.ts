@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import UAccountCard from 'components/AccountCard';
 import UCoinAmount from 'components/CoinAmount';
-import {cardStyle, colors, fonts} from 'styles';
+import {colors, fonts} from 'styles';
 
 export const AccountCard = styled(UAccountCard)`
   margin-top: 24px;
@@ -13,9 +13,13 @@ export const CoinAmount = styled(UCoinAmount)`
 `;
 
 export const Container = styled.div`
-  ${cardStyle};
+  border-bottom: 1px solid #d8dee4;
   display: flex;
   padding: 16px;
+
+  &:last-child {
+    border-bottom: none;
+  }
 `;
 
 export const Description = styled.span`

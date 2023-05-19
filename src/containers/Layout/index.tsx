@@ -1,25 +1,17 @@
-import {FC} from 'react';
-import {Route, Routes} from 'react-router-dom';
-
-import TopNav from 'containers/TopNav';
-import CreateEditRecipe from 'pages/CreateEditRecipe';
-import Home from 'pages/Home';
-import Profile from 'pages/Profile';
-import RecipeDetails from 'pages/RecipeDetails';
+import Center from 'containers/Center';
+import LeftNav from 'containers/LeftNav';
+import Right from 'containers/Right';
+import {SFC} from 'types';
 import * as S from './Styles';
 
-const Layout: FC = () => {
+const NewLayout: SFC = ({className}) => {
   return (
-    <S.Container>
-      <TopNav />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/createEditRecipe" element={<CreateEditRecipe />} />
-        <Route path="/profile/:accountNumber" element={<Profile />} />
-        <Route path="/recipe/:id" element={<RecipeDetails />} />
-      </Routes>
+    <S.Container className={className}>
+      <LeftNav />
+      <Center />
+      <Right />
     </S.Container>
   );
 };
 
-export default Layout;
+export default NewLayout;

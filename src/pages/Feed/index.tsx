@@ -7,7 +7,7 @@ import {RecipeReadSerializer, SFC} from 'types';
 import {displayErrorToast} from 'utils/toast';
 import * as S from './Styles';
 
-const Home: SFC = ({className}) => {
+const Feed: SFC = ({className}) => {
   const [deletedRecipeIds, setDeletedRecipeIds] = useState<number[]>([]);
   const [recipes, setRecipes] = useState<RecipeReadSerializer[] | null>(null);
   const [requestPending, setRequestPending] = useState<boolean>(true);
@@ -58,4 +58,4 @@ const Home: SFC = ({className}) => {
   return <S.Container className={className}>{renderRecipeList()}</S.Container>;
 };
 
-export default Home;
+export default Feed;

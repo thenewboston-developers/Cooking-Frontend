@@ -5,10 +5,10 @@ import UCopyContainer from 'components/CopyContainer';
 import {fonts} from 'styles';
 
 export const ButtonContainer = styled.div`
+  align-items: flex-end;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-top: 24px;
+  flex: 1;
 `;
 
 export const CoinAmount = styled(UCoinAmount)`
@@ -17,16 +17,17 @@ export const CoinAmount = styled(UCoinAmount)`
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  padding: 32px 16px 24px;
 `;
 
 export const CopyContainer = styled(UCopyContainer)`
   background: #fcfcfc;
   border: 1px solid rgb(207, 217, 222);
+  max-width: 280px;
 `;
 
 export const Img = styled.img`
-  border-radius: 6px;
+  border-radius: 50%;
   height: 100%;
   object-fit: cover;
   position: absolute;
@@ -36,7 +37,7 @@ export const Img = styled.img`
 export const ImgWrapper = styled.div`
   padding-bottom: 100%;
   position: relative;
-  width: 100%;
+  width: 160px;
 `;
 
 export const Label = styled.div`
@@ -44,8 +45,18 @@ export const Label = styled.div`
   margin: 16px 0 4px;
 `;
 
+export const Left = styled.div``;
+
 export const Name = styled.span`
   font-size: 24px;
   font-weight: ${fonts.weight.black};
   margin-top: 12px;
 `;
+
+export const Right = styled.div`
+  display: flex;
+  flex: 1;
+  margin: 0 12px;
+`;
+
+export const UserInformation = styled.div``;

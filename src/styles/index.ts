@@ -1,5 +1,5 @@
 import colors from 'styles/colors';
 import fonts from 'styles/fonts';
-import {cardStyle} from 'styles/mixins';
+import {hiddenScroll} from 'styles/mixins';
 
-export {cardStyle, colors, fonts};
+export {colors, fonts, hiddenScroll};
