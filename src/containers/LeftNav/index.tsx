@@ -1,16 +1,15 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {mdiAccount, mdiDotsVertical, mdiHome} from '@mdi/js';
+import {mdiAccount, mdiAccountPlus, mdiExitToApp, mdiHome, mdiLogin} from '@mdi/js';
 
-import Button from 'components/Button';
-import CoinAmount from 'components/CoinAmount';
-import {DropdownMenuOption} from 'components/DropdownMenu';
 import {logout} from 'dispatchers/authentication';
 import {useIsAuthenticated, useToggle} from 'hooks';
 import CreateAccountModal from 'modals/CreateAccountModal';
 import LogInModal from 'modals/LogInModal';
 import {getSelf} from 'selectors/state';
 import {AppDispatch, SFC} from 'types';
-import NavItem from './NavItem';
+import Balance from './Balance';
+import MenuButton from './MenuItem/MenuButton';
+import MenuLink from './MenuItem/MenuLink';
 import * as S from './Styles';
 
 const LeftNav: SFC = ({className}) => {
@@ -22,28 +21,27 @@ const LeftNav: SFC = ({className}) => {
 
   const renderBalance = () => {
     if (!isAuthenticated) return null;
-    return <CoinAmount amount={self.balance} />;
+    return <Balance />;
   };
 
   const renderLogoutButton = () => {
     if (!isAuthenticated) return null;
-    const menuOptions: DropdownMenuOption[] = [{label: 'Log out', onClick: () => dispatch(logout())}];
-    return <S.DropdownMenu icon={mdiDotsVertical} options={menuOptions} />;
+    return <MenuButton icon={mdiExitToApp} onClick={() => dispatch(logout())} text="Log out" />;
   };
 
   const renderProfileLink = () => {
     if (!isAuthenticated) return null;
-    return <NavItem icon={mdiAccount} text="Profile" to={`/profile/${self.accountNumber}`} />;
+    return <MenuLink icon={mdiAccount} text="Profile" to={`/profile/${self.accountNumber}`} />;
   };
 
   const renderUnauthenticatedButtons = () => {
     if (isAuthenticated) return null;
 
     return (
-      <S.ButtonContainer>
-        <Button onClick={toggleCreateAccountModal} text="Create account" />
-        <Button onClick={toggleLogInModal} text="Log in" />
-      </S.ButtonContainer>
+      <>
+        <MenuButton icon={mdiAccountPlus} onClick={toggleCreateAccountModal} text="Create account" />
+        <MenuButton icon={mdiLogin} onClick={toggleLogInModal} text="Log in" />
+      </>
     );
   };
 
@@ -51,9 +49,9 @@ const LeftNav: SFC = ({className}) => {
     <>
       <S.Container className={className}>
         <S.Top>
-          {renderUnauthenticatedButtons()}
           {renderBalance()}
-          <NavItem icon={mdiHome} text="Home" to="/" />
+          {renderUnauthenticatedButtons()}
+          <MenuLink icon={mdiHome} text="Home" to="/" />
           {renderProfileLink()}
         </S.Top>
         <S.Bottom>{renderLogoutButton()}</S.Bottom>
