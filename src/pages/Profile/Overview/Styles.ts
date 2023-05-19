@@ -2,7 +2,13 @@ import styled from 'styled-components';
 
 import UCoinAmount from 'components/CoinAmount';
 import UCopyContainer from 'components/CopyContainer';
-import {colors, fonts} from 'styles';
+import {breakpoints, colors, fonts} from 'styles';
+
+export const AccountNumber = styled.div`
+  @media (max-width: ${breakpoints.mini}) {
+    display: none;
+  }
+`;
 
 export const ButtonContainer = styled.div`
   align-items: flex-end;
@@ -39,12 +45,16 @@ export const Img = styled.img`
 export const ImgWrapper = styled.div`
   padding-bottom: 100%;
   position: relative;
-  width: 180px;
+  width: 240px;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 160px;
+  }
 `;
 
 export const Label = styled.div`
   font-size: 12px;
-  margin: 16px 0 4px;
+  margin: 12px 0 4px;
 `;
 
 export const Left = styled.div``;
@@ -58,6 +68,16 @@ export const Name = styled.span`
 export const Right = styled.div`
   display: flex;
   flex: 1;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    flex-direction: column;
+    gap: 12px;
+
+    ${ButtonContainer} {
+      align-items: flex-start;
+      margin-left: 24px;
+    }
+  }
 `;
 
 export const UserInformation = styled.div`

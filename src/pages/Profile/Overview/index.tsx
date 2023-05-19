@@ -57,10 +57,10 @@ const Overview: SFC = ({className}) => {
     if (requestPending) return null;
 
     return (
-      <>
+      <S.AccountNumber>
         <S.Label>Account Number</S.Label>
         <S.CopyContainer text={accountNumber || ''} />
-      </>
+      </S.AccountNumber>
     );
   };
 
