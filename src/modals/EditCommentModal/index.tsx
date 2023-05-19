@@ -1,10 +1,9 @@
 import {useMemo} from 'react';
-import axios from 'axios';
 import {Form, Formik} from 'formik';
 
+import {updateComment} from 'api/comments';
 import Button, {ButtonType} from 'components/Button';
 import {CommentReadSerializer, SFC} from 'types';
-import {authorizationHeaders} from 'utils/authentication';
 import {displayErrorToast} from 'utils/toast';
 import yup from 'utils/yup';
 import * as S from './Styles';
@@ -24,11 +23,7 @@ const EditCommentModal: SFC<EditCommentModalProps> = ({className, close, comment
 
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
-      const {data} = await axios.patch<CommentReadSerializer>(
-        `${process.env.REACT_APP_API_URL}/api/comments/${comment.id}`,
-        values,
-        authorizationHeaders(),
-      );
+      const data = await updateComment(comment.id, values);
       handleEdit(data);
       close();
     } catch (error) {

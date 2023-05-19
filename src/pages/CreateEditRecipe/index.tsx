@@ -1,13 +1,12 @@
 import {useEffect, useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
-import axios from 'axios';
 import {Form, Formik} from 'formik';
 
+import {createRecipe, updateRecipe} from 'api/recipes';
 import Button, {ButtonType} from 'components/Button';
 import {ToastType} from 'enums';
 import {useActiveRecipe, useIsAuthenticated} from 'hooks';
-import {RecipeReadSerializer, SFC} from 'types';
-import {authorizationHeaders} from 'utils/authentication';
+import {SFC} from 'types';
 import {displayErrorToast, displayToast} from 'utils/toast';
 import yup from 'utils/yup';
 import * as S from './Styles';
@@ -31,7 +30,7 @@ const CreateEditRecipe: SFC = ({className}) => {
 
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
-      let response;
+      let responseData;
       const requestData = {
         description: values.description,
         image_url: values.imageUrl,
@@ -39,22 +38,14 @@ const CreateEditRecipe: SFC = ({className}) => {
       };
 
       if (activeRecipe) {
-        response = await axios.patch<RecipeReadSerializer>(
-          `${process.env.REACT_APP_API_URL}/api/recipes/${activeRecipe.id}`,
-          requestData,
-          authorizationHeaders(),
-        );
+        responseData = await updateRecipe(activeRecipe.id, requestData);
         displayToast('Recipe updated!', ToastType.success);
       } else {
-        response = await axios.post<RecipeReadSerializer>(
-          `${process.env.REACT_APP_API_URL}/api/recipes`,
-          requestData,
-          authorizationHeaders(),
-        );
+        responseData = await createRecipe(requestData);
         displayToast('Recipe created!', ToastType.success);
       }
 
-      navigate(`/recipe/${response.data.id}`);
+      navigate(`/recipe/${responseData.id}`);
     } catch (error) {
       console.error(error);
       const verb = activeRecipe ? 'updating' : 'creating';

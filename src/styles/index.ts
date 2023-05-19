@@ -1,5 +1,6 @@
+import breakpoints from 'styles/breakpoints';
 import colors from 'styles/colors';
 import fonts from 'styles/fonts';
-import {cardStyle} from 'styles/mixins';
+import {hiddenScroll, inputStyle} from 'styles/mixins';
 
-export {cardStyle, colors, fonts};
+export {breakpoints, colors, fonts, hiddenScroll, inputStyle};

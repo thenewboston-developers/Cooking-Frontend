@@ -1,11 +1,13 @@
 import {SFC} from 'types';
+import Overview from './Overview';
+import UserRecipes from './UserRecipes';
 import * as S from './Styles';
 
 const Profile: SFC = ({className}) => {
   return (
     <S.Container className={className}>
-      <S.Left />
-      <S.Right />
+      <Overview />
+      <UserRecipes />
     </S.Container>
   );
 };

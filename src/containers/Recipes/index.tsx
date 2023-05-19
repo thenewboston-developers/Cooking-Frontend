@@ -7,7 +7,11 @@ import {RecipeReadSerializer, SFC} from 'types';
 import {displayErrorToast} from 'utils/toast';
 import * as S from './Styles';
 
-const Home: SFC = ({className}) => {
+interface RecipesProps {
+  endpoint: string;
+}
+
+const Recipes: SFC<RecipesProps> = ({className, endpoint}) => {
   const [deletedRecipeIds, setDeletedRecipeIds] = useState<number[]>([]);
   const [recipes, setRecipes] = useState<RecipeReadSerializer[] | null>(null);
   const [requestPending, setRequestPending] = useState<boolean>(true);
@@ -16,7 +20,7 @@ const Home: SFC = ({className}) => {
     (async () => {
       try {
         setRequestPending(true);
-        const {data} = await axios.get<RecipeReadSerializer[]>(`${process.env.REACT_APP_API_URL}/api/recipes`);
+        const {data} = await axios.get<RecipeReadSerializer[]>(endpoint);
         setRecipes(data);
       } catch (error) {
         console.error(error);
@@ -25,7 +29,7 @@ const Home: SFC = ({className}) => {
         setRequestPending(false);
       }
     })();
-  }, []);
+  }, [endpoint]);
 
   const handleRecipeDelete = (id: number) => {
     setDeletedRecipeIds([...deletedRecipeIds, id]);
@@ -43,7 +47,7 @@ const Home: SFC = ({className}) => {
     if (recipes === null || recipes.length === 0) {
       return (
         <S.EmptyStateWrapper>
-          <div>No recipes to display</div>
+          <S.EmptyState>No recipes to display</S.EmptyState>
         </S.EmptyStateWrapper>
       );
     }
@@ -58,4 +62,4 @@ const Home: SFC = ({className}) => {
   return <S.Container className={className}>{renderRecipeList()}</S.Container>;
 };
 
-export default Home;
+export default Recipes;

@@ -1,14 +1,13 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {Link, useNavigate} from 'react-router-dom';
-import axios from 'axios';
 import {mdiDotsVertical} from '@mdi/js';
 
+import {deleteRecipe} from 'api/recipes';
 import DropdownMenu, {DropdownMenuOption} from 'components/DropdownMenu';
 import {ToastType} from 'enums';
 import {getSelf} from 'selectors/state';
 import {updateManager} from 'store/manager';
 import {AppDispatch, RecipeReadSerializer, SFC} from 'types';
-import {authorizationHeaders} from 'utils/authentication';
 import {shortDate} from 'utils/dates';
 import {truncate} from 'utils/strings';
 import {displayErrorToast, displayToast} from 'utils/toast';
@@ -28,11 +27,10 @@ const Recipe: SFC<RecipeProps> = ({className, handleDelete, recipe}) => {
 
   const handleDeleteClick = async () => {
     try {
-      await axios.delete(`${process.env.REACT_APP_API_URL}/api/recipes/${id}`, authorizationHeaders());
+      await deleteRecipe(id);
       displayToast('Recipe deleted!', ToastType.success);
       handleDelete(id);
     } catch (error) {
-      console.error(error);
       displayErrorToast('Error deleting the recipe');
     }
   };
@@ -74,7 +72,7 @@ const Recipe: SFC<RecipeProps> = ({className, handleDelete, recipe}) => {
           </S.ImgWrapper>
         </Link>
       </S.ImgContainer>
-      <S.Middle>
+      <S.Details>
         <Link to={`/recipe/${id}`}>
           <S.Name>{name}</S.Name>
         </Link>
@@ -86,7 +84,7 @@ const Recipe: SFC<RecipeProps> = ({className, handleDelete, recipe}) => {
           displayImage={creator.display_image}
           displayName={creator.display_name}
         />
-      </S.Middle>
+      </S.Details>
       {renderRight()}
     </S.Container>
   );

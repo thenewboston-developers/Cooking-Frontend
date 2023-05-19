@@ -2,14 +2,15 @@
 
 const fonts = {
   family: {
-    default: 'Lato, sans-serif',
+    default: 'OpenSans, sans-serif',
   },
   weight: {
-    thin: '100',
     light: '300',
     regular: '400',
+    medium: '500',
+    semiBold: '600',
     bold: '700',
-    black: '900',
+    extraBold: '800',
   },
 };
 

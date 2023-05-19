@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {useNavigate, useParams} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {useParams} from 'react-router-dom';
 import axios from 'axios';
 
 import DefaultAvatar from 'assets/default-avatar.png';
@@ -9,21 +9,18 @@ import Loader from 'components/Loader';
 import {useIsAuthenticated, useToggle} from 'hooks';
 import EditAccountModal from 'modals/EditAccountModal';
 import {getSelf} from 'selectors/state';
-import {updateManager} from 'store/manager';
-import {AppDispatch, GetAccountResponse, SFC} from 'types';
+import {GetAccountResponse, SFC} from 'types';
 import {displayErrorToast} from 'utils/toast';
 import * as S from './Styles';
 
-const Left: SFC = ({className}) => {
+const Overview: SFC = ({className}) => {
   const [editAccountModalIsOpen, toggleEditAccountModal] = useToggle(false);
   const [displayBalance, setDisplayBalance] = useState<number>(0);
   const [displayImage, setDisplayImage] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState<string | null>(null);
   const [requestPending, setRequestPending] = useState<boolean>(false);
   const {accountNumber} = useParams();
-  const dispatch = useDispatch<AppDispatch>();
   const isAuthenticated = useIsAuthenticated();
-  const navigate = useNavigate();
   const self = useSelector(getSelf);
 
   useEffect(() => {
@@ -56,30 +53,14 @@ const Left: SFC = ({className}) => {
     })();
   }, [accountNumber, self]);
 
-  const handleCreateRecipeClick = () => {
-    dispatch(updateManager({activeRecipe: null}));
-    navigate('/createEditRecipe');
-  };
-
   const renderAccountNumber = () => {
     if (requestPending) return null;
 
     return (
-      <>
+      <S.AccountNumber>
         <S.Label>Account Number</S.Label>
         <S.CopyContainer text={accountNumber || ''} />
-      </>
-    );
-  };
-
-  const renderActionButtons = () => {
-    if (!isAuthenticated || accountNumber !== self.accountNumber) return null;
-
-    return (
-      <S.ButtonContainer>
-        <Button color={ButtonColor.secondary} onClick={toggleEditAccountModal} text="Edit profile" />
-        <Button color={ButtonColor.secondary} onClick={handleCreateRecipeClick} text="Create recipe" />
-      </S.ButtonContainer>
+      </S.AccountNumber>
     );
   };
 
@@ -105,18 +86,28 @@ const Left: SFC = ({className}) => {
     return <S.Name>{displayName || 'Anonymous'}</S.Name>;
   };
 
+  const renderEditProfileButton = () => {
+    if (!isAuthenticated || accountNumber !== self.accountNumber) return null;
+
+    return <Button color={ButtonColor.secondary} onClick={toggleEditAccountModal} text="Edit profile" />;
+  };
+
   return (
     <>
       <S.Container className={className}>
-        {renderDisplayImage()}
-        {renderDisplayName()}
-        {renderCoinAmount()}
-        {renderAccountNumber()}
-        {renderActionButtons()}
+        <S.Left>{renderDisplayImage()}</S.Left>
+        <S.Right>
+          <S.UserInformation>
+            {renderDisplayName()}
+            {renderCoinAmount()}
+            {renderAccountNumber()}
+          </S.UserInformation>
+          <S.ButtonContainer>{renderEditProfileButton()}</S.ButtonContainer>
+        </S.Right>
       </S.Container>
       {editAccountModalIsOpen ? <EditAccountModal close={toggleEditAccountModal} /> : null}
     </>
   );
 };
 
-export default Left;
+export default Overview;

@@ -1,22 +1,15 @@
 import styled from 'styled-components';
 
-import {cardStyle, fonts} from 'styles';
-
-export const Card = styled.div`
-  ${cardStyle};
-  padding: 16px;
-`;
+import {fonts} from 'styles';
 
 export const Container = styled.div`
-  display: grid;
-  grid-template-columns: auto 320px;
-  overflow-y: auto;
+  padding: 16px 24px 24px;
 `;
 
 export const Details = styled.div`
   display: flex;
   gap: 16px;
-  margin-top: 8px;
+  margin-top: 12px;
 `;
 
 export const EmptyStateWrapper = styled.div`
@@ -26,23 +19,14 @@ export const EmptyStateWrapper = styled.div`
 export const Img = styled.img`
   border-radius: 6px;
   height: auto;
-  margin-top: 16px;
+  margin-top: 20px;
+  max-height: 600px;
   max-width: 100%;
 `;
 
-export const Left = styled.div`
-  grid-column: 1 / span 1;
-  padding: 20px 10px 20px 24px;
-`;
-
 export const Name = styled.span`
-  font-size: 24px;
-  font-weight: ${fonts.weight.black};
-`;
-
-export const Right = styled.div`
-  grid-column: 2 / span 1;
-  padding: 20px 24px 20px 10px;
+  font-size: 32px;
+  font-weight: ${fonts.weight.bold};
 `;
 
 export const SectionContent = styled.div`

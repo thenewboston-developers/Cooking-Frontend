@@ -1,9 +1,34 @@
 import {css} from 'styled-components';
 
-import {colors} from 'styles';
+import colors from 'styles/colors';
+import fonts from 'styles/fonts';
 
-export const cardStyle = css`
-  background: ${colors.white};
-  border-radius: 8px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+export const hiddenScroll = css`
+  overflow-y: auto;
+
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+`;
+
+export const inputStyle = css`
+  background: ${colors.whiteHover};
+  border-radius: 3px;
+  font-family: ${fonts.family.default};
+  height: 40px;
+  padding: 10px 14px;
+
+  ::-webkit-inner-spin-button,
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
