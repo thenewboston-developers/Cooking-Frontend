@@ -3,45 +3,41 @@ import axios from 'axios';
 import {RecipeReadSerializer} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
 
-export const createRecipe = async (data: any) => {
+const BASE_URL = `${process.env.REACT_APP_API_URL}/api/recipes`;
+
+export const createRecipe = async (data: any): Promise<RecipeReadSerializer> => {
   try {
-    return await axios.post<RecipeReadSerializer>(
-      `${process.env.REACT_APP_API_URL}/api/recipes`,
-      data,
-      authorizationHeaders(),
-    );
+    const response = await axios.post<RecipeReadSerializer>(BASE_URL, data, authorizationHeaders());
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
 
-export const deleteRecipe = async (id: number) => {
+export const deleteRecipe = async (id: number): Promise<void> => {
   try {
-    return await axios.delete(`${process.env.REACT_APP_API_URL}/api/recipes/${id}`, authorizationHeaders());
+    await axios.delete(`${BASE_URL}/${id}`, authorizationHeaders());
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
 
-export const getRecipe = async (id: number) => {
+export const getRecipe = async (id: number): Promise<RecipeReadSerializer> => {
   try {
-    const {data} = await axios.get<RecipeReadSerializer>(`${process.env.REACT_APP_API_URL}/api/recipes/${id}`);
-    return data;
+    const response = await axios.get<RecipeReadSerializer>(`${BASE_URL}/${id}`);
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
 
-export const updateRecipe = async (id: number, data: any) => {
+export const updateRecipe = async (id: number, data: any): Promise<RecipeReadSerializer> => {
   try {
-    return await axios.patch<RecipeReadSerializer>(
-      `${process.env.REACT_APP_API_URL}/api/recipes/${id}`,
-      data,
-      authorizationHeaders(),
-    );
+    const response = await axios.patch<RecipeReadSerializer>(`${BASE_URL}/${id}`, data, authorizationHeaders());
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;

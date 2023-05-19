@@ -23,7 +23,7 @@ const EditCommentModal: SFC<EditCommentModalProps> = ({className, close, comment
 
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
-      const {data} = await updateComment(comment.id, values);
+      const data = await updateComment(comment.id, values);
       handleEdit(data);
       close();
     } catch (error) {

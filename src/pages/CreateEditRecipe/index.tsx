@@ -30,7 +30,7 @@ const CreateEditRecipe: SFC = ({className}) => {
 
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
-      let response;
+      let responseData;
       const requestData = {
         description: values.description,
         image_url: values.imageUrl,
@@ -38,14 +38,14 @@ const CreateEditRecipe: SFC = ({className}) => {
       };
 
       if (activeRecipe) {
-        response = await updateRecipe(activeRecipe.id, requestData);
+        responseData = await updateRecipe(activeRecipe.id, requestData);
         displayToast('Recipe updated!', ToastType.success);
       } else {
-        response = await createRecipe(requestData);
+        responseData = await createRecipe(requestData);
         displayToast('Recipe created!', ToastType.success);
       }
 
-      navigate(`/recipe/${response.data.id}`);
+      navigate(`/recipe/${responseData.id}`);
     } catch (error) {
       console.error(error);
       const verb = activeRecipe ? 'updating' : 'creating';

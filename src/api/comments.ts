@@ -3,48 +3,41 @@ import axios from 'axios';
 import {CommentReadSerializer} from 'types';
 import {authorizationHeaders} from 'utils/authentication';
 
-export const createComment = async (data: any) => {
+const BASE_URL = `${process.env.REACT_APP_API_URL}/api/comments`;
+
+export const createComment = async (data: any): Promise<CommentReadSerializer> => {
   try {
-    const {data: commentData} = await axios.post<CommentReadSerializer>(
-      `${process.env.REACT_APP_API_URL}/api/comments`,
-      data,
-      authorizationHeaders(),
-    );
-    return commentData;
+    const response = await axios.post<CommentReadSerializer>(BASE_URL, data, authorizationHeaders());
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
 
-export const deleteComment = async (id: number) => {
+export const deleteComment = async (id: number): Promise<void> => {
   try {
-    return await axios.delete(`${process.env.REACT_APP_API_URL}/api/comments/${id}`, authorizationHeaders());
+    await axios.delete(`${BASE_URL}/${id}`, authorizationHeaders());
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
 
-export const getCommentsByRecipeId = async (recipeId: number) => {
+export const getCommentsByRecipeId = async (recipeId: number): Promise<CommentReadSerializer[]> => {
   try {
-    const {data} = await axios.get<CommentReadSerializer[]>(
-      `${process.env.REACT_APP_API_URL}/api/comments?recipe=${recipeId}`,
-    );
-    return data;
+    const response = await axios.get<CommentReadSerializer[]>(`${BASE_URL}?recipe=${recipeId}`);
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
 
-export const updateComment = async (id: number, data: any) => {
+export const updateComment = async (id: number, data: any): Promise<CommentReadSerializer> => {
   try {
-    return await axios.patch<CommentReadSerializer>(
-      `${process.env.REACT_APP_API_URL}/api/comments/${id}`,
-      data,
-      authorizationHeaders(),
-    );
+    const response = await axios.patch<CommentReadSerializer>(`${BASE_URL}/${id}`, data, authorizationHeaders());
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;
