@@ -1,12 +1,11 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {Link} from 'react-router-dom';
 import {mdiDotsVertical} from '@mdi/js';
 
 import Button from 'components/Button';
 import CoinAmount from 'components/CoinAmount';
 import {DropdownMenuOption} from 'components/DropdownMenu';
 import {logout} from 'dispatchers/authentication';
-import {useIsAuthenticated, useSelfDisplayImage, useToggle} from 'hooks';
+import {useIsAuthenticated, useToggle} from 'hooks';
 import CreateAccountModal from 'modals/CreateAccountModal';
 import LogInModal from 'modals/LogInModal';
 import {getSelf} from 'selectors/state';
@@ -19,7 +18,6 @@ const Right: SFC = ({className}) => {
   const dispatch = useDispatch<AppDispatch>();
   const isAuthenticated = useIsAuthenticated();
   const self = useSelector(getSelf);
-  const selfDisplayImage = useSelfDisplayImage();
 
   const renderContent = () => {
     if (!isAuthenticated) {
@@ -34,9 +32,6 @@ const Right: SFC = ({className}) => {
     return (
       <>
         <CoinAmount amount={self.balance} />
-        <Link to={`/profile/${self.accountNumber}`}>
-          <S.Avatar alt="avatar" src={selfDisplayImage} />
-        </Link>
         {renderDropdownMenu()}
       </>
     );

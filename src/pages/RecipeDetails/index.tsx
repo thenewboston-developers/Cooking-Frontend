@@ -95,6 +95,12 @@ const RecipeDetails: SFC = ({className}) => {
       <S.TopLeft>
         <S.Name>{recipe!.name}</S.Name>
         <S.Details>
+          <AccountCard
+            accountNumber={recipe!.creator.account_number}
+            bottomText={truncate(recipe!.creator.account_number, 16)}
+            displayImage={recipe!.creator.display_image}
+            displayName={recipe!.creator.display_name}
+          />
           <Detail label="Created" value={shortDate(recipe!.created_date, true)} />
           <Detail label="Modified" value={shortDate(recipe!.modified_date, true)} />
         </S.Details>
@@ -144,24 +150,10 @@ const RecipeDetails: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
-      <S.Left>
-        <S.Card>
-          {renderTop()}
-          <S.Img alt="image" src={recipe.image_url} />
-          {renderDescription()}
-        </S.Card>
-        <Comments recipe={recipe} refreshRecipe={refreshRecipe} />
-      </S.Left>
-      <S.Right>
-        <S.Card>
-          <AccountCard
-            accountNumber={recipe.creator.account_number}
-            bottomText={truncate(recipe.creator.account_number, 16)}
-            displayImage={recipe.creator.display_image}
-            displayName={recipe.creator.display_name}
-          />
-        </S.Card>
-      </S.Right>
+      {renderTop()}
+      <S.Img alt="image" src={recipe.image_url} />
+      {renderDescription()}
+      <Comments recipe={recipe} refreshRecipe={refreshRecipe} />
     </S.Container>
   );
 };

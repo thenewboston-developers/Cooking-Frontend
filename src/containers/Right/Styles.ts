@@ -3,13 +3,6 @@ import styled from 'styled-components';
 import UDropdownMenu from 'components/DropdownMenu';
 import {hiddenScroll} from 'styles';
 
-export const Avatar = styled.img`
-  border-radius: 50%;
-  height: 32px;
-  margin-left: 16px;
-  width: 32px;
-`;
-
 export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -17,6 +10,8 @@ export const ButtonContainer = styled.div`
 `;
 
 export const Container = styled.div`
+  align-items: flex-start;
+  display: flex;
   padding: 24px 0 0 16px;
   ${hiddenScroll};
 `;
