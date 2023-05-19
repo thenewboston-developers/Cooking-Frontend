@@ -1,8 +1,8 @@
 import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
 import {mdiDotsVertical} from '@mdi/js';
 
+import {deleteComment} from 'api/comments';
 import Avatar from 'components/Avatar';
 import DropdownMenu, {DropdownMenuOption} from 'components/DropdownMenu';
 import {ToastType} from 'enums';
@@ -10,7 +10,6 @@ import {useToggle} from 'hooks';
 import EditCommentModal from 'modals/EditCommentModal';
 import {getSelf} from 'selectors/state';
 import {CommentReadSerializer, SFC} from 'types';
-import {authorizationHeaders} from 'utils/authentication';
 import {shortDate} from 'utils/dates';
 import {displayErrorToast, displayToast} from 'utils/toast';
 import * as S from './Styles';
@@ -35,7 +34,7 @@ const Comment: SFC<CommentProps> = ({className, comment, handleDelete, handleEdi
 
   const handleDeleteClick = async () => {
     try {
-      await axios.delete(`${process.env.REACT_APP_API_URL}/api/comments/${id}`, authorizationHeaders());
+      await deleteComment(id);
       displayToast('Comment deleted!', ToastType.success);
       handleDelete(id);
     } catch (error) {

@@ -1,9 +1,9 @@
 import {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
-import axios from 'axios';
 import {mdiDotsVertical} from '@mdi/js';
 
+import {deleteRecipe, getRecipe} from 'api/recipes';
 import AccountCard from 'components/AccountCard';
 import Detail from 'components/Detail';
 import DropdownMenu, {DropdownMenuOption} from 'components/DropdownMenu';
@@ -12,7 +12,6 @@ import {ToastType} from 'enums';
 import {getSelf} from 'selectors/state';
 import {updateManager} from 'store/manager';
 import {AppDispatch, RecipeReadSerializer, SFC} from 'types';
-import {authorizationHeaders} from 'utils/authentication';
 import {shortDate} from 'utils/dates';
 import {truncate} from 'utils/strings';
 import {displayErrorToast, displayToast} from 'utils/toast';
@@ -28,12 +27,12 @@ const RecipeDetails: SFC = ({className}) => {
   const self = useSelector(getSelf);
 
   useEffect(() => {
+    if (!recipeId) return;
+
     (async () => {
       try {
         setRequestPending(true);
-        const {data} = await axios.get<RecipeReadSerializer>(
-          `${process.env.REACT_APP_API_URL}/api/recipes/${recipeId}`,
-        );
+        const data = await getRecipe(Number(recipeId));
         setRecipe(data);
       } catch (error) {
         console.error(error);
@@ -46,7 +45,7 @@ const RecipeDetails: SFC = ({className}) => {
 
   const handleDeleteClick = async () => {
     try {
-      await axios.delete(`${process.env.REACT_APP_API_URL}/api/recipes/${recipe!.id}`, authorizationHeaders());
+      await deleteRecipe(recipe!.id);
       displayToast('Recipe deleted!', ToastType.success);
       navigate(`/profile/${self.accountNumber}`);
     } catch (error) {
@@ -69,11 +68,11 @@ const RecipeDetails: SFC = ({className}) => {
   };
 
   const refreshRecipe = useCallback(() => {
+    if (!recipeId) return;
+
     (async () => {
       try {
-        const {data} = await axios.get<RecipeReadSerializer>(
-          `${process.env.REACT_APP_API_URL}/api/recipes/${recipeId}`,
-        );
+        const data = await getRecipe(Number(recipeId));
         setRecipe(data);
       } catch (error) {
         console.error(error);

@@ -1,16 +1,15 @@
 import {useEffect, useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
-import axios from 'axios';
 import {Formik, FormikHelpers} from 'formik';
 import orderBy from 'lodash/orderBy';
 
+import {createComment, getCommentsByRecipeId} from 'api/comments';
 import Avatar from 'components/Avatar';
 import {ButtonType} from 'components/Button';
 import {CORE_TRANSACTION_FEE} from 'constants/protocol';
 import {getSelf} from 'selectors/state';
 import {CommentReadSerializer, RecipeReadSerializer, SFC} from 'types';
-import {authorizationHeaders} from 'utils/authentication';
 import {displayErrorToast} from 'utils/toast';
 import yup from 'utils/yup';
 import Comment from './Comment';
@@ -48,9 +47,7 @@ const Comments: SFC<CommentsProps> = ({className, recipe, refreshRecipe}) => {
     (async () => {
       try {
         setRequestPending(true);
-        const {data} = await axios.get<CommentReadSerializer[]>(
-          `${process.env.REACT_APP_API_URL}/api/comments?recipe=${recipeId}`,
-        );
+        const data = await getCommentsByRecipeId(Number(recipeId));
         setComments(data);
       } catch (error) {
         console.error(error);
@@ -80,15 +77,8 @@ const Comments: SFC<CommentsProps> = ({className, recipe, refreshRecipe}) => {
   const handleSubmit = async (values: FormValues, {resetForm}: FormikHelpers<FormValues>): Promise<void> => {
     try {
       const requestData = {...values, recipe: recipeId};
-
-      const {data} = await axios.post<CommentReadSerializer>(
-        `${process.env.REACT_APP_API_URL}/api/comments`,
-        requestData,
-        authorizationHeaders(),
-      );
-
+      const data = await createComment(requestData);
       setNewComments([...newComments, data]);
-
       refreshRecipe();
       resetForm();
     } catch (error) {
