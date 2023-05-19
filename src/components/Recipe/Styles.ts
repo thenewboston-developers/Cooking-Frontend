@@ -38,7 +38,7 @@ export const Img = styled.img`
 `;
 
 export const ImgContainer = styled.div`
-  flex-basis: 260px;
+  flex-basis: 320px;
 `;
 
 export const ImgWrapper = styled.div`
