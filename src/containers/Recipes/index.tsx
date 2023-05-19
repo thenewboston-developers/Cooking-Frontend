@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
 import axios from 'axios';
 
 import Loader from 'components/Loader';
@@ -8,19 +7,20 @@ import {RecipeReadSerializer, SFC} from 'types';
 import {displayErrorToast} from 'utils/toast';
 import * as S from './Styles';
 
-const Recipes: SFC = ({className}) => {
+interface RecipesProps {
+  endpoint: string;
+}
+
+const Recipes: SFC<RecipesProps> = ({className, endpoint}) => {
   const [deletedRecipeIds, setDeletedRecipeIds] = useState<number[]>([]);
   const [recipes, setRecipes] = useState<RecipeReadSerializer[] | null>(null);
   const [requestPending, setRequestPending] = useState<boolean>(true);
-  const {accountNumber} = useParams();
 
   useEffect(() => {
     (async () => {
       try {
         setRequestPending(true);
-        const {data} = await axios.get<RecipeReadSerializer[]>(
-          `${process.env.REACT_APP_API_URL}/api/recipes?creator=${accountNumber}`,
-        );
+        const {data} = await axios.get<RecipeReadSerializer[]>(endpoint);
         setRecipes(data);
       } catch (error) {
         console.error(error);
@@ -29,7 +29,7 @@ const Recipes: SFC = ({className}) => {
         setRequestPending(false);
       }
     })();
-  }, [accountNumber]);
+  }, [endpoint]);
 
   const handleRecipeDelete = (id: number) => {
     setDeletedRecipeIds([...deletedRecipeIds, id]);

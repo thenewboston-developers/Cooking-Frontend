@@ -1,61 +1,10 @@
-import {useEffect, useState} from 'react';
-import axios from 'axios';
-
-import Loader from 'components/Loader';
-import Recipe from 'components/Recipe';
-import {RecipeReadSerializer, SFC} from 'types';
-import {displayErrorToast} from 'utils/toast';
-import * as S from './Styles';
+import Recipes from 'containers/Recipes';
+import {SFC} from 'types';
 
 const Feed: SFC = ({className}) => {
-  const [deletedRecipeIds, setDeletedRecipeIds] = useState<number[]>([]);
-  const [recipes, setRecipes] = useState<RecipeReadSerializer[] | null>(null);
-  const [requestPending, setRequestPending] = useState<boolean>(true);
+  const endpoint = `${process.env.REACT_APP_API_URL}/api/recipes`;
 
-  useEffect(() => {
-    (async () => {
-      try {
-        setRequestPending(true);
-        const {data} = await axios.get<RecipeReadSerializer[]>(`${process.env.REACT_APP_API_URL}/api/recipes`);
-        setRecipes(data);
-      } catch (error) {
-        console.error(error);
-        displayErrorToast('Error fetching recipes');
-      } finally {
-        setRequestPending(false);
-      }
-    })();
-  }, []);
-
-  const handleRecipeDelete = (id: number) => {
-    setDeletedRecipeIds([...deletedRecipeIds, id]);
-  };
-
-  const renderRecipeList = () => {
-    if (requestPending) {
-      return (
-        <S.EmptyStateWrapper>
-          <Loader />
-        </S.EmptyStateWrapper>
-      );
-    }
-
-    if (recipes === null || recipes.length === 0) {
-      return (
-        <S.EmptyStateWrapper>
-          <S.EmptyState>No recipes to display</S.EmptyState>
-        </S.EmptyStateWrapper>
-      );
-    }
-
-    const items = recipes
-      .filter(({id}) => !deletedRecipeIds.includes(id))
-      .map((recipe) => <Recipe handleDelete={handleRecipeDelete} key={recipe.id} recipe={recipe} />);
-
-    return <S.RecipeList>{items}</S.RecipeList>;
-  };
-
-  return <S.Container className={className}>{renderRecipeList()}</S.Container>;
+  return <Recipes className={className} endpoint={endpoint} />;
 };
 
 export default Feed;
