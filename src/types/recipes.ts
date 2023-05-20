@@ -2,6 +2,6 @@ export interface Recipe {
   balance: number;
   description: string;
   id: number;
-  imageUrl: string;
+  image: string;
   name: string;
 }

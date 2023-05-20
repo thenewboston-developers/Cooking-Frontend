@@ -1,9 +1,10 @@
 import {useEffect, useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Form, Formik} from 'formik';
+import {Field, Form, Formik} from 'formik';
 
 import {createRecipe, updateRecipe} from 'api/recipes';
 import Button, {ButtonType} from 'components/Button';
+import {FileInput} from 'components/FormElements';
 import {ToastType} from 'enums';
 import {useActiveRecipe, useIsAuthenticated} from 'hooks';
 import {SFC} from 'types';
@@ -18,7 +19,7 @@ const CreateEditRecipe: SFC = ({className}) => {
 
   const initialValues = {
     description: activeRecipe?.description || '',
-    imageUrl: activeRecipe?.imageUrl || '',
+    image: activeRecipe?.image || '',
     name: activeRecipe?.name || '',
   };
 
@@ -31,11 +32,10 @@ const CreateEditRecipe: SFC = ({className}) => {
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
       let responseData;
-      const requestData = {
-        description: values.description,
-        image_url: values.imageUrl,
-        name: values.name,
-      };
+      const requestData = new FormData();
+      requestData.append('name', values.name);
+      requestData.append('description', values.description);
+      requestData.append('image', values.image);
 
       if (activeRecipe) {
         responseData = await updateRecipe(activeRecipe.id, requestData);
@@ -56,7 +56,7 @@ const CreateEditRecipe: SFC = ({className}) => {
   const validationSchema = useMemo(() => {
     return yup.object().shape({
       description: yup.string().required(),
-      imageUrl: yup.string().url().required(),
+      image: yup.mixed().required(),
       name: yup.string().required(),
     });
   }, []);
@@ -72,9 +72,9 @@ const CreateEditRecipe: SFC = ({className}) => {
         >
           {({dirty, errors, isSubmitting, touched, isValid}) => (
             <Form>
-              <S.Input errors={errors} label="Image URL" name="imageUrl" touched={touched} />
               <S.Input errors={errors} label="Name" name="name" touched={touched} />
               <S.Input errors={errors} label="Description" name="description" touched={touched} />
+              <Field component={FileInput} name="image" touched={touched} />
               <Button
                 dirty={dirty}
                 disabled={isSubmitting}
