@@ -23,7 +23,7 @@ const Recipe: SFC<RecipeProps> = ({className, handleDelete, recipe}) => {
   const navigate = useNavigate();
   const self = useSelector(getSelf);
 
-  const {balance, created_date, creator, description, id, image_url, name} = recipe;
+  const {balance, created_date, creator, description, id, image, name} = recipe;
 
   const handleDeleteClick = async () => {
     try {
@@ -40,7 +40,7 @@ const Recipe: SFC<RecipeProps> = ({className, handleDelete, recipe}) => {
       balance,
       description,
       id,
-      imageUrl: image_url,
+      image,
       name,
     };
 
@@ -68,7 +68,7 @@ const Recipe: SFC<RecipeProps> = ({className, handleDelete, recipe}) => {
       <S.ImgContainer>
         <Link to={`/recipe/${id}`}>
           <S.ImgWrapper>
-            <S.Img alt="image" src={image_url} />
+            <S.Img alt="image" src={image} />
           </S.ImgWrapper>
         </Link>
       </S.ImgContainer>

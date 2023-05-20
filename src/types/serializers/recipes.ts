@@ -9,7 +9,7 @@ export interface RecipeReadSerializer {
   };
   description: string;
   id: number;
-  image_url: string;
+  image: string;
   modified_date: string;
   name: string;
 }

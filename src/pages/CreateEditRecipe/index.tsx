@@ -1,6 +1,6 @@
-import {useEffect, useMemo} from 'react';
+import {ChangeEvent, FC, useEffect, useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Form, Formik} from 'formik';
+import {Field, FieldProps, Form, Formik, useField} from 'formik';
 
 import {createRecipe, updateRecipe} from 'api/recipes';
 import Button, {ButtonType} from 'components/Button';
@@ -11,6 +11,24 @@ import {displayErrorToast, displayToast} from 'utils/toast';
 import yup from 'utils/yup';
 import * as S from './Styles';
 
+const CustomFileInput: FC<FieldProps<File | null>> = ({field, form, ...props}) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, __, helpers] = useField<File | null>(field.name);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.currentTarget.files && event.currentTarget.files[0];
+    form.setFieldValue(field.name, file);
+    helpers.setValue(file);
+  };
+
+  return (
+    <>
+      <input {...field} {...props} accept="image/*" onChange={handleChange} type="file" value={undefined} />
+      {form.touched[field.name] && form.errors[field.name] && <div>{String(form.errors[field.name])}</div>}
+    </>
+  );
+};
+
 const CreateEditRecipe: SFC = ({className}) => {
   const activeRecipe = useActiveRecipe();
   const isAuthenticated = useIsAuthenticated();
@@ -18,7 +36,7 @@ const CreateEditRecipe: SFC = ({className}) => {
 
   const initialValues = {
     description: activeRecipe?.description || '',
-    imageUrl: activeRecipe?.imageUrl || '',
+    image: activeRecipe?.image || '',
     name: activeRecipe?.name || '',
   };
 
@@ -31,11 +49,10 @@ const CreateEditRecipe: SFC = ({className}) => {
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
       let responseData;
-      const requestData = {
-        description: values.description,
-        image_url: values.imageUrl,
-        name: values.name,
-      };
+      const requestData = new FormData();
+      requestData.append('name', values.name);
+      requestData.append('description', values.description);
+      requestData.append('image', values.image);
 
       if (activeRecipe) {
         responseData = await updateRecipe(activeRecipe.id, requestData);
@@ -56,7 +73,7 @@ const CreateEditRecipe: SFC = ({className}) => {
   const validationSchema = useMemo(() => {
     return yup.object().shape({
       description: yup.string().required(),
-      imageUrl: yup.string().url().required(),
+      image: yup.mixed(),
       name: yup.string().required(),
     });
   }, []);
@@ -72,7 +89,7 @@ const CreateEditRecipe: SFC = ({className}) => {
         >
           {({dirty, errors, isSubmitting, touched, isValid}) => (
             <Form>
-              <S.Input errors={errors} label="Image URL" name="imageUrl" touched={touched} />
+              <Field component={CustomFileInput} name="image" touched={touched} />
               <S.Input errors={errors} label="Name" name="name" touched={touched} />
               <S.Input errors={errors} label="Description" name="description" touched={touched} />
               <Button
