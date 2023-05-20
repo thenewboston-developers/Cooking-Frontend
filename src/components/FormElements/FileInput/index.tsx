@@ -16,7 +16,7 @@ const FileInput: FC<FieldProps<File | null>> = ({field, form, ...props}) => {
     <>
       <input {...field} {...props} accept="image/*" onChange={handleChange} type="file" value={undefined} />
       <S.SecondaryContainer>
-        <ErrorMessage name={field.name} component={S.ErrorMessage} />
+        <ErrorMessage component={S.ErrorMessage} name={field.name} />
       </S.SecondaryContainer>
     </>
   );
