@@ -1,21 +1,22 @@
-import {SFC} from 'types';
+import {ChangeEvent, FC} from 'react';
+import {ErrorMessage, FieldProps, useField} from 'formik';
 import * as S from './Styles';
 
-export interface InputProps {
-  errors: {[field: string]: string};
-  label: string;
-  name: string;
-  touched: {[field: string]: boolean};
-  type?: 'text' | 'number';
-}
+const FileInput: FC<FieldProps<File | null>> = ({field, form, ...props}) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, __, helpers] = useField<File | null>(field.name);
 
-const FileInput: SFC<InputProps> = ({className, errors, label, name, touched, type = 'text'}) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.currentTarget.files && event.currentTarget.files[0];
+    form.setFieldValue(field.name, file);
+    helpers.setValue(file);
+  };
+
   return (
     <>
-      <S.Label>{label}</S.Label>
-      <S.Field $error={errors[name] && touched[name]} className={className} name={name} type={type} />
+      <input {...field} {...props} accept="image/*" onChange={handleChange} type="file" value={undefined} />
       <S.SecondaryContainer>
-        {errors[name] && touched[name] ? <S.ErrorMessage>{errors[name]}</S.ErrorMessage> : null}
+        <ErrorMessage name={field.name} component={S.ErrorMessage} />
       </S.SecondaryContainer>
     </>
   );
