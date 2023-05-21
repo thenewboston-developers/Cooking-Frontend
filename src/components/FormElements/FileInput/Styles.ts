@@ -8,11 +8,4 @@ export const ErrorMessage = styled.div`
   margin-top: 6px;
 `;
 
-export const Label = styled.div`
-  font-size: 12px;
-  margin-bottom: 8px;
-`;
-
-export const SecondaryContainer = styled.div`
-  margin-bottom: 32px;
-`;
+export const SecondaryContainer = styled.div``;
