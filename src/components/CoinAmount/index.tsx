@@ -1,4 +1,4 @@
-import Coin from 'assets/coin.png';
+import Coin from 'assets/coin.svg';
 import {SFC} from 'types';
 import * as S from './Styles';
 

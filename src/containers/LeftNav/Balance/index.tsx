@@ -1,6 +1,6 @@
 import {useSelector} from 'react-redux';
 
-import Coin from 'assets/coin.png';
+import Coin from 'assets/coin.svg';
 import {getSelf} from 'selectors/state';
 import {SFC} from 'types';
 import * as S from './Styles';
